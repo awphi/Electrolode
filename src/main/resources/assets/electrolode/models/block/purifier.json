@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "electrolode:blocks/purifier/front",
+    "down": "electrolode:blocks/purifier/down",
+    "up": "electrolode:blocks/purifier/up",
+    "east": "electrolode:blocks/purifier/left",
+    "west": "electrolode:blocks/purifier/right",
+    "north": "electrolode:blocks/purifier/front",
+    "south": "electrolode:blocks/purifier/back"
+  }
+}

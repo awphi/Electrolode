@@ -1,0 +1,16 @@
+[
+{
+  "modid": "electrolode",
+  "name": "Electrolode",
+  "description": "Electric expansion.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["aWpH"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

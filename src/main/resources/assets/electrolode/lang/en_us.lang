@@ -1,0 +1,35 @@
+tile.electrolode.carbonblock.name=Carbon Block
+tile.electrolode.purifier.name=Purifier
+
+item.electrolode.chipper.name=Chipper
+item.electrolode.pestlemortar.name=Pestle and Mortar
+
+item.electrolode.carbonpowder.name=Carbon Powder
+item.electrolode.ironpowder.name=Iron Powder
+item.electrolode.goldpowder.name=Gold Powder
+item.electrolode.titaniumpowder.name=Titanium Powder
+
+item.electrolode.carbonpurifiedpowder.name=Purified Carbon Powder
+item.electrolode.ironpurifiedpowder.name=Purified Iron Powder
+item.electrolode.goldpurifiedpowder.name=Purified Gold Powder
+item.electrolode.titaniumpurifiedpowder.name=Purified Titanium Powder
+
+itemGroup.electrolode=Electrolode
+
+tooltip.electrolode.purifierprogress=purified
+tooltip.electrolode.configtab=Configuration
+tooltip.electrolode.maxenergyusage=Max:
+tooltip.electrolode.totalenergy=Total:
+tooltip.electrolode.autoeject=Auto-eject:
+tooltip.electrolode.on=On
+tooltip.electrolode.off=Off
+
+enum.electrolode.facerole.none=None
+enum.electrolode.facerole.input=Input
+enum.electrolode.facerole.output=Output
+
+gui.electrolode.slot=Slot:
+gui.electrolode.sideconfig.name=Machine Config
+gui.electrolode.inventory.name=Inventory
+gui.electrolode.back.name=Return
+
