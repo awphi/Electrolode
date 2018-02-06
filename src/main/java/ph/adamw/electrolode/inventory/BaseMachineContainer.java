@@ -7,7 +7,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import ph.adamw.electrolode.block.machines.TileItemMachine;
+import ph.adamw.electrolode.block.machine.TileItemMachine;
 
 public abstract class BaseMachineContainer extends Container {
     public TileItemMachine tileEntity;

@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.items;
+package ph.adamw.electrolode.item;
 
 public interface IExtendedDescription {
     //Get description - returns a string with delimiters

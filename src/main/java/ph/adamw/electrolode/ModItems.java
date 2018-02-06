@@ -6,10 +6,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
-import ph.adamw.electrolode.items.ItemPowder;
-import ph.adamw.electrolode.items.ItemPurifiedPowder;
-import ph.adamw.electrolode.items.tools.ItemPestleMortar;
-import ph.adamw.electrolode.items.tools.ItemChipper;
+import ph.adamw.electrolode.item.ItemPowder;
+import ph.adamw.electrolode.item.ItemPurifiedPowder;
+import ph.adamw.electrolode.item.tool.ItemPestleMortar;
+import ph.adamw.electrolode.item.tool.ItemChipper;
 import ph.adamw.electrolode.rendering.RenderClient;
 
 public class ModItems {
@@ -24,7 +24,7 @@ public class ModItems {
     public static final ItemChipper chipper = new ItemChipper();
     public static final ItemPestleMortar pestleMortar = new ItemPestleMortar();
 
-    //Variant items
+    //Variant item
     public static final ItemPowder powder = new ItemPowder();
     public static final ItemPurifiedPowder purifiedPowder = new ItemPurifiedPowder();
 

@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import ph.adamw.electrolode.EnumPurifiableMineral;
 import ph.adamw.electrolode.ModItems;
-import ph.adamw.electrolode.block.machines.purifier.TilePurifier;
+import ph.adamw.electrolode.block.machine.purifier.TilePurifier;
 import ph.adamw.electrolode.recipe.MachineRecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
 

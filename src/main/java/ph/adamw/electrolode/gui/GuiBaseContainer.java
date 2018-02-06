@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
-import ph.adamw.electrolode.block.machines.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileBaseMachine;
 import ph.adamw.electrolode.gui.extension.GuiExtension;
 
 import java.io.IOException;

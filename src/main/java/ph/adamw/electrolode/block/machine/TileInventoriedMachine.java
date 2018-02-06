@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.block.machines;
+package ph.adamw.electrolode.block.machine;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.items.ItemStackHandler;

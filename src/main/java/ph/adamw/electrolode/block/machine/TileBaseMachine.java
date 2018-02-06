@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.block.machines;
+package ph.adamw.electrolode.block.machine;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,14 +11,12 @@ import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import org.lwjgl.Sys;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.util.BlockUtils;
 import ph.adamw.electrolode.util.GuiUtils;
 import ph.adamw.electrolode.util.SidedHashMap;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public abstract class TileBaseMachine extends TileEntity implements ITickable, IEnergyStorage {

@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.block.machines;
+package ph.adamw.electrolode.block.machine;
 
 public abstract class TileSimpleMachine extends TileItemMachine {
     public int getInputSize() {

@@ -3,7 +3,7 @@ package ph.adamw.electrolode.gui.extension;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.block.machines.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileBaseMachine;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
 
 public class GuiTabEnergy extends GuiTab {

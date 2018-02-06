@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.items;
+package ph.adamw.electrolode.item;
 
 import net.minecraft.item.Item;
 import ph.adamw.electrolode.ModItems;
