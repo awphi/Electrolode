@@ -1,5 +1,6 @@
 package ph.adamw.electrolode.gui.extension;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.Electrolode;
@@ -11,41 +12,61 @@ import ph.adamw.electrolode.networking.PacketSideConfigUpdate;
 public class GuiButtonSideConfig extends GuiExtensionButton {
     private EnumFaceRole current;
     private EnumFacing direction;
+    private String tooltipSpecific;
 
-    public GuiButtonSideConfig(GuiBaseContainer gui, int x, int y, EnumFacing direction, EnumFaceRole current) {
+    public GuiButtonSideConfig(GuiBaseContainer gui, int x, int y, EnumFacing direction, EnumFaceRole current, boolean isLocked) {
         super(gui, -1, new ResourceLocation(Electrolode.MODID,"textures/gui/extensions/sideconfigbutton.png") , x, y, 16, 16);
-        if(current == null) {
-            current = EnumFaceRole.next(current);
-        }
+
         this.current = current;
         this.direction = direction;
+        tooltipSpecific = current.getLocalizedName();
+        if(isLocked) {
+            tooltipSpecific = current.getLocalizedName() + " §l(" + I18n.format("tooltip.electrolode.locked") + ")";
+            disabled = true;
+        }
     }
 
-    private void incrementRole() {
-        current = EnumFaceRole.next(current);
+    private void stepRole(boolean up) {
+        current = up ? EnumFaceRole.next(current) : EnumFaceRole.previous(current);
         PacketHandler.INSTANCE.sendToServer(new PacketSideConfigUpdate(guiObj.tileEntity.getPos(), direction, current));
     }
 
     @Override
     public String getTooltip() {
-        return current.getUnlocalizedName();
+        return current.getLocalizedName();
     }
 
     @Override
     public void renderBackground(int xAxis, int yAxis, int guiWidth, int guiHeight) {
         mc.renderEngine.bindTexture(resource);
 
-        if(!isInRect(xAxis, yAxis, REL_X, REL_Y, HEIGHT, WIDTH)) {
-            guiObj.drawTexturedModalRect(guiWidth + REL_X, guiHeight + REL_Y, 0, current.getValue() * HEIGHT, WIDTH, HEIGHT);
+        if(!disabled) {
+            if (!isInRect(xAxis, yAxis, REL_X, REL_Y, HEIGHT, WIDTH)) {
+                guiObj.drawTexturedModalRect(guiWidth + REL_X, guiHeight + REL_Y, 0, current.getValue() * HEIGHT, WIDTH, HEIGHT);
+            } else {
+                guiObj.drawTexturedModalRect(guiWidth + REL_X, guiHeight + REL_Y, WIDTH, current.getValue() * HEIGHT, WIDTH, HEIGHT);
+            }
         } else {
-            guiObj.drawTexturedModalRect(guiWidth + REL_X, guiHeight + REL_Y, WIDTH , current.getValue()* HEIGHT, WIDTH, HEIGHT);
+            guiObj.drawTexturedModalRect(guiWidth + REL_X * 2, guiHeight + REL_Y, WIDTH, current.getValue() * HEIGHT, WIDTH, HEIGHT);
+        }
+    }
+
+    @Override
+    public void renderForeground(int xAxis, int yAxis) {
+        if(isInRect(xAxis, yAxis, REL_X, REL_Y, HEIGHT, WIDTH) && getTooltip() != null) {
+            displayTooltip(getTooltip(), xAxis, yAxis);
         }
     }
 
     @Override
     public void mouseClicked(int xAxis, int yAxis, int button) {
-        if(isInRect(xAxis, yAxis, REL_X, REL_Y, HEIGHT, WIDTH)) {
-            incrementRole();
+        System.out.println(button);
+        if(isInRect(xAxis, yAxis, REL_X, REL_Y, HEIGHT, WIDTH) && !disabled) {
+            if(button == 0) {
+                stepRole(true);
+            } else if(button == 1) {
+                stepRole(false);
+            }
         }
     }
 }

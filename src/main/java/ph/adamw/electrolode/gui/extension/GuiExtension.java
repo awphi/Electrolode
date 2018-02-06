@@ -17,7 +17,7 @@ public abstract class GuiExtension {
 
     public String tooltip;
 
-    public GuiExtension(GuiBaseContainer gui, ResourceLocation resource) {
+    GuiExtension(GuiBaseContainer gui, ResourceLocation resource) {
         this.resource = resource;
         guiObj = gui;
     }

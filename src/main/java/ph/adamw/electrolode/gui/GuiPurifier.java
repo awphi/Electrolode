@@ -18,8 +18,7 @@ public class GuiPurifier extends GuiMachineBasic {
 
     public GuiPurifier(TileBaseMachine tileEntity, BaseMachineContainer container) {
         super(tileEntity, container);
-        guiExtensions.add(new GuiTabSideConfig(this, tileEntity));
-        guiExtensions.add(new GuiProgressBar(tileEntity, this, new TextureHelper(getBackground(), 0, 165, 23, 23), 87, 32, EnumGuiDirection.RIGHT, I18n.format("tooltip.electrolode.purifierprogress")));
+        guiExtensions.add(new GuiProgressBar(tileEntity, this, new TextureHelper(getBackground(), 0, 165, 23, 23), 87, 31, EnumGuiDirection.RIGHT, I18n.format("tooltip.electrolode.purifierprogress")));
         guiExtensions.add(new GuiEnergyBar(tileEntity, this, 20, 20, 22, 46, true));
     }
 
@@ -27,5 +26,5 @@ public class GuiPurifier extends GuiMachineBasic {
         return new ResourceLocation(Electrolode.MODID, "textures/gui/purifier.png");
     }
 
-    public void onAction(int id) {}
+    public void onAction(int id, int mbp) {}
 }

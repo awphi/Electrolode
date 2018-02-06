@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 public enum EnumFaceRole {
     NONE (0, "enum.electrolode.facerole.none"),
-    INPUT_ITEM (1, "enum.electrolode.facerole.input"),
-    OUTPUT_ITEM (2, "enum.electrolode.facerole.output");
+    INPUT(1, "enum.electrolode.facerole.input"),
+    OUTPUT(2, "enum.electrolode.facerole.output");
 
     int phase;
     private String unlocalizedName;
@@ -30,20 +30,28 @@ public enum EnumFaceRole {
         return this.phase;
     }
 
-    public static EnumFaceRole next(EnumFaceRole e) {
+    private static EnumFaceRole step(EnumFaceRole e, int step) {
         if(e == null) {
             return roles[0];
         }
-        int nextIndex = e.ordinal() + 1;
-        nextIndex %= roles.length;
+        int nextIndex = e.ordinal() + step;
+        nextIndex = nextIndex % roles.length;
         return roles[nextIndex];
+    }
+
+    public static EnumFaceRole next(EnumFaceRole e) {
+        return step(e, 1);
+    }
+
+    public static EnumFaceRole previous(EnumFaceRole e) {
+        return step(e, -1);
     }
 
     public static EnumFaceRole getRole(int i) {
         return map.get(i);
     }
 
-    public String getUnlocalizedName() {
+    public String getLocalizedName() {
         return I18n.format(unlocalizedName);
     }
 }

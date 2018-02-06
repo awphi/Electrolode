@@ -10,10 +10,10 @@ import ph.adamw.electrolode.util.StringUtils;
 public class GuiButtonEject extends GuiExtensionButton {
     private boolean current;
 
-    public GuiButtonEject(GuiBaseContainer gui, int x, int y, boolean current) {
+    public GuiButtonEject(GuiBaseContainer gui, int x, int y, boolean state) {
         super(gui, -1, GuiUtils.CommonExtensions.AUTO_EJECT, x, y);
-        this.current = current;
-        disabled = !current;
+        current = state;
+        disabled = !state;
     }
 
     private void sendUpdate() {
@@ -27,7 +27,11 @@ public class GuiButtonEject extends GuiExtensionButton {
         mc.renderEngine.bindTexture(resource);
 
         if (isInRect(xAxis, yAxis, REL_X, REL_Y, HEIGHT, WIDTH)) {
-            guiObj.drawTexturedModalRect(guiWidth + REL_X, guiHeight + REL_Y, ORIGIN_X, ORIGIN_Y + HEIGHT, WIDTH, HEIGHT);
+            if(!disabled) {
+                guiObj.drawTexturedModalRect(guiWidth + REL_X, guiHeight + REL_Y, ORIGIN_X, ORIGIN_Y + HEIGHT, WIDTH, HEIGHT);
+            } else {
+                guiObj.drawTexturedModalRect(guiWidth + REL_X, guiHeight + REL_Y, ORIGIN_X, ORIGIN_Y + HEIGHT * 3, WIDTH, HEIGHT);
+            }
         } else {
             if(!disabled) {
                 guiObj.drawTexturedModalRect(guiWidth + REL_X, guiHeight + REL_Y, ORIGIN_X, ORIGIN_Y, WIDTH, HEIGHT);
@@ -52,6 +56,7 @@ public class GuiButtonEject extends GuiExtensionButton {
     @Override
     public void mouseClicked(int xAxis, int yAxis, int button) {
         if (isInRect(xAxis, yAxis, REL_X, REL_Y, HEIGHT, WIDTH)) {
+            System.out.println("ya");
             sendUpdate();
         }
     }

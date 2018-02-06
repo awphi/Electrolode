@@ -23,6 +23,7 @@ tooltip.electrolode.totalenergy=Total:
 tooltip.electrolode.autoeject=Auto-eject:
 tooltip.electrolode.on=On
 tooltip.electrolode.off=Off
+tooltip.electrolode.locked=Locked
 
 enum.electrolode.facerole.none=None
 enum.electrolode.facerole.input=Input

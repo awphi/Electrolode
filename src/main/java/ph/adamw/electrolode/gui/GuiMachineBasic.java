@@ -4,11 +4,13 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
 import ph.adamw.electrolode.block.machines.TileBaseMachine;
 import ph.adamw.electrolode.gui.extension.GuiTabEnergy;
+import ph.adamw.electrolode.gui.extension.GuiTabSideConfig;
 
 public abstract class GuiMachineBasic extends GuiBaseContainer {
     GuiMachineBasic(TileBaseMachine tileEntity, Container container) {
         super(tileEntity, container);
         guiExtensions.add(new GuiTabEnergy(this, tileEntity));
+        guiExtensions.add(new GuiTabSideConfig(this, tileEntity));
     }
 
     public String getUnlocalizedTitle() {

@@ -58,7 +58,7 @@ public class GuiExtensionButton extends GuiExtension {
 
     public void mouseClicked(int xAxis, int yAxis, int button) {
         if(isInRect(xAxis, yAxis, REL_X, REL_Y, HEIGHT, WIDTH) && !disabled) {
-            guiObj.onAction(buttonId);
+            guiObj.onAction(buttonId, button);
         }
     }
 

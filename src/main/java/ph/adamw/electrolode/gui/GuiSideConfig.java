@@ -25,20 +25,20 @@ public class GuiSideConfig extends GuiBaseContainer {
         EnumFacing facing = tileEntity.getState().getValue(BlockBaseMachine.FACING);
 
         //Top
-        guiExtensions.add(new GuiButtonSideConfig(this, 64, 22, EnumFacing.UP, tileEntity.faceMap.get(EnumFacing.UP)));
+        guiExtensions.add(new GuiButtonSideConfig(this, 64, 22, EnumFacing.UP, tileEntity.faceMap.get(EnumFacing.UP), tileEntity.isFaceDisabled(EnumFacing.UP)));
         //Bottom
-        guiExtensions.add(new GuiButtonSideConfig(this, 64, 58, EnumFacing.DOWN, tileEntity.faceMap.get(EnumFacing.DOWN)));
+        guiExtensions.add(new GuiButtonSideConfig(this, 64, 58, EnumFacing.DOWN, tileEntity.faceMap.get(EnumFacing.DOWN), tileEntity.isFaceDisabled(EnumFacing.DOWN)));
         //Front
-        guiExtensions.add(new GuiButtonSideConfig(this, 64, 40, facing, tileEntity.faceMap.get(facing)));
+        guiExtensions.add(new GuiButtonSideConfig(this, 64, 40, facing, tileEntity.faceMap.get(facing), tileEntity.isFaceDisabled(facing)));
         facing = BlockUtils.getNextEnumFacing(facing);
         //Left
-        guiExtensions.add(new GuiButtonSideConfig(this, 46, 40, facing, tileEntity.faceMap.get(facing)));
+        guiExtensions.add(new GuiButtonSideConfig(this, 46, 40, facing, tileEntity.faceMap.get(facing), tileEntity.isFaceDisabled(facing)));
         facing = BlockUtils.getNextEnumFacing(facing);
         //Back
-        guiExtensions.add(new GuiButtonSideConfig(this, 82, 58, facing, tileEntity.faceMap.get(facing)));
+        guiExtensions.add(new GuiButtonSideConfig(this, 82, 58, facing, tileEntity.faceMap.get(facing), tileEntity.isFaceDisabled(facing)));
         facing = BlockUtils.getNextEnumFacing(facing);
         //Right
-        guiExtensions.add(new GuiButtonSideConfig(this, 82, 40, facing, tileEntity.faceMap.get(facing)));
+        guiExtensions.add(new GuiButtonSideConfig(this, 82, 40, facing, tileEntity.faceMap.get(facing), tileEntity.isFaceDisabled(facing)));
 
         //Back button
         guiExtensions.add(new GuiExtensionButton(this, 0, GuiUtils.CommonExtensions.BACK, 6, 6));
@@ -68,10 +68,13 @@ public class GuiSideConfig extends GuiBaseContainer {
         super.onGuiClosed();
     }
 
-    public void onAction(int id) {
-        BlockPos pos = tileEntity.getPos();
-        switch(id) {
-            case 0: mc.player.openGui(Electrolode.MODID, tileEntity.getGuiId(), mc.player.world, pos.getX(), pos.getY(), pos.getZ());
+    public void onAction(int id, int mbp) {
+        if(mbp == 0) {
+            BlockPos pos = tileEntity.getPos();
+            switch (id) {
+                case 0:
+                    mc.player.openGui(Electrolode.MODID, tileEntity.getGuiId(), mc.player.world, pos.getX(), pos.getY(), pos.getZ());
+            }
         }
     }
 }

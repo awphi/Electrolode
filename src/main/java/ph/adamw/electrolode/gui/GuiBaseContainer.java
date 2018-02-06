@@ -31,7 +31,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
 
     public abstract ResourceLocation getBackground();
 
-    public abstract void onAction(int id);
+    public abstract void onAction(int id, int mouseButton);
 
     public abstract String getUnlocalizedTitle();
 

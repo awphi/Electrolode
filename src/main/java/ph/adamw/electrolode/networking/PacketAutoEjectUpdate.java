@@ -47,7 +47,10 @@ public class PacketAutoEjectUpdate implements IMessage {
             // Check if the chunk is loaded to prevent abuse
             if (world.isBlockLoaded(message.pos)) {
                 TileBaseMachine te = (TileBaseMachine) world.getTileEntity(message.pos);
-                if(te == null) return;
+                if(te == null)  {
+                    System.err.println("Invalid auto-eject update request at position " + message.pos + " by " + playerEntity.getName() + ", " + playerEntity.getPlayerIP());
+                    return;
+                }
                 te.autoEject = message.enabled;
                 te.markForUpdate();
             }

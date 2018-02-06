@@ -19,6 +19,7 @@ import ph.adamw.electrolode.util.SidedHashMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public abstract class TileBaseMachine extends TileEntity implements ITickable, IEnergyStorage {
     double processedTime = 0;
@@ -32,6 +33,7 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
     }
 
     public SidedHashMap faceMap = new SidedHashMap();
+    private List<EnumFacing> disabledFaces = new ArrayList<>();
 
 
     public boolean canInteractWith(EntityPlayer playerIn) {
@@ -93,6 +95,10 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
                 int v = compound.getInteger(EnumFacing.getFront(i).getName());
                 faceMap.put(EnumFacing.getFront(i), EnumFaceRole.getRole(v));
             }
+
+            for(int i : compound.getIntArray("disabledFaces")) {
+                disabledFaces.add(EnumFacing.getFront(i));
+            }
             /* --- */
             processedTime = compound.getDouble("processedTime");
             energy = compound.getInteger("energyStored");
@@ -114,6 +120,12 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
         for(int i : x) {
             compound.setInteger(EnumFacing.getFront(i).getName(), faceMap.get(EnumFacing.getFront(i)).getValue());
         }
+
+        int[] y = new int[disabledFaces.size()];
+        for(int i = 0; i < disabledFaces.size(); i ++) {
+            y[i] = disabledFaces.get(i).getIndex();
+        }
+        compound.setIntArray("disabledFaces", y);
         /* --- */
 
 
@@ -142,6 +154,44 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
         handleUpdateTag(packet.getNbtCompound());
     }
     /* --- */
+
+    /**
+     *
+     * @param face - Face to disable - NORTH = front, EAST = right etc.
+     *             (as if the machine is facing up from birds-eye view then round clockwise)
+     */
+    protected void disableFace(EnumFacing face) {
+        if(disabledFaces.contains(face)) return;
+
+        if(face == EnumFacing.DOWN || face == EnumFacing.UP) {
+            disabledFaces.add(face);
+        } else {
+            EnumFacing facing = this.getState().getValue(BlockBaseMachine.FACING);
+            int i = 0;
+            switch (face) {
+                case NORTH: i = 0;
+                case EAST: i = 1;
+                case SOUTH: i = 2;
+                case WEST: i = 3;
+            }
+
+            for(int j = 0; j < i; j ++) {
+                facing = BlockUtils.getNextEnumFacing(facing);
+            }
+
+            disabledFaces.add(facing);
+        }
+    }
+
+    protected void disableAllFaces() {
+        for(EnumFacing i : EnumFacing.values()) {
+            disableFace(i);
+        }
+    }
+
+    public boolean isFaceDisabled(EnumFacing e) {
+        return disabledFaces.contains(e);
+    }
 
     /* Basic processing stuff */
     public abstract void processingComplete();

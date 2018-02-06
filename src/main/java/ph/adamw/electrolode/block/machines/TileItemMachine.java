@@ -19,9 +19,9 @@ public abstract class TileItemMachine extends TileInventoriedMachine {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             if(facing == null) {
                 return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(allSlotsWrapper);
-            } else if(faceMap.get(facing) == EnumFaceRole.INPUT_ITEM) {
+            } else if(faceMap.get(facing) == EnumFaceRole.INPUT) {
                 return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inputOnlySlotsWrapper);
-            } else if(faceMap.get(facing) == EnumFaceRole.OUTPUT_ITEM) {
+            } else if(faceMap.get(facing) == EnumFaceRole.OUTPUT) {
                 return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(outputOnlySlotsWrapper);
             } else {
                 return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(new DummyItemStackHandler());
@@ -48,12 +48,12 @@ public abstract class TileItemMachine extends TileInventoriedMachine {
     }
 
     public void ejectOutput() {
-        if(!faceMap.containsValue(EnumFaceRole.OUTPUT_ITEM)) return;
+        if(!faceMap.containsValue(EnumFaceRole.OUTPUT)) return;
 
         int count = 0;
         for(ItemStack j : getOutputContents()) {
             for(EnumFacing i : faceMap.keySet()) {
-                if(faceMap.get(i) == EnumFaceRole.OUTPUT_ITEM) {
+                if(faceMap.get(i) == EnumFaceRole.OUTPUT) {
                     TileEntity neighbour = world.getTileEntity(BlockUtils.getNeighbourPos(pos, i));
                     if(neighbour == null) continue;
                     IItemHandler x = neighbour.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, i);
