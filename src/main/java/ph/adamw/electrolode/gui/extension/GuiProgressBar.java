@@ -1,7 +1,7 @@
 package ph.adamw.electrolode.gui.extension;
 
 import net.minecraft.util.ResourceLocation;
-import ph.adamw.electrolode.block.machines.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileBaseMachine;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.util.EnumGuiDirection;
 import ph.adamw.electrolode.util.TextureHelper;

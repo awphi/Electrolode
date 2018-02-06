@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import ph.adamw.electrolode.block.EnumFaceRole;
-import ph.adamw.electrolode.block.machines.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileBaseMachine;
 
 public class PacketSideConfigUpdate implements IMessage {
     BlockPos pos;

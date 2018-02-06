@@ -1,7 +1,7 @@
 package ph.adamw.electrolode.recipe;
 
 import net.minecraft.item.ItemStack;
-import ph.adamw.electrolode.block.machines.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileBaseMachine;
 
 import java.util.HashMap;
 

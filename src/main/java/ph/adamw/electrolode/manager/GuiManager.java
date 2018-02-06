@@ -1,7 +1,7 @@
 package ph.adamw.electrolode.manager;
 
-import ph.adamw.electrolode.block.machines.purifier.ContainerPurifier;
-import ph.adamw.electrolode.block.machines.purifier.TilePurifier;
+import ph.adamw.electrolode.block.machine.purifier.ContainerPurifier;
+import ph.adamw.electrolode.block.machine.purifier.TilePurifier;
 import ph.adamw.electrolode.gui.GuiPurifier;
 import ph.adamw.electrolode.util.GuiUtils;
 

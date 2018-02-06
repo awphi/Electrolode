@@ -3,7 +3,7 @@ package ph.adamw.electrolode.util;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.block.machines.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileBaseMachine;
 import ph.adamw.electrolode.gui.GuiEntry;
 import ph.adamw.electrolode.gui.GuiMachineBasic;
 import ph.adamw.electrolode.inventory.BaseMachineContainer;

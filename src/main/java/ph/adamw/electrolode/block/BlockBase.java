@@ -14,15 +14,26 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import ph.adamw.electrolode.ModBlocks;
 import ph.adamw.electrolode.ModItems;
 
-public class BlockBase extends Block {
+import java.util.Random;
+
+public abstract class BlockBase extends Block {
     public BlockBase(Material m, boolean addToCreativeTab) {
         super(m);
         if(addToCreativeTab) {
             setCreativeTab(ModItems.CREATIVETAB);
         }
     }
+
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return Item.getItemFromBlock(ModBlocks.getBlock(this.getClass()));
+    }
+
+    public abstract String getBlockName();
+
 
     @SideOnly(Side.CLIENT)
     public void initModel() {

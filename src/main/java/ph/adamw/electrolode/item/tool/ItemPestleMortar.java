@@ -1,6 +1,6 @@
-package ph.adamw.electrolode.items.tools;
+package ph.adamw.electrolode.item.tool;
 
-import ph.adamw.electrolode.items.ItemBase;
+import ph.adamw.electrolode.item.ItemBase;
 
 public class ItemPestleMortar extends ItemBase {
     public ItemPestleMortar() {

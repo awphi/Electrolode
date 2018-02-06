@@ -1,8 +1,8 @@
-package ph.adamw.electrolode.block.machines.press;
+package ph.adamw.electrolode.block.machine.press;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraftforge.items.IItemHandler;
-import ph.adamw.electrolode.block.machines.TileItemMachine;
+import ph.adamw.electrolode.block.machine.TileItemMachine;
 import ph.adamw.electrolode.inventory.BaseMachineContainer;
 import ph.adamw.electrolode.inventory.IDischargeSlot;
 import ph.adamw.electrolode.inventory.SlotOutput;

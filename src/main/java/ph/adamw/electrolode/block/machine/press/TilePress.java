@@ -1,6 +1,6 @@
-package ph.adamw.electrolode.block.machines.press;
+package ph.adamw.electrolode.block.machine.press;
 
-import ph.adamw.electrolode.block.machines.TileItemMachine;
+import ph.adamw.electrolode.block.machine.TileItemMachine;
 
 public class TilePress extends TileItemMachine {
     public int getInputSize() {

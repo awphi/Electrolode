@@ -2,7 +2,7 @@ package ph.adamw.electrolode.gui;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
-import ph.adamw.electrolode.block.machines.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileBaseMachine;
 import ph.adamw.electrolode.gui.extension.GuiTabEnergy;
 import ph.adamw.electrolode.gui.extension.GuiTabSideConfig;
 

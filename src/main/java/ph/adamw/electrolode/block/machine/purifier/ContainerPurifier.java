@@ -1,8 +1,8 @@
-package ph.adamw.electrolode.block.machines.purifier;
+package ph.adamw.electrolode.block.machine.purifier;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraftforge.items.IItemHandler;
-import ph.adamw.electrolode.block.machines.TileItemMachine;
+import ph.adamw.electrolode.block.machine.TileItemMachine;
 import ph.adamw.electrolode.inventory.IDischargeSlot;
 import ph.adamw.electrolode.inventory.SlotOutput;
 import ph.adamw.electrolode.inventory.BaseMachineContainer;

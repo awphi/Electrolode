@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.items;
+package ph.adamw.electrolode.item;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.Block;
@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
-import ph.adamw.electrolode.block.machines.BlockBaseMachine;
+import ph.adamw.electrolode.block.machine.BlockBaseMachine;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;

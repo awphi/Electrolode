@@ -1,6 +1,6 @@
-package ph.adamw.electrolode.block.machines.purifier;
+package ph.adamw.electrolode.block.machine.purifier;
 
-import ph.adamw.electrolode.block.machines.TileSimpleMachine;
+import ph.adamw.electrolode.block.machine.TileSimpleMachine;
 
 
 public class TilePurifier extends TileSimpleMachine {

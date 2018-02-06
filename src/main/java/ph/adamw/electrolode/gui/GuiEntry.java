@@ -1,6 +1,6 @@
 package ph.adamw.electrolode.gui;
 
-import ph.adamw.electrolode.block.machines.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileBaseMachine;
 import ph.adamw.electrolode.inventory.BaseMachineContainer;
 
 public class GuiEntry {
