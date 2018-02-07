@@ -1,12 +1,14 @@
-package ph.adamw.electrolode.gui.extension;
+package ph.adamw.electrolode.gui.element;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
+import ph.adamw.electrolode.block.BlockBase;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.util.EnumGuiDirection;
 import ph.adamw.electrolode.util.TextureHelper;
 
-public class GuiProgressBar extends GuiExtension {
+public class GuiProgressBar extends GuiElement {
     private int PLACEHOLDER_X;
     private int PLACEHOLDER_Y;
 
@@ -20,7 +22,7 @@ public class GuiProgressBar extends GuiExtension {
     private TileBaseMachine tileEntity;
     private String tooltipSpecific;
 
-    public GuiProgressBar(TileBaseMachine te, GuiBaseContainer gui, ResourceLocation res, int x, int y, int u, int v, int width, int height, EnumGuiDirection dir, String tooltipS) {
+    public GuiProgressBar(TileBaseMachine te, GuiBaseContainer gui, ResourceLocation res, int x, int y, int u, int v, int width, int height, EnumGuiDirection dir) {
         super(gui, res);
         PLACEHOLDER_X = x;
         PLACEHOLDER_Y = y;
@@ -30,15 +32,16 @@ public class GuiProgressBar extends GuiExtension {
         HEIGHT = height;
         direction = dir;
         tileEntity = te;
-        tooltipSpecific = tooltipS;
+        tooltipSpecific = ((BlockBase) tileEntity.getWorld().getBlockState(tileEntity.getPos()).getBlock()).getBlockName();
+        tooltipSpecific = I18n.format("tooltip.electrolode." + tooltipSpecific + "progress");
     }
 
-    public GuiProgressBar(TileBaseMachine te, GuiBaseContainer gui, ResourceLocation res, int x, int y, int width, int height, EnumGuiDirection dir, String tooltipSpecific) {
-        this(te, gui, res, x, y, 0, 0, width, height, dir, tooltipSpecific);
+    public GuiProgressBar(TileBaseMachine te, GuiBaseContainer gui, ResourceLocation res, int x, int y, int width, int height, EnumGuiDirection dir) {
+        this(te, gui, res, x, y, 0, 0, width, height, dir);
     }
 
-    public GuiProgressBar(TileBaseMachine te, GuiBaseContainer gui, TextureHelper helper, int x, int y, EnumGuiDirection dir, String tooltipSpecific) {
-        this(te, gui, helper.resource, x, y, helper.X_ORIGIN, helper.Y_ORIGIN, helper.WIDTH, helper.HEIGHT, dir, tooltipSpecific);
+    public GuiProgressBar(TileBaseMachine te, GuiBaseContainer gui, TextureHelper helper, int x, int y, EnumGuiDirection dir) {
+        this(te, gui, helper.resource, x, y, helper.X_ORIGIN, helper.Y_ORIGIN, helper.WIDTH, helper.HEIGHT, dir);
     }
 
     public String getTooltip() {

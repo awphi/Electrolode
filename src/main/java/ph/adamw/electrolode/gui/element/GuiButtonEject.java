@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.gui.extension;
+package ph.adamw.electrolode.gui.element;
 
 import net.minecraft.client.resources.I18n;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
@@ -7,7 +7,7 @@ import ph.adamw.electrolode.networking.PacketHandler;
 import ph.adamw.electrolode.util.GuiUtils;
 import ph.adamw.electrolode.util.StringUtils;
 
-public class GuiButtonEject extends GuiExtensionButton {
+public class GuiButtonEject extends GuiButtonElement {
     private boolean current;
 
     public GuiButtonEject(GuiBaseContainer gui, int x, int y, boolean state) {

@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.gui.extension;
+package ph.adamw.electrolode.gui.element;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
@@ -9,7 +9,7 @@ import ph.adamw.electrolode.gui.GuiSideConfig;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class GuiTab extends GuiExtension {
+public abstract class GuiTab extends GuiElement {
     public TileBaseMachine tileEntity;
     public boolean rightAligned;
 

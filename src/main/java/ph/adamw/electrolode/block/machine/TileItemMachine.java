@@ -72,13 +72,24 @@ public abstract class TileItemMachine extends TileInventoriedMachine {
 
 
     protected ItemStack[] getCurrentRecipeOutput() {
-        MachineRecipeComponent[] x= RecipeHandler.getOutput(this.getClass(), ItemUtils.toMachineRecipeArray(getInputContents()));
-        return ItemUtils.toItemStackArray(x);
+        MachineRecipeComponent[] x = RecipeHandler.getOutput(this.getClass(), ItemUtils.toMachineRecipeArray(getInputContents()));
+        // Botched this but until it causes me real stress it remains
+        if(x != null) {
+            return ItemUtils.toItemStackArray(x);
+        } else {
+            return ItemUtils.makeItemStackArray(ItemStack.EMPTY, getOutputSize());
+        }
     }
 
 
     protected ItemStack[] getCurrentRecipeInput() {
-        return ItemUtils.toItemStackArray(RecipeHandler.getInput(this.getClass(), ItemUtils.toMachineRecipeArray(getInputContents())));
+        MachineRecipeComponent[] x = RecipeHandler.getInput(this.getClass(), ItemUtils.toMachineRecipeArray(getInputContents()));
+        // See above method explanation for this hack
+        if(x != null) {
+            return ItemUtils.toItemStackArray(x);
+        } else {
+            return ItemUtils.makeItemStackArray(ItemStack.EMPTY, getInputSize());
+        }
     }
 
     public boolean canProcess() {
@@ -86,5 +97,17 @@ public abstract class TileItemMachine extends TileInventoriedMachine {
             return ItemUtils.canItemStackArraysStack(getOutputContents(), getCurrentRecipeOutput());
         }
         return false;
+    }
+
+    public void processingComplete() {
+        ItemStack[] output = getCurrentRecipeOutput();
+        for(int i = 0; i < getOutputSize(); i ++) {
+            outputOnlySlotsWrapper.insertItemInternally(i, output[i], false);
+        }
+
+        ItemStack[] input = getCurrentRecipeInput();
+        for(int i = 0; i < getInputSize(); i ++) {
+            inputOnlySlotsWrapper.extractItemInternally(i, input[i].getCount(), false);
+        }
     }
 }

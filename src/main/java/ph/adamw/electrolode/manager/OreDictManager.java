@@ -7,8 +7,10 @@ import ph.adamw.electrolode.ModItems;
 import ph.adamw.electrolode.block.machine.purifier.TilePurifier;
 import ph.adamw.electrolode.item.ItemPowder;
 import ph.adamw.electrolode.item.ItemPurifiedPowder;
+import ph.adamw.electrolode.recipe.ItemStackComponent;
 import ph.adamw.electrolode.recipe.MachineRecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
+import ph.adamw.electrolode.util.ItemUtils;
 
 public class OreDictManager {
     public static void registerEntries() {
@@ -20,10 +22,15 @@ public class OreDictManager {
     public static void registerRecipes() {
         for(EnumPurifiableMineral el : EnumPurifiableMineral.values()) {
 
-            //Powders -> Purified Powders
+            // Powders -> stuff
             for (ItemStack i : OreDictionary.getOres("dust" + el.getOreDictSuffix())) {
                 MachineRecipeComponent entry = new MachineRecipeComponent(i);
-                RecipeHandler.addRecipe(TilePurifier.class, entry, new MachineRecipeComponent(new ItemStack(ModItems.get(ItemPurifiedPowder.class), 1, el.getOrdinal())));
+
+                // Purifier
+                RecipeHandler.addRecipe(TilePurifier.class, entry, new ItemStackComponent(ModItems.get(ItemPurifiedPowder.class), 1, el.getOrdinal()));
+
+                // Press
+                ItemStack[] ingredients = ItemUtils.makeItemStackArray(i, 3);
             }
         }
     }

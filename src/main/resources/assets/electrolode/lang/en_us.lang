@@ -1,5 +1,5 @@
-tile.electrolode.carbonblock.name=Carbon Block
 tile.electrolode.purifier.name=Purifier
+tile.electrolode.press.name=Press
 
 item.electrolode.chipper.name=Chipper
 item.electrolode.pestlemortar.name=Pestle and Mortar
@@ -17,6 +17,8 @@ item.electrolode.titaniumpurifiedpowder.name=Purified Titanium Powder
 itemGroup.electrolode=Electrolode
 
 tooltip.electrolode.purifierprogress=purified
+tooltip.electrolode.pressprogress=pressed
+
 tooltip.electrolode.configtab=Configuration
 tooltip.electrolode.maxenergyusage=Max:
 tooltip.electrolode.totalenergy=Total:

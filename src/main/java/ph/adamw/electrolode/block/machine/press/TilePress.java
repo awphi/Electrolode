@@ -12,7 +12,7 @@ public class TilePress extends TileItemMachine {
     }
 
     public int getBaseProcTime() {
-        return 120;
+        return 360;
     }
 
     public int getBaseEnergyUsage() {
@@ -21,12 +21,5 @@ public class TilePress extends TileItemMachine {
 
     public int getMaxEnergyStored() {
         return 25000;
-    }
-
-    public void processingComplete() {
-        outputOnlySlotsWrapper.insertItemInternally(0, getCurrentRecipeOutput()[0], false);
-        for(int i = 0; i < getInputSize(); i ++) {
-            inputOnlySlotsWrapper.extractItemInternally(i, getCurrentRecipeInput()[i].getCount(), false);
-        }
     }
 }

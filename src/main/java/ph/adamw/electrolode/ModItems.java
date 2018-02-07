@@ -46,7 +46,7 @@ public class ModItems {
             e.printStackTrace();
         }
     }
-    
+
     @SideOnly(Side.CLIENT)
     public static void initModels() {
         for(Item i : itemMap.values()) {

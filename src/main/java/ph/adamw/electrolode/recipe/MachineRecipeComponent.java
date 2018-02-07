@@ -16,6 +16,9 @@ public class MachineRecipeComponent {
     }
 
     public boolean isValid(MachineRecipeComponent other) {
+        if(getType() == null) {
+            return false;
+        }
         switch(getType()) {
             case ITEM: return compareItemStack(other);
             case FLUID: return compareFluidStack(other);
@@ -45,20 +48,34 @@ public class MachineRecipeComponent {
     }
 
     public ItemStack getItemStack() {
-        if(itemStack == null) throw new RuntimeException("getItemStack called on MachineRecipeComponent that didn't contain an ItemStack!");
+        if(itemStack == null) {
+            throw new RuntimeException("getItemStack called on MachineRecipeComponent that didn't contain an ItemStack!");
+        }
         return itemStack.copy();
     }
 
     public FluidStack getFluidStack() {
-        if(fluidStack == null) throw new RuntimeException("getFluidStack called on MachineRecipeComponent that didn't contain an FluidStack!");
+        if(fluidStack == null) {
+            throw new RuntimeException("getFluidStack called on MachineRecipeComponent that didn't contain an FluidStack!");
+        }
         return fluidStack.copy();
+    }
+
+    public boolean isEmpty() {
+        if(getType() == null) {
+            return true;
+        }
+        switch(getType()) {
+            case FLUID: return fluidStack.amount == 0;
+            case ITEM: return itemStack.isEmpty();
+            default: return true;
+        }
     }
 
 
     public enum Type {
         ITEM(0),
-        FLUID(1),
-        GAS(2);
+        FLUID(1);
 
         private int id;
 

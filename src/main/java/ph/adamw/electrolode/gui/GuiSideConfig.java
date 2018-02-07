@@ -8,9 +8,9 @@ import net.minecraft.util.math.BlockPos;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.machine.BlockBaseMachine;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
-import ph.adamw.electrolode.gui.extension.GuiButtonEject;
-import ph.adamw.electrolode.gui.extension.GuiButtonSideConfig;
-import ph.adamw.electrolode.gui.extension.GuiExtensionButton;
+import ph.adamw.electrolode.gui.element.GuiButtonEject;
+import ph.adamw.electrolode.gui.element.GuiButtonSideConfig;
+import ph.adamw.electrolode.gui.element.GuiButtonElement;
 import ph.adamw.electrolode.util.BlockUtils;
 import ph.adamw.electrolode.util.GuiUtils;
 
@@ -25,26 +25,26 @@ public class GuiSideConfig extends GuiBaseContainer {
         EnumFacing facing = tileEntity.getState().getValue(BlockBaseMachine.FACING);
 
         //Top
-        guiExtensions.add(new GuiButtonSideConfig(this, 64, 22, EnumFacing.UP, tileEntity.faceMap.get(EnumFacing.UP), tileEntity.isFaceDisabled(EnumFacing.UP)));
+        guiElements.add(new GuiButtonSideConfig(this, 64, 22, EnumFacing.UP, tileEntity.faceMap.get(EnumFacing.UP), tileEntity.isFaceDisabled(EnumFacing.UP)));
         //Bottom
-        guiExtensions.add(new GuiButtonSideConfig(this, 64, 58, EnumFacing.DOWN, tileEntity.faceMap.get(EnumFacing.DOWN), tileEntity.isFaceDisabled(EnumFacing.DOWN)));
+        guiElements.add(new GuiButtonSideConfig(this, 64, 58, EnumFacing.DOWN, tileEntity.faceMap.get(EnumFacing.DOWN), tileEntity.isFaceDisabled(EnumFacing.DOWN)));
         //Front
-        guiExtensions.add(new GuiButtonSideConfig(this, 64, 40, facing, tileEntity.faceMap.get(facing), tileEntity.isFaceDisabled(facing)));
+        guiElements.add(new GuiButtonSideConfig(this, 64, 40, facing, tileEntity.faceMap.get(facing), tileEntity.isFaceDisabled(facing)));
         facing = BlockUtils.getNextEnumFacing(facing);
         //Left
-        guiExtensions.add(new GuiButtonSideConfig(this, 46, 40, facing, tileEntity.faceMap.get(facing), tileEntity.isFaceDisabled(facing)));
+        guiElements.add(new GuiButtonSideConfig(this, 46, 40, facing, tileEntity.faceMap.get(facing), tileEntity.isFaceDisabled(facing)));
         facing = BlockUtils.getNextEnumFacing(facing);
         //Back
-        guiExtensions.add(new GuiButtonSideConfig(this, 82, 58, facing, tileEntity.faceMap.get(facing), tileEntity.isFaceDisabled(facing)));
+        guiElements.add(new GuiButtonSideConfig(this, 82, 58, facing, tileEntity.faceMap.get(facing), tileEntity.isFaceDisabled(facing)));
         facing = BlockUtils.getNextEnumFacing(facing);
         //Right
-        guiExtensions.add(new GuiButtonSideConfig(this, 82, 40, facing, tileEntity.faceMap.get(facing), tileEntity.isFaceDisabled(facing)));
+        guiElements.add(new GuiButtonSideConfig(this, 82, 40, facing, tileEntity.faceMap.get(facing), tileEntity.isFaceDisabled(facing)));
 
         //Back button
-        guiExtensions.add(new GuiExtensionButton(this, 0, GuiUtils.CommonExtensions.BACK, 6, 6));
+        guiElements.add(new GuiButtonElement(this, 0, GuiUtils.CommonExtensions.BACK, 6, 6));
 
         //Auto eject button
-        guiExtensions.add(new GuiButtonEject(this, 122, 6, tileEntity.autoEject));
+        guiElements.add(new GuiButtonEject(this, 122, 6, tileEntity.autoEject));
     }
 
     public int getHeight() {

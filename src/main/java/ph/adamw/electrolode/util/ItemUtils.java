@@ -2,6 +2,7 @@ package ph.adamw.electrolode.util;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemHandlerHelper;
+import ph.adamw.electrolode.recipe.ItemStackComponent;
 import ph.adamw.electrolode.recipe.MachineRecipeComponent;
 
 public class ItemUtils {
@@ -49,5 +50,13 @@ public class ItemUtils {
         }
 
         return true;
+    }
+
+    public static ItemStack[] makeItemStackArray(ItemStack i, int dupes) {
+        ItemStack[] ing = new ItemStack[dupes];
+        for(int j = 0; j < ing.length; j ++) {
+            ing[j] = i;
+        }
+        return ing;
     }
 }

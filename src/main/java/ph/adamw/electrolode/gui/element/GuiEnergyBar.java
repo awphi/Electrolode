@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.gui.extension;
+package ph.adamw.electrolode.gui.element;
 
 import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.Electrolode;
@@ -6,7 +6,7 @@ import ph.adamw.electrolode.block.machine.TileBaseMachine;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.util.TextureHelper;
 
-public class GuiEnergyBar extends GuiExtension {
+public class GuiEnergyBar extends GuiElement {
     private TileBaseMachine tileEntity;
 
     private int X_POS;

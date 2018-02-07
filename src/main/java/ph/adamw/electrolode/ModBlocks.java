@@ -10,6 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 import ph.adamw.electrolode.block.BlockBase;
 import ph.adamw.electrolode.block.machine.BlockBaseMachine;
+import ph.adamw.electrolode.block.machine.press.BlockPress;
 import ph.adamw.electrolode.block.machine.purifier.BlockPurifier;
 import ph.adamw.electrolode.block.machine.purifier.TilePurifier;
 import ph.adamw.electrolode.item.IExtendedDescription;
@@ -73,6 +74,7 @@ public class ModBlocks {
     public static void registerBlocks(IForgeRegistry<Block> registry) {
         ModBlocks.registry = registry;
         registerBlock(BlockPurifier.class);
+        registerBlock(BlockPress.class);
     }
 
     //Register one-off TEs here, machine tile entities are register along with their block

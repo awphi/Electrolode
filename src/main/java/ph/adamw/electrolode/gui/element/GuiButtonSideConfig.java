@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.gui.extension;
+package ph.adamw.electrolode.gui.element;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumFacing;
@@ -9,7 +9,7 @@ import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.networking.PacketHandler;
 import ph.adamw.electrolode.networking.PacketSideConfigUpdate;
 
-public class GuiButtonSideConfig extends GuiExtensionButton {
+public class GuiButtonSideConfig extends GuiButtonElement {
     private EnumFaceRole current;
     private EnumFacing direction;
     private String tooltipSpecific;

@@ -5,6 +5,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import ph.adamw.electrolode.block.machine.TileItemMachine;
 import ph.adamw.electrolode.recipe.RecipeHandler;
+import ph.adamw.electrolode.util.ItemUtils;
 
 import javax.annotation.Nullable;
 
@@ -20,6 +21,6 @@ public class SlotRecipeInput extends SlotItemHandler {
     public boolean isItemValid(@Nullable ItemStack stack) {
         ItemStack[] list = machine.getInputContents();
         list[getSlotIndex()] = stack;
-        return RecipeHandler.hasRecipe(machine.getClass(), list);
+        return RecipeHandler.hasRecipeSoft(machine.getClass(), ItemUtils.toMachineRecipeArray(list));
     }
 }

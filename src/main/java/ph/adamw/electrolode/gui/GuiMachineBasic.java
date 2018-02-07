@@ -2,15 +2,18 @@ package ph.adamw.electrolode.gui;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
-import ph.adamw.electrolode.gui.extension.GuiTabEnergy;
-import ph.adamw.electrolode.gui.extension.GuiTabSideConfig;
+import ph.adamw.electrolode.gui.element.GuiTabEnergy;
+import ph.adamw.electrolode.gui.element.GuiTabSideConfig;
 
+@SideOnly(Side.CLIENT)
 public abstract class GuiMachineBasic extends GuiBaseContainer {
     GuiMachineBasic(TileBaseMachine tileEntity, Container container) {
         super(tileEntity, container);
-        guiExtensions.add(new GuiTabEnergy(this, tileEntity));
-        guiExtensions.add(new GuiTabSideConfig(this, tileEntity));
+        guiElements.add(new GuiTabEnergy(this, tileEntity));
+        guiElements.add(new GuiTabSideConfig(this, tileEntity));
     }
 
     public String getUnlocalizedTitle() {

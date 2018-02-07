@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.gui.extension;
+package ph.adamw.electrolode.gui.element;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;

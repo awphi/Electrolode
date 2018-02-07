@@ -6,7 +6,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
-import ph.adamw.electrolode.gui.extension.GuiExtension;
+import ph.adamw.electrolode.gui.element.GuiElement;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -15,7 +15,7 @@ import java.util.Set;
 
 public abstract class GuiBaseContainer extends GuiContainer {
     public TileBaseMachine tileEntity;
-    public Set<GuiExtension> guiExtensions = new HashSet<>();
+    public Set<GuiElement> guiElements = new HashSet<>();
 
     public GuiBaseContainer(TileBaseMachine tileEntity, Container container) {
         super(container);
@@ -49,7 +49,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
         int xAxis = mouseX - guiLeft;
         int yAxis = mouseY - guiTop;
 
-        for(GuiExtension element : guiExtensions) {
+        for(GuiElement element : guiElements) {
             GlStateManager.color(1f, 1f, 1f, 1f);
             element.renderBackground(xAxis, yAxis, guiLeft, guiTop);
         }
@@ -63,7 +63,7 @@ public abstract class GuiBaseContainer extends GuiContainer {
         int xAxis = mouseX - guiLeft;
         int yAxis = mouseY - guiTop;
 
-        for(GuiExtension extension : guiExtensions) {
+        for(GuiElement extension : guiElements) {
             extension.renderForeground(xAxis, yAxis);
         }
     }
@@ -90,12 +90,12 @@ public abstract class GuiBaseContainer extends GuiContainer {
         int xAxis = mouseX - guiLeft;
         int yAxis = mouseY - guiTop;
 
-        for(GuiExtension ext : guiExtensions) {
+        for(GuiElement ext : guiElements) {
             ext.preMouseClicked(xAxis, yAxis, button);
         }
         super.mouseClicked(mouseX, mouseY, button);
 
-        for(GuiExtension ext : guiExtensions) {
+        for(GuiElement ext : guiElements) {
             ext.mouseClicked(xAxis, yAxis, button);
         }
     }

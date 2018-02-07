@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.gui.extension;
+package ph.adamw.electrolode.gui.element;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
@@ -12,7 +12,7 @@ import ph.adamw.electrolode.util.TextureHelper;
 // [] Hovered
 // [] Disabled
 
-public class GuiExtensionButton extends GuiExtension {
+public class GuiButtonElement extends GuiElement {
     int REL_X;
     int REL_Y;
     int WIDTH;
@@ -25,7 +25,7 @@ public class GuiExtensionButton extends GuiExtension {
 
     public boolean disabled = false;
 
-    public GuiExtensionButton(GuiBaseContainer gui,int id, ResourceLocation resource, int x, int y, int width, int height, String tooltip) {
+    public GuiButtonElement(GuiBaseContainer gui, int id, ResourceLocation resource, int x, int y, int width, int height, String tooltip) {
         super(gui, resource);
         buttonId = id;
         REL_X = x;
@@ -36,21 +36,21 @@ public class GuiExtensionButton extends GuiExtension {
         this.tooltip = tooltip;
     }
 
-    public GuiExtensionButton(GuiBaseContainer gui, int id, ResourceLocation resource, int x, int y, int width, int height) {
+    public GuiButtonElement(GuiBaseContainer gui, int id, ResourceLocation resource, int x, int y, int width, int height) {
             this(gui, id, resource, x, y, width, height, null);
     }
 
-    public GuiExtensionButton(GuiBaseContainer gui, int id, TextureHelper helper, int x, int y, int width, int height, String tooltip) {
+    public GuiButtonElement(GuiBaseContainer gui, int id, TextureHelper helper, int x, int y, int width, int height, String tooltip) {
         this(gui, id, helper.resource, x, y, width, height, tooltip);
         ORIGIN_X = helper.X_ORIGIN;
         ORIGIN_Y = helper.Y_ORIGIN;
     }
 
-    public GuiExtensionButton(GuiBaseContainer gui, int id, TextureHelper helper, int x, int y, String toolTip) {
+    public GuiButtonElement(GuiBaseContainer gui, int id, TextureHelper helper, int x, int y, String toolTip) {
         this(gui, id, helper, x, y, helper.WIDTH, helper.HEIGHT, toolTip);
     }
 
-    public GuiExtensionButton(GuiBaseContainer gui, int id, GuiUtils.CommonExtensions button, int x, int y) {
+    public GuiButtonElement(GuiBaseContainer gui, int id, GuiUtils.CommonExtensions button, int x, int y) {
         this(gui, id, button.getTextureHelper(), x, y, button.getTooltip());
     }
 

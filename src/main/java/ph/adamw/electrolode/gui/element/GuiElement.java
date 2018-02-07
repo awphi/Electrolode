@@ -1,7 +1,6 @@
-package ph.adamw.electrolode.gui.extension;
+package ph.adamw.electrolode.gui.element;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -10,14 +9,14 @@ import ph.adamw.electrolode.gui.GuiBaseContainer;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public abstract class GuiExtension {
+public abstract class GuiElement {
     public static Minecraft mc = Minecraft.getMinecraft();
     public ResourceLocation resource;
     public GuiBaseContainer guiObj;
 
     public String tooltip;
 
-    GuiExtension(GuiBaseContainer gui, ResourceLocation resource) {
+    GuiElement(GuiBaseContainer gui, ResourceLocation resource) {
         this.resource = resource;
         guiObj = gui;
     }
