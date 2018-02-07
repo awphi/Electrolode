@@ -6,4 +6,8 @@ public class ItemChipper extends ItemBase {
     public ItemChipper() {
         super(1,true);
     }
+
+    public String getItemName() {
+        return "chipper";
+    }
 }

@@ -20,7 +20,6 @@ import java.util.HashMap;
 
 public class ModBlocks {
     private static final HashMap<Class<? extends BlockBase>, BlockBase> blockMap = new HashMap<>();
-    private static final HashMap<Class<? extends  BlockBase>, String> blockNameMap = new HashMap<>();
     private static IForgeRegistry<Block> registry;
 
     private static void registerBlock(Class<? extends BlockBase> block) {
@@ -30,7 +29,6 @@ public class ModBlocks {
         }
         try {
             blockMap.put(block, block.newInstance());
-            blockNameMap.put(block, blockMap.get(block).getBlockName());
             registry.register(nameBlock(getBlock(block), getBlockName(block)));
         } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
@@ -42,7 +40,7 @@ public class ModBlocks {
     }
 
     private static String getBlockName(Class<? extends BlockBase> e) {
-        return blockNameMap.get(e);
+        return blockMap.get(e).getBlockName();
     }
 
     @SideOnly(Side.CLIENT)

@@ -7,4 +7,8 @@ public class ItemPestleMortar extends ItemBase {
         super( 1,true);
         setContainerItem(this);
     }
+
+    public String getItemName() {
+        return "pestlemortar";
+    }
 }

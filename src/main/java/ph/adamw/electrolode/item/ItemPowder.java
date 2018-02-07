@@ -21,6 +21,10 @@ public class ItemPowder extends ItemBase implements IMetadataItem {
         return EnumPurifiableMineral.values()[meta].getName() + "powder";
     }
 
+    public String getItemName() {
+        return "powder";
+    }
+
     @Override
     public String getUnlocalizedName(ItemStack i) {
         if(i.getItemDamage() <= EnumPurifiableMineral.values().length-1) {
