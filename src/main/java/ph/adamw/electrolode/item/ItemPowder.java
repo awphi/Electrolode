@@ -4,7 +4,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.EnumPurifiableMineral;
+import ph.adamw.electrolode.item.core.EnumMineral;
 
 public class ItemPowder extends ItemBase implements IMetadataItem {
     public ItemPowder() {
@@ -14,11 +14,11 @@ public class ItemPowder extends ItemBase implements IMetadataItem {
     }
 
     public int getVariants() {
-        return EnumPurifiableMineral.values().length;
+        return EnumMineral.values().length;
     }
 
     public String getTexture(int meta) {
-        return EnumPurifiableMineral.values()[meta].getName() + "powder";
+        return EnumMineral.values()[meta].getName() + "powder";
     }
 
     public String getItemName() {
@@ -27,8 +27,8 @@ public class ItemPowder extends ItemBase implements IMetadataItem {
 
     @Override
     public String getUnlocalizedName(ItemStack i) {
-        if(i.getItemDamage() <= EnumPurifiableMineral.values().length-1) {
-            return "item." + Electrolode.MODID + "." + EnumPurifiableMineral.values()[i.getItemDamage()].getName().toLowerCase() + "powder";
+        if(i.getItemDamage() <= EnumMineral.values().length-1) {
+            return "item." + Electrolode.MODID + "." + EnumMineral.values()[i.getItemDamage()].getName().toLowerCase() + "powder";
         }
 
         return null;
@@ -37,7 +37,7 @@ public class ItemPowder extends ItemBase implements IMetadataItem {
     @Override
     public void getSubItems(CreativeTabs tabs, NonNullList<ItemStack> itemList) {
         if(!isInCreativeTab(tabs)) return;
-        for(int counter = 0; counter < EnumPurifiableMineral.values().length; counter++) {
+        for(int counter = 0; counter < EnumMineral.values().length; counter++) {
             itemList.add(new ItemStack(this, 1, counter));
         }
     }

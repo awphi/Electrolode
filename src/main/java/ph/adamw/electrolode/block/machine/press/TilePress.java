@@ -3,11 +3,11 @@ package ph.adamw.electrolode.block.machine.press;
 import ph.adamw.electrolode.block.machine.TileItemMachine;
 
 public class TilePress extends TileItemMachine {
-    public int getInputSize() {
+    public int getInputSlots() {
         return 3;
     }
 
-    public int getOutputSize() {
+    public int getOutputSlots() {
         return 1;
     }
 
@@ -19,7 +19,7 @@ public class TilePress extends TileItemMachine {
         return 240;
     }
 
-    public int getMaxEnergyStored() {
+    public int getBaseMaxEnergy() {
         return 25000;
     }
 }

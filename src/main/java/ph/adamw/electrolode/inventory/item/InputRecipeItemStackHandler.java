@@ -1,9 +1,10 @@
-package ph.adamw.electrolode.inventory;
+package ph.adamw.electrolode.inventory.item;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
 import ph.adamw.electrolode.recipe.RecipeHandler;
+import ph.adamw.electrolode.util.ItemUtils;
 
 public class InputRecipeItemStackHandler extends InputItemStackHandler {
     private Class<? extends TileBaseMachine> machineType;
@@ -15,7 +16,8 @@ public class InputRecipeItemStackHandler extends InputItemStackHandler {
 
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        if(RecipeHandler.hasRecipe(machineType, stack)) {
+        ItemStack[] recipe = ItemUtils.makePopulatedRecipe(this, stack, slot);
+        if(RecipeHandler.hasRecipeSoft(machineType, ItemUtils.toMachineRecipeArray(recipe)) && canAccess(slot)) {
             return internalSlot.insertItem(slot, stack, simulate);
         } else {
             return stack;

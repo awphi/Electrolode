@@ -1,9 +1,8 @@
-package ph.adamw.electrolode.inventory;
+package ph.adamw.electrolode.inventory.item;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.items.ItemStackHandler;
 
-public class DummyItemStackHandler extends ItemStackHandler {
+public class DummyItemStackHandler extends ItemStackHandlerBase {
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
         return stack;

@@ -11,8 +11,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import ph.adamw.electrolode.Config;
-import ph.adamw.electrolode.ModBlocks;
-import ph.adamw.electrolode.ModItems;
+import ph.adamw.electrolode.manager.BlockManager;
+import ph.adamw.electrolode.manager.ItemManager;
 import ph.adamw.electrolode.gui.GuiProxy;
 import ph.adamw.electrolode.manager.GuiManager;
 import ph.adamw.electrolode.networking.PacketHandler;
@@ -46,13 +46,13 @@ public class CommonProxy {
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
-        ModBlocks.registerBlocks(event.getRegistry());
-        ModBlocks.registerTileEntities();
+        BlockManager.registerBlocks(event.getRegistry());
+        BlockManager.registerTileEntities();
     }
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
-        ModItems.registerItems(event.getRegistry());
-        ModBlocks.registerItemBlocks(event.getRegistry());
+        ItemManager.registerItems(event.getRegistry());
+        BlockManager.registerItemBlocks(event.getRegistry());
     }
 }

@@ -6,6 +6,9 @@ import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.util.GuiUtils;
 import ph.adamw.electrolode.util.TextureHelper;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 // Texture file should consist of 3 buttons of the same height with textures in these order:
 // [] Unhovered
@@ -82,7 +85,12 @@ public class GuiButtonElement extends GuiElement {
 
     public void renderForeground(int xAxis, int yAxis) {
         if(isInRect(xAxis, yAxis, REL_X, REL_Y, HEIGHT, WIDTH) && !disabled && getTooltip() != null) {
-            displayTooltip(getTooltip(), xAxis, yAxis);
+            if(getTooltip().contains("#n")) {
+                List<String> x = Arrays.asList(getTooltip().split("#n"));
+                displayTooltips(x, xAxis, yAxis);
+            } else {
+                displayTooltip(getTooltip(), xAxis, yAxis);
+            }
         }
     }
 }

@@ -2,7 +2,7 @@ package ph.adamw.electrolode.util;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemHandlerHelper;
-import ph.adamw.electrolode.recipe.ItemStackComponent;
+import net.minecraftforge.items.ItemStackHandler;
 import ph.adamw.electrolode.recipe.MachineRecipeComponent;
 
 public class ItemUtils {
@@ -25,6 +25,7 @@ public class ItemUtils {
     }
 
     public static ItemStack[] toItemStackArray(MachineRecipeComponent[] machineRecipeComponents) {
+
         ItemStack[] ret = new ItemStack[machineRecipeComponents.length];
         for(int i = 0; i < machineRecipeComponents.length; i ++) {
             ret[i] = machineRecipeComponents[i].getItemStack();
@@ -58,5 +59,14 @@ public class ItemUtils {
             ing[j] = i;
         }
         return ing;
+    }
+
+    public static ItemStack[] makePopulatedRecipe(ItemStackHandler i, ItemStack stack, int slot) {
+        ItemStack[] recipe = new ItemStack[i.getSlots()];
+        for(int j = 0; j < i.getSlots(); j ++) {
+            recipe[j] = i.getStackInSlot(j);
+        }
+        recipe[slot] = stack;
+        return recipe;
     }
 }

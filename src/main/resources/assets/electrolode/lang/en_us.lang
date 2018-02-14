@@ -1,5 +1,6 @@
 tile.electrolode.purifier.name=Purifier
 tile.electrolode.press.name=Press
+tile.electrolode.softener.name=Water Softener
 
 item.electrolode.chipper.name=Chipper
 item.electrolode.pestlemortar.name=Pestle and Mortar
@@ -9,10 +10,10 @@ item.electrolode.ironpowder.name=Iron Powder
 item.electrolode.goldpowder.name=Gold Powder
 item.electrolode.titaniumpowder.name=Titanium Powder
 
-item.electrolode.carbonpurifiedpowder.name=Purified Carbon Powder
-item.electrolode.ironpurifiedpowder.name=Purified Iron Powder
-item.electrolode.goldpurifiedpowder.name=Purified Gold Powder
-item.electrolode.titaniumpurifiedpowder.name=Purified Titanium Powder
+item.electrolode.carbonpowderpurified.name=Purified Carbon Powder
+item.electrolode.ironpowderpurified.name=Purified Iron Powder
+item.electrolode.goldpowderpurified.name=Purified Gold Powder
+item.electrolode.titaniumpowderpurified.name=Purified Titanium Powder
 
 itemGroup.electrolode=Electrolode
 
@@ -26,10 +27,15 @@ tooltip.electrolode.autoeject=Auto-eject:
 tooltip.electrolode.on=On
 tooltip.electrolode.off=Off
 tooltip.electrolode.locked=Locked
+tooltip.electrolode.allindex=All
+tooltip.electrolode.itemindex=Slot(s):
+tooltip.electrolode.fluidindex=Tank:
 
 enum.electrolode.facerole.none=None
-enum.electrolode.facerole.input=Input
-enum.electrolode.facerole.output=Output
+enum.electrolode.facerole.input=Items In
+enum.electrolode.facerole.output=Items Out
+enum.electrolode.facerole.inputfluid=Fluids In
+enum.electrolode.facerole.outputfluid=Fluids Out
 
 gui.electrolode.slot=Slot:
 gui.electrolode.sideconfig.name=Machine Config

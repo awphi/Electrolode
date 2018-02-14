@@ -16,12 +16,13 @@ public class PacketSideConfigUpdate implements IMessage {
     BlockPos pos;
     EnumFaceRole role;
     EnumFacing direction;
+    int containerIndex;
 
-    public PacketSideConfigUpdate(BlockPos e, EnumFacing side, EnumFaceRole newRole) {
+    public PacketSideConfigUpdate(BlockPos e, EnumFacing side, EnumFaceRole newRole, int index) {
         pos = e;
         role = newRole;
         direction = side;
-
+        containerIndex = index;
     }
 
     public PacketSideConfigUpdate() {}
@@ -31,6 +32,7 @@ public class PacketSideConfigUpdate implements IMessage {
         pos = BlockPos.fromLong(buf.readLong());
         role = EnumFaceRole.getRole(buf.readInt());
         direction = EnumFacing.getFront(buf.readInt());
+        containerIndex = buf.readInt();
     }
 
     @Override
@@ -38,6 +40,7 @@ public class PacketSideConfigUpdate implements IMessage {
         buf.writeLong(pos.toLong());
         buf.writeInt(role.getValue());
         buf.writeInt(direction.getIndex());
+        buf.writeInt(containerIndex);
     }
 
     public static class Handler implements IMessageHandler<PacketSideConfigUpdate, IMessage> {
@@ -54,7 +57,7 @@ public class PacketSideConfigUpdate implements IMessage {
             if (world.isBlockLoaded(message.pos)) {
                 TileBaseMachine te = (TileBaseMachine) world.getTileEntity(message.pos);
                 if(te == null) return;
-                te.faceMap.put(message.direction, message.role);
+                te.faceMap.put(message.direction, message.role, message.containerIndex);
                 te.markForUpdate();
             }
         }

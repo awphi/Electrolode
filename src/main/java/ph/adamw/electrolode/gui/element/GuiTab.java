@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
-import ph.adamw.electrolode.gui.GuiSideConfig;
+import ph.adamw.electrolode.gui.machine.GuiSideConfig;
 
 import java.util.Arrays;
 import java.util.List;

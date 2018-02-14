@@ -3,37 +3,89 @@ package ph.adamw.electrolode.gui.element;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.Sys;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.EnumFaceRole;
+import ph.adamw.electrolode.block.machine.TileInventoriedMachine;
+import ph.adamw.electrolode.block.machine.TileTankedMachine;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.networking.PacketHandler;
 import ph.adamw.electrolode.networking.PacketSideConfigUpdate;
+import ph.adamw.electrolode.util.GuiUtils;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class GuiButtonSideConfig extends GuiButtonElement {
     private EnumFaceRole current;
     private EnumFacing direction;
-    private String tooltipSpecific;
+    private int containerIndex;
 
-    public GuiButtonSideConfig(GuiBaseContainer gui, int x, int y, EnumFacing direction, EnumFaceRole current, boolean isLocked) {
+    public GuiButtonSideConfig(GuiBaseContainer gui, int x, int y, EnumFacing direction) {
         super(gui, -1, new ResourceLocation(Electrolode.MODID,"textures/gui/extensions/sideconfigbutton.png") , x, y, 16, 16);
 
-        this.current = current;
+        this.current = guiObj.tileEntity.faceMap.getRole(direction);
         this.direction = direction;
-        tooltipSpecific = current.getLocalizedName();
-        if(isLocked) {
-            tooltipSpecific = current.getLocalizedName() + " §l(" + I18n.format("tooltip.electrolode.locked") + ")";
+        this.containerIndex = guiObj.tileEntity.faceMap.getContainerIndex(direction);
+        if (guiObj.tileEntity.isFaceDisabled(direction)) {
             disabled = true;
         }
     }
 
-    private void stepRole(boolean up) {
-        current = up ? EnumFaceRole.next(current) : EnumFaceRole.previous(current);
-        PacketHandler.INSTANCE.sendToServer(new PacketSideConfigUpdate(guiObj.tileEntity.getPos(), direction, current));
+    private String getTooltipSpecific() {
+        if(guiObj.tileEntity.isFaceDisabled(direction)) {
+            return current.getLocalizedName() + " §l(" + I18n.format("tooltip.electrolode.locked") + ")";
+        } else {
+            return current.getLocalizedName();
+        }
+    }
+
+    private void stepRole() {
+        current = EnumFaceRole.next(current, guiObj.tileEntity.potentialRoles);
+        if(current == EnumFaceRole.INPUT_FLUID || current == EnumFaceRole.OUTPUT_FLUID) {
+            containerIndex = 0;
+        } else {
+            containerIndex = -1;
+        }
+        sendState();
+    }
+
+    private void sendState() {
+        PacketHandler.INSTANCE.sendToServer(new PacketSideConfigUpdate(guiObj.tileEntity.getPos(), direction, current, containerIndex));
+    }
+
+    private void stepIndex() {
+        int cap = -1;
+        int min = -1;
+
+        if(current == EnumFaceRole.INPUT_ITEM) {
+            cap = ((TileInventoriedMachine) guiObj.tileEntity).getInputSlots();
+        } else if(current == EnumFaceRole.OUTPUT_ITEM) {
+            cap = ((TileInventoriedMachine) guiObj.tileEntity).getOutputSlots();
+        } else if(current == EnumFaceRole.INPUT_FLUID) {
+            cap = ((TileTankedMachine) guiObj.tileEntity).getInputTanks();
+            min = 0;
+        } else if(current == EnumFaceRole.OUTPUT_FLUID) {
+            cap = ((TileTankedMachine) guiObj.tileEntity).getOutputTanks();
+            min = 0;
+        }
+
+        containerIndex = GuiUtils.nextInt(containerIndex, cap, min);
+        sendState();
     }
 
     @Override
     public String getTooltip() {
-        return current.getLocalizedName();
+        if(current != EnumFaceRole.NONE) {
+            String unlocalized = "tooltip.electrolode." + current.name().toLowerCase().split("_")[1] + "index";
+            if(containerIndex == -1) {
+                return getTooltipSpecific() + "#n" + I18n.format(unlocalized) + " " + I18n.format("tooltip.electrolode.allindex");
+            } else {
+                return getTooltipSpecific() + "#n" + I18n.format(unlocalized) + " " + (containerIndex + 1);
+            }
+        } else {
+            return getTooltipSpecific();
+        }
     }
 
     @Override
@@ -54,18 +106,22 @@ public class GuiButtonSideConfig extends GuiButtonElement {
     @Override
     public void renderForeground(int xAxis, int yAxis) {
         if(isInRect(xAxis, yAxis, REL_X, REL_Y, HEIGHT, WIDTH) && getTooltip() != null) {
-            displayTooltip(getTooltip(), xAxis, yAxis);
+            if(getTooltip().contains("#n")) {
+                List<String> x = Arrays.asList(getTooltip().split("#n"));
+                displayTooltips(x, xAxis, yAxis);
+            } else {
+                displayTooltip(getTooltip(), xAxis, yAxis);
+            }
         }
     }
 
     @Override
     public void mouseClicked(int xAxis, int yAxis, int button) {
-        System.out.println(button);
         if(isInRect(xAxis, yAxis, REL_X, REL_Y, HEIGHT, WIDTH) && !disabled) {
             if(button == 0) {
-                stepRole(true);
+                stepRole();
             } else if(button == 1) {
-                stepRole(false);
+                stepIndex();
             }
         }
     }

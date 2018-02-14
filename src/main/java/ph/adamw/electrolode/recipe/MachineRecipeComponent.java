@@ -1,24 +1,46 @@
 package ph.adamw.electrolode.recipe;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import ph.adamw.electrolode.util.FluidUtils;
+
+import javax.crypto.Mac;
 
 public class MachineRecipeComponent {
     private ItemStack itemStack;
     private FluidStack fluidStack;
+    private Type type = null;
 
     public MachineRecipeComponent(ItemStack stack) {
         itemStack = stack;
+        type = Type.ITEM;
     }
+
+    public MachineRecipeComponent(Item i, int amount, int meta) {
+        this(new ItemStack(i, amount, meta));
+    }
+
+    public MachineRecipeComponent(Item i) {
+        this(new ItemStack(i));
+    }
+
+    public MachineRecipeComponent(Item i, int amount) {
+        this(new ItemStack(i, amount));
+    }
+
 
     public MachineRecipeComponent(FluidStack fluid) {
         fluidStack = fluid;
+        type = Type.FLUID;
+    }
+
+    public MachineRecipeComponent(Fluid i, int amount) {
+        this(new FluidStack(i, amount));
     }
 
     public boolean isValid(MachineRecipeComponent other) {
-        if(getType() == null) {
-            return false;
-        }
         switch(getType()) {
             case ITEM: return compareItemStack(other);
             case FLUID: return compareFluidStack(other);
@@ -29,7 +51,11 @@ public class MachineRecipeComponent {
     private boolean compareFluidStack(MachineRecipeComponent other) {
         FluidStack th = getFluidStack();
         FluidStack oth = other.getFluidStack();
-        return th.getFluid() == oth.getFluid() && th.amount >= oth.amount && th.tag == oth.tag;
+        if (th == null) {
+            return false;
+        } else {
+            return th.getFluid() == oth.getFluid() && th.amount >= oth.amount && th.tag == oth.tag;
+        }
     }
 
     private boolean compareItemStack(MachineRecipeComponent other) {
@@ -40,25 +66,22 @@ public class MachineRecipeComponent {
     }
 
     //Make other constructors here etc.
-    private Type getType() {
-        if(itemStack != null) return Type.ITEM;
-        if(fluidStack != null) return Type.FLUID;
-        //etc.
-        return null;
+    public Type getType() {
+        return this.type;
     }
 
     public ItemStack getItemStack() {
-        if(itemStack == null) {
+        if(type != Type.ITEM) {
             throw new RuntimeException("getItemStack called on MachineRecipeComponent that didn't contain an ItemStack!");
         }
         return itemStack.copy();
     }
 
     public FluidStack getFluidStack() {
-        if(fluidStack == null) {
+        if(type != Type.FLUID) {
             throw new RuntimeException("getFluidStack called on MachineRecipeComponent that didn't contain an FluidStack!");
         }
-        return fluidStack.copy();
+        return fluidStack;
     }
 
     public boolean isEmpty() {
@@ -66,7 +89,7 @@ public class MachineRecipeComponent {
             return true;
         }
         switch(getType()) {
-            case FLUID: return fluidStack.amount == 0;
+            case FLUID: return fluidStack == null;
             case ITEM: return itemStack.isEmpty();
             default: return true;
         }

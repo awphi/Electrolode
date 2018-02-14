@@ -56,7 +56,6 @@ public class GuiButtonEject extends GuiButtonElement {
     @Override
     public void mouseClicked(int xAxis, int yAxis, int button) {
         if (isInRect(xAxis, yAxis, REL_X, REL_Y, HEIGHT, WIDTH)) {
-            System.out.println("ya");
             sendUpdate();
         }
     }

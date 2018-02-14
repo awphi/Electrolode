@@ -1,12 +1,10 @@
-package ph.adamw.electrolode.inventory;
+package ph.adamw.electrolode.inventory.item;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class InputItemStackHandler extends ItemStackHandler {
-    public final ItemStackHandler internalSlot;
-
+public class InputItemStackHandler extends ItemStackHandlerBase {
     public InputItemStackHandler(ItemStackHandler hidden) {
         super();
         internalSlot = hidden;
@@ -29,7 +27,11 @@ public class InputItemStackHandler extends ItemStackHandler {
 
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        return internalSlot.insertItem(slot, stack, simulate);
+        if(canAccess(slot)) {
+            return internalSlot.insertItem(slot, stack, simulate);
+        } else {
+            return stack;
+        }
     }
 
     @Override

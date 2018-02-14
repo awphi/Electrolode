@@ -8,8 +8,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import ph.adamw.electrolode.block.machine.TileItemMachine;
+import ph.adamw.electrolode.inventory.item.IDischargeSlot;
+import ph.adamw.electrolode.inventory.item.SlotDischarge;
 
-public abstract class BaseMachineContainer extends Container {
+public abstract class BaseMachineContainer extends Container implements IDischargeSlot {
     public TileItemMachine tileEntity;
     protected int TOTAL_PLAYER_INVENTORY_SIZE = 36;
 
@@ -19,15 +21,15 @@ public abstract class BaseMachineContainer extends Container {
             9 -> 35 = player inventory
 
         Tile Entity:
-            0 -> tileEntity.getInputSize() - 1 = inputs
-            getInputSize() -> getCombinedSize() - 1 = outputs
-            getCombinedSize() = dischargeable slot
+            0 -> tileEntity.getInputSlots() - 1 = inputs
+            getInputSlots() -> getCombinedSlots() - 1 = outputs
+            getCombinedSlots() = dischargeable slot
 
         Overall:
             0 -> 8 = hotbar
             9 -> 35 = player inventory
-            36 -> 36 + (getInputSize() - 1) = te inputs
-            36 + getInputSize() -> (you get the idea)
+            36 -> 36 + (getInputSlots() - 1) = te inputs
+            36 + getInputSlots() -> (you getRole the idea)
     */
 
     public BaseMachineContainer(IInventory playerInventory, TileItemMachine te) {
@@ -36,10 +38,8 @@ public abstract class BaseMachineContainer extends Container {
         addPlayerSlots(playerInventory);
         IItemHandler tileItemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
         addOwnSlots(tileItemHandler);
-        if(this instanceof IDischargeSlot) {
-            int[] pos = ((IDischargeSlot) this).getChargeSlotPos();
-            addSlotToContainer(new SlotDischarge(tileItemHandler, te.getCombinedSize() - 1, pos[0], pos[1]));
-        }
+        int[] pos = this.getChargeSlotPos();
+        addSlotToContainer(new SlotDischarge(tileItemHandler, te.getCombinedSlots() - 1, pos[0], pos[1]));
     }
 
     @Override
@@ -51,10 +51,10 @@ public abstract class BaseMachineContainer extends Container {
 
         // Check if the slot clicked is one of the vanilla container slots
         if (sourceSlotIndex >= 0 && sourceSlotIndex < TOTAL_PLAYER_INVENTORY_SIZE) {
-            if (!mergeItemStack(sourceStack, TOTAL_PLAYER_INVENTORY_SIZE, TOTAL_PLAYER_INVENTORY_SIZE + tileEntity.getCombinedSize(), false)){
+            if (!mergeItemStack(sourceStack, TOTAL_PLAYER_INVENTORY_SIZE, TOTAL_PLAYER_INVENTORY_SIZE + tileEntity.getCombinedSlots(), false)){
                 return ItemStack.EMPTY;
             }
-        } else if (sourceSlotIndex >= TOTAL_PLAYER_INVENTORY_SIZE && sourceSlotIndex < TOTAL_PLAYER_INVENTORY_SIZE + tileEntity.getCombinedSize()) {
+        } else if (sourceSlotIndex >= TOTAL_PLAYER_INVENTORY_SIZE && sourceSlotIndex < TOTAL_PLAYER_INVENTORY_SIZE + tileEntity.getCombinedSlots()) {
             if (!mergeItemStack(sourceStack, 0, TOTAL_PLAYER_INVENTORY_SIZE, false)) {
                 return ItemStack.EMPTY;
             }
@@ -72,6 +72,95 @@ public abstract class BaseMachineContainer extends Container {
 
         sourceSlot.onTake(player, sourceStack);
         return copyOfSourceStack;
+    }
+
+    @Override
+    protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection) {
+        boolean flag = false;
+        int i = startIndex;
+
+        if (reverseDirection) {
+            i = endIndex - 1;
+        }
+
+        if (stack.isStackable()) {
+            while (!stack.isEmpty()) {
+                if (reverseDirection) {
+                    if (i < startIndex) {
+                        break;
+                    }
+                } else if (i >= endIndex) {
+                    break;
+                }
+
+                Slot slot = this.inventorySlots.get(i);
+                ItemStack itemstack = slot.getStack();
+
+                if (!itemstack.isEmpty() && itemstack.getItem() == stack.getItem() && (!stack.getHasSubtypes() || stack.getMetadata() == itemstack.getMetadata()) && ItemStack.areItemStackTagsEqual(stack, itemstack) && slot.isItemValid(stack)) {
+                    int j = itemstack.getCount() + stack.getCount();
+                    int maxSize = Math.min(slot.getSlotStackLimit(), stack.getMaxStackSize());
+
+                    if (j <= maxSize) {
+                        stack.setCount(0);
+                        itemstack.setCount(j);
+                        slot.onSlotChanged();
+                        flag = true;
+                    } else if (itemstack.getCount() < maxSize) {
+                        stack.shrink(maxSize - itemstack.getCount());
+                        itemstack.setCount(maxSize);
+                        slot.onSlotChanged();
+                        flag = true;
+                    }
+                }
+
+                if (reverseDirection) {
+                    --i;
+                } else {
+                    ++i;
+                }
+            }
+        }
+
+        if (!stack.isEmpty()) {
+            if (reverseDirection) {
+                i = endIndex - 1;
+            } else {
+                i = startIndex;
+            }
+
+            while (true) {
+                if (reverseDirection) {
+                    if (i < startIndex) {
+                        break;
+                    }
+                } else if (i >= endIndex) {
+                    break;
+                }
+
+                Slot slot1 = this.inventorySlots.get(i);
+                ItemStack itemstack1 = slot1.getStack();
+
+                if (itemstack1.isEmpty() && slot1.isItemValid(stack)) {
+                    if (stack.getCount() > slot1.getSlotStackLimit()) {
+                        slot1.putStack(stack.splitStack(slot1.getSlotStackLimit()));
+                    } else {
+                        slot1.putStack(stack.splitStack(stack.getCount()));
+                    }
+
+                    slot1.onSlotChanged();
+                    flag = true;
+                    break;
+                }
+
+                if (reverseDirection) {
+                    --i;
+                } else {
+                    ++i;
+                }
+            }
+        }
+
+        return flag;
     }
 
     @Override

@@ -32,7 +32,7 @@ public class Config {
 
     private static void initGeneralConfig(Configuration cfg) {
         cfg.addCustomCategoryComment(CATEGORY_GENERAL, "General configuration");
-        // cfg.getBoolean() will get the value in the config if it is already specified there. If not it will create the value.
+        // cfg.getBoolean() will getRole the value in the config if it is already specified there. If not it will create the value.
         isThisAGoodTutorial = cfg.getBoolean("goodTutorial", CATEGORY_GENERAL, isThisAGoodTutorial, "Set to false if you don't like this tutorial");
         yourRealName = cfg.getString("realName", CATEGORY_GENERAL, yourRealName, "Set your real name here");
     }

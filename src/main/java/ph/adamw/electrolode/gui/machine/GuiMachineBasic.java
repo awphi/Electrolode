@@ -1,10 +1,11 @@
-package ph.adamw.electrolode.gui;
+package ph.adamw.electrolode.gui.machine;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.gui.element.GuiTabEnergy;
 import ph.adamw.electrolode.gui.element.GuiTabSideConfig;
 

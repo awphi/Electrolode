@@ -1,11 +1,18 @@
 package ph.adamw.electrolode.util;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.gui.GuiEntry;
-import ph.adamw.electrolode.gui.GuiMachineBasic;
+import ph.adamw.electrolode.gui.machine.GuiMachineBasic;
 import ph.adamw.electrolode.inventory.BaseMachineContainer;
 
 import java.util.HashMap;
@@ -62,5 +69,34 @@ public class GuiUtils {
 
     public static int getGuiId(TileBaseMachine e) {
         return getGuiId(e.getClass());
+    }
+
+    public static int nextInt(int start, int max, int min) {
+        start += 1;
+        if(start == max) {
+            start =  min;
+        }
+        if((max - 1) - min == 1) {
+            start = -1;
+        }
+        return start;
+    }
+
+    public static void fillAreaWithSprite(Minecraft mc, GuiBaseContainer gui, TextureAtlasSprite sprite, ResourceLocation spriteMap, int x, int y, int width, int height) {
+        mc.renderEngine.bindTexture(spriteMap);
+        double xRatio = (double) width / (double) sprite.getIconWidth();
+        double yRatio = (double) height / (double) sprite.getIconHeight();
+
+        int xCoord = x;
+        int yCoord = y + height;
+
+        while(yRatio > 0) {
+            double v = Math.min(1, yRatio);
+            yRatio -= v;
+
+            yCoord -= (int) (v * sprite.getIconHeight());
+
+            gui.drawTexturedModalRect(xCoord, yCoord, sprite, (int) (xRatio * sprite.getIconWidth()), (int) (v * sprite.getIconHeight()));
+        }
     }
 }

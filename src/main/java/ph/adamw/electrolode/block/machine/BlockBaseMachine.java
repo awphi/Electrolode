@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.ModBlocks;
+import ph.adamw.electrolode.manager.BlockManager;
 import ph.adamw.electrolode.block.BlockBase;
 import ph.adamw.electrolode.item.IExtendedDescription;
 import ph.adamw.electrolode.util.BlockUtils;
@@ -34,7 +34,7 @@ public abstract class BlockBaseMachine extends BlockBase implements ITileEntityP
         super(Material.ROCK, true);
         setHardness(4.0f);
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-        ModBlocks.registerTileEntity(createNewTileEntity(null, 0).getClass(), getBlockName());
+        BlockManager.registerTileEntity(createNewTileEntity(null, 0).getClass(), getBlockName());
     }
 
     public abstract TileEntity createNewTileEntity(World worldIn, int meta);
@@ -51,6 +51,7 @@ public abstract class BlockBaseMachine extends BlockBase implements ITileEntityP
 
     @Override
     public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis) {
+        /*
         IBlockState state = world.getBlockState(pos);
         for (IProperty<?> prop : state.getProperties().keySet()) {
             if ((prop.getName().equals("facing") || prop.getName().equals("rotation")) && prop.getValueClass() == EnumFacing.class) {
@@ -80,6 +81,7 @@ public abstract class BlockBaseMachine extends BlockBase implements ITileEntityP
                 return true;
             }
         }
+        */
         return false;
     }
 

@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.inventory;
+package ph.adamw.electrolode.inventory.item;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;

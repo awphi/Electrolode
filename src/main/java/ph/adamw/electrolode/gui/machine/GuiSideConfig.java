@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.gui;
+package ph.adamw.electrolode.gui.machine;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.machine.BlockBaseMachine;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.gui.element.GuiButtonEject;
 import ph.adamw.electrolode.gui.element.GuiButtonSideConfig;
 import ph.adamw.electrolode.gui.element.GuiButtonElement;
@@ -25,20 +26,20 @@ public class GuiSideConfig extends GuiBaseContainer {
         EnumFacing facing = tileEntity.getState().getValue(BlockBaseMachine.FACING);
 
         //Top
-        guiElements.add(new GuiButtonSideConfig(this, 64, 22, EnumFacing.UP, tileEntity.faceMap.get(EnumFacing.UP), tileEntity.isFaceDisabled(EnumFacing.UP)));
+        guiElements.add(new GuiButtonSideConfig(this, 64, 22, EnumFacing.UP));
         //Bottom
-        guiElements.add(new GuiButtonSideConfig(this, 64, 58, EnumFacing.DOWN, tileEntity.faceMap.get(EnumFacing.DOWN), tileEntity.isFaceDisabled(EnumFacing.DOWN)));
+        guiElements.add(new GuiButtonSideConfig(this, 64, 58, EnumFacing.DOWN));
         //Front
-        guiElements.add(new GuiButtonSideConfig(this, 64, 40, facing, tileEntity.faceMap.get(facing), tileEntity.isFaceDisabled(facing)));
+        guiElements.add(new GuiButtonSideConfig(this, 64, 40, facing));
         facing = BlockUtils.getNextEnumFacing(facing);
         //Left
-        guiElements.add(new GuiButtonSideConfig(this, 46, 40, facing, tileEntity.faceMap.get(facing), tileEntity.isFaceDisabled(facing)));
+        guiElements.add(new GuiButtonSideConfig(this, 46, 40, facing));
         facing = BlockUtils.getNextEnumFacing(facing);
         //Back
-        guiElements.add(new GuiButtonSideConfig(this, 82, 58, facing, tileEntity.faceMap.get(facing), tileEntity.isFaceDisabled(facing)));
+        guiElements.add(new GuiButtonSideConfig(this, 82, 58, facing));
         facing = BlockUtils.getNextEnumFacing(facing);
         //Right
-        guiElements.add(new GuiButtonSideConfig(this, 82, 40, facing, tileEntity.faceMap.get(facing), tileEntity.isFaceDisabled(facing)));
+        guiElements.add(new GuiButtonSideConfig(this, 82, 40, facing));
 
         //Back button
         guiElements.add(new GuiButtonElement(this, 0, GuiUtils.CommonExtensions.BACK, 6, 6));

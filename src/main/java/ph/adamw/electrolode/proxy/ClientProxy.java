@@ -5,8 +5,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import ph.adamw.electrolode.ModBlocks;
-import ph.adamw.electrolode.ModItems;
+import ph.adamw.electrolode.manager.BlockManager;
+import ph.adamw.electrolode.manager.ItemManager;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
@@ -17,7 +17,7 @@ public class ClientProxy extends CommonProxy {
 
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
-        ModItems.initModels();
-        ModBlocks.initModels();
+        ItemManager.initModels();
+        BlockManager.initModels();
     }
 }

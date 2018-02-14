@@ -4,11 +4,11 @@ import net.minecraft.inventory.IInventory;
 import net.minecraftforge.items.IItemHandler;
 import ph.adamw.electrolode.block.machine.TileItemMachine;
 import ph.adamw.electrolode.inventory.BaseMachineContainer;
-import ph.adamw.electrolode.inventory.IDischargeSlot;
-import ph.adamw.electrolode.inventory.SlotOutput;
-import ph.adamw.electrolode.inventory.SlotRecipeInput;
+import ph.adamw.electrolode.inventory.item.IDischargeSlot;
+import ph.adamw.electrolode.inventory.item.SlotOutput;
+import ph.adamw.electrolode.inventory.item.SlotRecipeInput;
 
-public class ContainerPress extends BaseMachineContainer implements IDischargeSlot {
+public class ContainerPress extends BaseMachineContainer {
     private final int INPUT_0 = 0, INPUT_1 = 1, INPUT_2 = 2, OUTPUT = 3;
 
     public ContainerPress(IInventory playerInv, TileItemMachine e) {

@@ -1,12 +1,12 @@
 package ph.adamw.electrolode.item;
 
 import net.minecraft.item.Item;
-import ph.adamw.electrolode.ModItems;
+import ph.adamw.electrolode.manager.ItemManager;
 
 public abstract class ItemBase extends Item {
     public ItemBase(int maxStack, boolean addToCreativeTab) {
         if(addToCreativeTab) {
-            setCreativeTab(ModItems.CREATIVETAB);
+            setCreativeTab(ItemManager.CREATIVETAB);
         }
 
         setMaxStackSize(maxStack);

@@ -4,11 +4,11 @@ import ph.adamw.electrolode.block.machine.TileItemMachine;
 
 
 public class TilePurifier extends TileItemMachine {
-    public int getInputSize() {
+    public int getInputSlots() {
         return 1;
     }
 
-    public int getOutputSize() {
+    public int getOutputSlots() {
         return 1;
     }
 
@@ -20,7 +20,7 @@ public class TilePurifier extends TileItemMachine {
         return 40;
     }
 
-    public int getMaxEnergyStored() {
+    public int getBaseMaxEnergy() {
         return 25000;
     }
 }

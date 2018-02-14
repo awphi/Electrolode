@@ -5,7 +5,7 @@ import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
-import ph.adamw.electrolode.gui.GuiSideConfig;
+import ph.adamw.electrolode.gui.machine.GuiSideConfig;
 
 public class GuiTabSideConfig extends GuiTab {
     public GuiTabSideConfig(GuiBaseContainer gui, TileBaseMachine e) {

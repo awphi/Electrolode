@@ -32,12 +32,21 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
 
     public SidedHashMap faceMap = new SidedHashMap();
     private List<EnumFacing> disabledFaces = new ArrayList<>();
+    public List<EnumFaceRole> potentialRoles = new ArrayList<>();
 
+    public TileBaseMachine() {
+        addPotentialFaceRoles();
+        if(!potentialRoles.contains(EnumFaceRole.NONE)) {
+            potentialRoles.add(EnumFaceRole.NONE);
+        }
+    }
 
     public boolean canInteractWith(EntityPlayer playerIn) {
         // If we are too far away from this tile entity you cannot use it
         return !isInvalid() && playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
     }
+
+    protected abstract void addPotentialFaceRoles();
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
@@ -90,8 +99,9 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
         if (compound.hasKey("processedTime")) {
             /* Side configuration */
             for(int i : compound.getIntArray("configuredFaces")) {
-                int v = compound.getInteger(EnumFacing.getFront(i).getName());
-                faceMap.put(EnumFacing.getFront(i), EnumFaceRole.getRole(v));
+                int roleId = compound.getInteger(EnumFacing.getFront(i).getName() + "role");
+                int index = compound.getInteger(EnumFacing.getFront(i).getName() + "index");
+                faceMap.put(EnumFacing.getFront(i), EnumFaceRole.getRole(roleId), index);
             }
 
             for(int i : compound.getIntArray("disabledFaces")) {
@@ -110,13 +120,14 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
         super.writeToNBT(compound);
         /* Side configuration */
         int[] x = new int[faceMap.keySet().size()];
-        Object[] arr = faceMap.keySet().toArray();
+        EnumFacing[] arr = faceMap.keySet().toArray(new EnumFacing[faceMap.keySet().size()]);
         for(int i = 0; i < arr.length; i ++) {
-            x[i] = ((EnumFacing) arr[i]).getIndex();
+            x[i] = arr[i].getIndex();
         }
         compound.setIntArray("configuredFaces", x);
         for(int i : x) {
-            compound.setInteger(EnumFacing.getFront(i).getName(), faceMap.get(EnumFacing.getFront(i)).getValue());
+            compound.setInteger(EnumFacing.getFront(i).getName() + "role", faceMap.getRole(EnumFacing.getFront(i)).getValue());
+            compound.setInteger(EnumFacing.getFront(i).getName() + "index", faceMap.getContainerIndex(EnumFacing.getFront(i)));
         }
 
         int[] y = new int[disabledFaces.size()];
@@ -219,6 +230,14 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
         return getBaseEnergyUsage();
     }
 
+    public abstract int getBaseMaxEnergy();
+
+    @Override
+    public int getMaxEnergyStored() {
+        //See get energy usage
+        return getBaseMaxEnergy();
+    }
+
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
         if(capability == CapabilityEnergy.ENERGY) {
             return CapabilityEnergy.ENERGY.cast(this);
@@ -236,7 +255,6 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
             energy += energyReceived;
             markForUpdate();
         }
-        markForUpdate();
         return energyReceived;
     }
 
@@ -264,9 +282,6 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
     public int getEnergyStored() {
         return energy;
     }
-
-    @Override
-    public abstract int getMaxEnergyStored();
 
     @Override
     public boolean canExtract() {
