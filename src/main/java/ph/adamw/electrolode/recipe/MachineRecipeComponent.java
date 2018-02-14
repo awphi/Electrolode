@@ -40,11 +40,19 @@ public class MachineRecipeComponent {
         this(new FluidStack(i, amount));
     }
 
+    /**
+     * isValid - Checks if the caller of this' component is the same as the passed one but in a greater or equal quantity
+     *         - Mostly used for recipes to test if the input is enough to produce the output
+     * @param other - Component to compare against
+     * @return - Boolean as to whether the caller is valid for the passed component
+     */
     public boolean isValid(MachineRecipeComponent other) {
-        switch(getType()) {
-            case ITEM: return compareItemStack(other);
-            case FLUID: return compareFluidStack(other);
-            default: return false;
+        if(getType() == Type.ITEM && other.getType() == Type.ITEM) {
+            return compareItemStack(other);
+        } else if(getType() == Type.FLUID && other.getType() == Type.FLUID) {
+            return compareFluidStack(other);
+        } else {
+            return false;
         }
     }
 
@@ -72,14 +80,14 @@ public class MachineRecipeComponent {
 
     public ItemStack getItemStack() {
         if(type != Type.ITEM) {
-            throw new RuntimeException("getItemStack called on MachineRecipeComponent that didn't contain an ItemStack!");
+            return ItemStack.EMPTY;
         }
         return itemStack.copy();
     }
 
     public FluidStack getFluidStack() {
         if(type != Type.FLUID) {
-            throw new RuntimeException("getFluidStack called on MachineRecipeComponent that didn't contain an FluidStack!");
+            return null;
         }
         return fluidStack;
     }

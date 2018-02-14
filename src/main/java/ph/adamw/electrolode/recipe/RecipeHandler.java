@@ -84,18 +84,6 @@ public class RecipeHandler {
         return hasRecipe(machine, new MachineRecipeComponent[] {component});
     }
 
-    public static boolean hasRecipe(Class<? extends TileBaseMachine> machine, ItemStack i) {
-        return hasRecipe(machine, new MachineRecipeComponent(i));
-    }
-
-    public static boolean hasRecipe(Class<? extends TileBaseMachine> machine, ItemStack[] i) {
-        MachineRecipeComponent[] x = new MachineRecipeComponent[i.length];
-        for(int j = 0; j < i.length; j ++) {
-            x[j] = new MachineRecipeComponent(i[j]);
-        }
-        return hasRecipe(machine, x);
-    }
-
     public static boolean hasRecipeSoft(Class<? extends TileBaseMachine> machine, MachineRecipeComponent[] component) {
         return getOutput(machine, component, false, true) != null;
     }

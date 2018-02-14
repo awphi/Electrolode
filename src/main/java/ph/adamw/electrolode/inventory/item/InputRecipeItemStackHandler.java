@@ -16,7 +16,7 @@ public class InputRecipeItemStackHandler extends InputItemStackHandler {
 
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        ItemStack[] recipe = ItemUtils.makePopulatedRecipe(this, stack, slot);
+        ItemStack[] recipe = ItemUtils.makeSimulateRecipe(this, stack, slot);
         if(RecipeHandler.hasRecipeSoft(machineType, ItemUtils.toMachineRecipeArray(recipe)) && canAccess(slot)) {
             return internalSlot.insertItem(slot, stack, simulate);
         } else {

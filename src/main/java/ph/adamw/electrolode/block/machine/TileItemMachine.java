@@ -9,6 +9,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.recipe.MachineRecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
+import ph.adamw.electrolode.recipe.RecipeUtils;
 import ph.adamw.electrolode.util.BlockUtils;
 import ph.adamw.electrolode.util.ItemUtils;
 
@@ -70,8 +71,8 @@ public abstract class TileItemMachine extends TileInventoriedMachine {
     }
 
     public boolean canProcess() {
-        if (RecipeHandler.hasRecipe(this.getClass(), getInputSlotContents())) {
-            return ItemUtils.canItemStackArraysStack(getOutputSlotContents(), getCurrentRecipeOutput());
+        if (RecipeHandler.hasRecipe(this.getClass(), ItemUtils.toMachineRecipeArray(getInputSlotContents()))) {
+            return RecipeUtils.canComponentArraysStack(ItemUtils.toMachineRecipeArray(getOutputSlotContents()), ItemUtils.toMachineRecipeArray(getCurrentRecipeOutput()));
         }
         return false;
     }

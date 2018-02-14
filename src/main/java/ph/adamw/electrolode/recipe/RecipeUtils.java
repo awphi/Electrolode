@@ -8,11 +8,11 @@ public class RecipeUtils {
         if(a.length != b.length) return false;
 
         for(int i = 0; i < a.length; i ++) {
-            if(a[i].getType() == MachineRecipeComponent.Type.ITEM) {
+            if(a[i].getType() == MachineRecipeComponent.Type.ITEM && b[i].getType() == MachineRecipeComponent.Type.ITEM) {
                 if(!ItemHandlerHelper.canItemStacksStack(a[i].getItemStack(), b[i].getItemStack())) {
                     return false;
                 }
-            } else if(a[i].getType() == MachineRecipeComponent.Type.FLUID) {
+            } else if(a[i].getType() == MachineRecipeComponent.Type.FLUID && b[i].getType() == MachineRecipeComponent.Type.FLUID) {
                 if(a[i].getFluidStack() == null || b[i].getFluidStack() == null) {
                     continue;
                 }
@@ -20,6 +20,8 @@ public class RecipeUtils {
                 if(a[i].getFluidStack().getFluid() != b[i].getFluidStack().getFluid() || !FluidStack.areFluidStackTagsEqual(a[i].getFluidStack(), b[i].getFluidStack())) {
                     return false;
                 }
+            } else {
+                return false;
             }
         }
 
