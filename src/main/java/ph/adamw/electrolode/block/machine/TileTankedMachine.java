@@ -1,6 +1,5 @@
 package ph.adamw.electrolode.block.machine;
 
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -12,8 +11,6 @@ import ph.adamw.electrolode.inventory.fluid.FluidTankBase;
 import ph.adamw.electrolode.recipe.MachineRecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
 import ph.adamw.electrolode.recipe.RecipeUtils;
-import ph.adamw.electrolode.util.FluidUtils;
-import ph.adamw.electrolode.util.ItemUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -112,31 +109,26 @@ public abstract class TileTankedMachine extends TileItemMachine {
         }
     }
 
-    protected MachineRecipeComponent[] getInputContents() {
-        MachineRecipeComponent[] recipe = new MachineRecipeComponent[getInputSlots() + getInputTanks()];
-        ItemStack[] inSlot = getInputSlotContents();
-        for(int i = 0; i < getInputSlots(); i ++) {
-            recipe[i] = new MachineRecipeComponent(inSlot[i]);
-        }
+    @Override
+    public MachineRecipeComponent[] getInputContents() {
+        List<MachineRecipeComponent> ret = new ArrayList<>();
+        ret.addAll(Arrays.asList(super.getInputContents()));
         FluidStack[] inTank = getInputTankContents();
         for(int i = 0; i < getInputTanks(); i ++) {
-            System.out.println(inTank[i]);
-            recipe[i + getInputSlots()] = new MachineRecipeComponent(inTank[i]);
+            ret.add(new MachineRecipeComponent(inTank[i]));
         }
-        return recipe;
+        return ret.toArray(new MachineRecipeComponent[ret.size()]);
     }
 
-    protected MachineRecipeComponent[] getOutputContents() {
-        MachineRecipeComponent[] recipe = new MachineRecipeComponent[getOutputSlots() + getOutputTanks()];
-        ItemStack[] outSlot = getOutputSlotContents();
-        for(int i = 0; i < getOutputSlots(); i ++) {
-            recipe[i] = new MachineRecipeComponent(outSlot[i]);
-        }
+    @Override
+    public MachineRecipeComponent[] getOutputContents() {
+        List<MachineRecipeComponent> ret = new ArrayList<>();
+        ret.addAll(Arrays.asList(super.getOutputContents()));
         FluidStack[] outTank = getOutputTankContents();
         for(int i = 0; i < getOutputTanks(); i ++) {
-            recipe[i + getOutputSlots()] = new MachineRecipeComponent(outTank[i]);
+            ret.add(new MachineRecipeComponent(outTank[i]));
         }
-        return recipe;
+        return ret.toArray(new MachineRecipeComponent[ret.size()]);
     }
 
     public FluidStack[] getInputTankContents() {
@@ -153,20 +145,6 @@ public abstract class TileTankedMachine extends TileItemMachine {
             x[i] = outputTanks.get(i).getFluid();
         }
         return x;
-    }
-
-    protected MachineRecipeComponent[] getCurrentRecipeInput() {
-        List<MachineRecipeComponent> contents = new ArrayList<>();
-        contents.addAll(Arrays.asList(ItemUtils.toMachineRecipeArray(getInputSlotContents())));
-        contents.addAll(Arrays.asList(FluidUtils.toMachineRecipeArray(getInputTankContents())));
-        return RecipeHandler.getInput(this.getClass(), contents.toArray(new MachineRecipeComponent[contents.size()]));
-    }
-
-    protected MachineRecipeComponent[] getCurrentRecipeOutput() {
-        List<MachineRecipeComponent> contents = new ArrayList<>();
-        contents.addAll(Arrays.asList(ItemUtils.toMachineRecipeArray(getInputSlotContents())));
-        contents.addAll(Arrays.asList(FluidUtils.toMachineRecipeArray(getInputTankContents())));
-        return RecipeHandler.getOutput(this.getClass(), contents.toArray(new MachineRecipeComponent[contents.size()]));
     }
 
     protected boolean canTanksHoldRecipe(MachineRecipeComponent[] recipeOutput) {

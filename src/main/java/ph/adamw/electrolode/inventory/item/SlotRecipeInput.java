@@ -26,14 +26,9 @@ public class SlotRecipeInput extends SlotItemHandler {
     @Override
     public boolean isItemValid(@Nullable ItemStack stack) {
         List<MachineRecipeComponent> components = new ArrayList<>();
-        MachineRecipeComponent[] list = ItemUtils.toMachineRecipeArray(machine.getInputSlotContents());
-        list[getSlotIndex()] = new MachineRecipeComponent(stack);
-        components.addAll(Arrays.asList(list));
+        components.addAll(Arrays.asList(machine.getInputContents()));
+        components.set(getSlotIndex(), new MachineRecipeComponent(stack));
 
-        if(machine instanceof TileTankedMachine) {
-            MachineRecipeComponent[] x = FluidUtils.toMachineRecipeArray(((TileTankedMachine) machine).getInputTankContents());
-            components.addAll(Arrays.asList(x));
-        }
         return RecipeHandler.hasRecipeSoft(machine.getClass(), components.toArray(new MachineRecipeComponent[components.size()]));
     }
 }

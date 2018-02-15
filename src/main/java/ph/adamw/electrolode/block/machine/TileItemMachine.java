@@ -14,18 +14,18 @@ import ph.adamw.electrolode.util.BlockUtils;
 import ph.adamw.electrolode.util.ItemUtils;
 
 public abstract class TileItemMachine extends TileInventoriedMachine {
-    public ItemStack[] getInputSlotContents() {
-        ItemStack[] ret = new ItemStack[getInputSlots()];
+    public MachineRecipeComponent[] getInputContents() {
+        MachineRecipeComponent[] ret = new MachineRecipeComponent[getInputSlots()];
         for(int i = 0; i < getInputSlots(); i ++) {
-            ret[i] = inputOnlySlotsWrapper.getStackInSlot(i);
+            ret[i] = new MachineRecipeComponent(inputOnlySlotsWrapper.getStackInSlot(i));
         }
         return ret;
     }
 
-    public ItemStack[] getOutputSlotContents() {
-        ItemStack[] ret = new ItemStack[getOutputSlots()];
+    public MachineRecipeComponent[] getOutputContents() {
+        MachineRecipeComponent[] ret = new MachineRecipeComponent[getOutputSlots()];
         for(int i = 0; i < getOutputSlots(); i ++) {
-            ret[i] = outputOnlySlotsWrapper.getStackInSlot(i);
+            ret[i] = new MachineRecipeComponent(outputOnlySlotsWrapper.getStackInSlot(i));
         }
         return ret;
     }
@@ -37,7 +37,8 @@ public abstract class TileItemMachine extends TileInventoriedMachine {
 
     public void ejectOutput() {
         int count = 0;
-        for(ItemStack j : getOutputSlotContents()) {
+        for(MachineRecipeComponent k : getOutputContents()) {
+            ItemStack j = k.getItemStack();
             for(EnumFacing i : faceMap.keySet()) {
                 if(faceMap.getRole(i) == EnumFaceRole.OUTPUT_ITEM) {
                     TileEntity neighbour = world.getTileEntity(BlockUtils.getNeighbourPos(pos, i));
@@ -59,27 +60,25 @@ public abstract class TileItemMachine extends TileInventoriedMachine {
     }
 
 
-    private ItemStack[] getCurrentRecipeOutput() {
-        MachineRecipeComponent[] x = RecipeHandler.getOutput(this.getClass(), ItemUtils.toMachineRecipeArray(getInputSlotContents()));
-        return ItemUtils.toItemStackArray(x);
+    protected MachineRecipeComponent[] getCurrentRecipeOutput() {
+        return RecipeHandler.getOutput(this.getClass(), getInputContents());
     }
 
 
-    private ItemStack[] getCurrentRecipeInput() {
-        MachineRecipeComponent[] x = RecipeHandler.getInput(this.getClass(), ItemUtils.toMachineRecipeArray(getInputSlotContents()));
-        return ItemUtils.toItemStackArray(x);
+    protected MachineRecipeComponent[] getCurrentRecipeInput() {
+        return RecipeHandler.getInput(this.getClass(), getInputContents());
     }
 
     public boolean canProcess() {
-        if (RecipeHandler.hasRecipe(this.getClass(), ItemUtils.toMachineRecipeArray(getInputSlotContents()))) {
-            return RecipeUtils.canComponentArraysStack(ItemUtils.toMachineRecipeArray(getOutputSlotContents()), ItemUtils.toMachineRecipeArray(getCurrentRecipeOutput()));
+        if (RecipeHandler.hasRecipe(this.getClass(), getInputContents())) {
+            return RecipeUtils.canComponentArraysStack(getOutputContents(), getCurrentRecipeOutput());
         }
         return false;
     }
 
     public void processingComplete() {
-        ItemStack[] output = getCurrentRecipeOutput();
-        ItemStack[] input = getCurrentRecipeInput();
+        ItemStack[] output = ItemUtils.toItemStackArray(getCurrentRecipeOutput());
+        ItemStack[] input = ItemUtils.toItemStackArray(getCurrentRecipeInput());
 
         for(int i = 0; i < getOutputSlots(); i ++) {
             outputOnlySlotsWrapper.insertItemInternally(i, output[i], false);
