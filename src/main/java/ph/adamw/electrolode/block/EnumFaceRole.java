@@ -43,10 +43,10 @@ public enum EnumFaceRole {
         return roles[nextIndex];
     }
 
-    public static EnumFaceRole next(EnumFaceRole e, @Nonnull List<EnumFaceRole> pool) {
-        e = EnumFaceRole.step(e, 1);
+    public static EnumFaceRole step(EnumFaceRole e, @Nonnull List<EnumFaceRole> pool, int step) {
+        e = EnumFaceRole.step(e, step);
         while(!pool.contains(e)) {
-            e = EnumFaceRole.step(e, 1);
+            e = EnumFaceRole.step(e, step);
         }
         return e;
     }

@@ -8,12 +8,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.ModItems;
-import ph.adamw.electrolode.item.ItemBase;
+import ph.adamw.electrolode.item.ItemSalt;
+import ph.adamw.electrolode.item.core.ItemBase;
 import ph.adamw.electrolode.item.ItemPlate;
 import ph.adamw.electrolode.item.ItemPowder;
 import ph.adamw.electrolode.item.ItemPurifiedPowder;
-import ph.adamw.electrolode.item.tool.ItemPestleMortar;
-import ph.adamw.electrolode.item.tool.ItemChipper;
 import ph.adamw.electrolode.rendering.RenderClient;
 
 import java.util.HashMap;
@@ -63,10 +62,9 @@ public class ItemManager {
 
     public static void registerItems(IForgeRegistry<Item> registry) {
         ItemManager.registry = registry;
-        registerItem(ItemChipper.class);
-        registerItem(ItemPestleMortar.class);
         registerItem(ItemPowder.class);
         registerItem(ItemPurifiedPowder.class);
         registerItem(ItemPlate.class);
+        registerItem(ItemSalt.class);
     }
 }

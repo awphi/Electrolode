@@ -4,9 +4,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import ph.adamw.electrolode.util.FluidUtils;
-
-import javax.crypto.Mac;
 
 public class MachineRecipeComponent {
     private ItemStack itemStack;

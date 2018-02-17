@@ -11,7 +11,10 @@ import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import ph.adamw.electrolode.Config;
 import ph.adamw.electrolode.block.EnumFaceRole;
+import ph.adamw.electrolode.recipe.MachineRecipeComponent;
+import ph.adamw.electrolode.recipe.RecipeHandler;
 import ph.adamw.electrolode.util.BlockUtils;
 import ph.adamw.electrolode.util.GuiUtils;
 import ph.adamw.electrolode.util.SidedHashMap;
@@ -24,7 +27,7 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
     private int energy = 0;
     private boolean toUpdate = false;
     private int currentEnergyUsage;
-    public boolean autoEject = false;
+    public boolean autoEject = Config.autoEjectDefault;
 
     public int getGuiId() {
         return GuiUtils.getGuiId(this);
@@ -69,7 +72,7 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
             toUpdate = false;
             world.markBlockRangeForRenderUpdate(pos, pos);
             world.notifyBlockUpdate(pos, getState(), getState(), 3);
-            world.scheduleBlockUpdate(pos,this.getBlockType(),0,0);
+            world.scheduleBlockUpdate(pos, this.getBlockType(),0,0);
             markDirty();
         }
     }
@@ -296,6 +299,18 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
     public double getEnergyPercentage() {
         return ((double) getEnergyStored() / (double) getMaxEnergyStored());
     }
-
     /* --- */
+
+    public abstract MachineRecipeComponent[] getInputContents();
+
+    public abstract MachineRecipeComponent[] getOutputContents();
+
+    protected MachineRecipeComponent[] getCurrentRecipeOutput() {
+        return RecipeHandler.getOutput(this.getClass(), getInputContents());
+    }
+
+
+    protected MachineRecipeComponent[] getCurrentRecipeInput() {
+        return RecipeHandler.getInput(this.getClass(), getInputContents());
+    }
 }

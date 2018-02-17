@@ -8,6 +8,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import ph.adamw.electrolode.ModFluids;
 import ph.adamw.electrolode.block.machine.softener.TileSoftener;
 import ph.adamw.electrolode.item.core.EnumMineral;
 import ph.adamw.electrolode.ModItems;
@@ -31,7 +32,7 @@ public class MachineRecipeManager {
         RecipeHandler.addRecipe(TilePress.class, ItemUtils.toMachineRecipeArray(ingredients), new MachineRecipeComponent(ModItems.PLATE, 1, EnumPlate.CONDUCTIVE.getOrdinal()));
 
         // Softener
-        MachineRecipeComponent[] components = new MachineRecipeComponent[] {new MachineRecipeComponent(Items.APPLE), new MachineRecipeComponent(new FluidStack(FluidRegistry.WATER, 1000))};
-        RecipeHandler.addRecipe(TileSoftener.class, components, new MachineRecipeComponent(FluidRegistry.LAVA, 1000));
+        MachineRecipeComponent[] components = new MachineRecipeComponent[] {new MachineRecipeComponent(ModItems.SALT), new MachineRecipeComponent(new FluidStack(FluidRegistry.WATER, 500))};
+        RecipeHandler.addRecipe(TileSoftener.class, components, new MachineRecipeComponent(ModFluids.SOFTENED_WATER, 500));
     }
 }

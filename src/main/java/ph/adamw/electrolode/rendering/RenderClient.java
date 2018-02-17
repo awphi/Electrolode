@@ -8,7 +8,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.item.IMetadataItem;
+import ph.adamw.electrolode.item.core.IMetadataItem;
 
 @SideOnly(Side.CLIENT)
 public class RenderClient {

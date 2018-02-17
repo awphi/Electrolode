@@ -14,8 +14,8 @@ import ph.adamw.electrolode.block.machine.BlockBaseMachine;
 import ph.adamw.electrolode.block.machine.press.BlockPress;
 import ph.adamw.electrolode.block.machine.purifier.BlockPurifier;
 import ph.adamw.electrolode.block.machine.softener.BlockSoftener;
-import ph.adamw.electrolode.item.IExtendedDescription;
-import ph.adamw.electrolode.item.ItemBlockDescribed;
+import ph.adamw.electrolode.item.core.IExtendedDescription;
+import ph.adamw.electrolode.item.core.ItemBlockDescribed;
 import ph.adamw.electrolode.item.ItemMachine;
 
 import java.util.HashMap;

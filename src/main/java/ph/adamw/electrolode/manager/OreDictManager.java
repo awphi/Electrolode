@@ -16,6 +16,9 @@ public class OreDictManager {
             OreDictionary.registerOre("dust" + i.getOreDictSuffix(), regularPowder);
             OreDictionary.registerOre("dust" + i.getOreDictSuffix() + "Purified", purifiedPowder);
         }
+
+        //Todo verify this entry against mek & thermal ex.
+        OreDictionary.registerOre("salt", ModItems.SALT);
     }
 
     public static void registerRecipes() {

@@ -5,22 +5,17 @@ import org.apache.logging.log4j.Level;
 import ph.adamw.electrolode.proxy.CommonProxy;
 
 public class Config {
-
     private static final String CATEGORY_GENERAL = "general";
-    private static final String CATEGORY_DIMENSIONS = "dimensions";
+    private static final String CATEGORY_MACHINE = "machines";
 
-    // This values below you can access elsewhere in your mod:
-    public static boolean isThisAGoodTutorial = true;
-    public static String yourRealName = "Steve";
+    public static boolean autoEjectDefault = true;
 
-    // Call this from CommonProxy.preInit(). It will create our config if it doesn't
-    // exist yet and read the values if it does exist.
     public static void readConfig() {
         Configuration cfg = CommonProxy.config;
         try {
             cfg.load();
             initGeneralConfig(cfg);
-            initDimensionConfig(cfg);
+            initMachineConfig(cfg);
         } catch (Exception e1) {
             Electrolode.logger.log(Level.ERROR, "Problem loading config file!", e1);
         } finally {
@@ -32,13 +27,10 @@ public class Config {
 
     private static void initGeneralConfig(Configuration cfg) {
         cfg.addCustomCategoryComment(CATEGORY_GENERAL, "General configuration");
-        // cfg.getBoolean() will getRole the value in the config if it is already specified there. If not it will create the value.
-        isThisAGoodTutorial = cfg.getBoolean("goodTutorial", CATEGORY_GENERAL, isThisAGoodTutorial, "Set to false if you don't like this tutorial");
-        yourRealName = cfg.getString("realName", CATEGORY_GENERAL, yourRealName, "Set your real name here");
     }
 
-    private static void initDimensionConfig(Configuration cfg) {
-        cfg.addCustomCategoryComment(CATEGORY_DIMENSIONS, "Dimension configuration");
-
+    private static void initMachineConfig(Configuration cfg) {
+        cfg.addCustomCategoryComment(CATEGORY_MACHINE, "Machine configuration");
+        autoEjectDefault = cfg.getBoolean("autoEjectDefault", CATEGORY_MACHINE, autoEjectDefault, "Will machines eject automatically be default");
     }
 }

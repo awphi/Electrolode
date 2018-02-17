@@ -3,7 +3,7 @@ package ph.adamw.electrolode.gui.element;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.Sys;
+import org.lwjgl.input.Keyboard;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.block.machine.TileInventoriedMachine;
@@ -40,8 +40,8 @@ public class GuiButtonSideConfig extends GuiButtonElement {
         }
     }
 
-    private void stepRole() {
-        current = EnumFaceRole.next(current, guiObj.tileEntity.potentialRoles);
+    private void stepRole(int y) {
+        current = EnumFaceRole.step(current, guiObj.tileEntity.potentialRoles, y);
         if(current == EnumFaceRole.INPUT_FLUID || current == EnumFaceRole.OUTPUT_FLUID) {
             containerIndex = 0;
         } else {
@@ -54,7 +54,7 @@ public class GuiButtonSideConfig extends GuiButtonElement {
         PacketHandler.INSTANCE.sendToServer(new PacketSideConfigUpdate(guiObj.tileEntity.getPos(), direction, current, containerIndex));
     }
 
-    private void stepIndex() {
+    private void stepIndex(int y) {
         int cap = -1;
         int min = -1;
 
@@ -70,7 +70,7 @@ public class GuiButtonSideConfig extends GuiButtonElement {
             min = 0;
         }
 
-        containerIndex = GuiUtils.nextInt(containerIndex, cap, min);
+        containerIndex = GuiUtils.step(containerIndex, cap, min, y);
         sendState();
     }
 
@@ -119,9 +119,17 @@ public class GuiButtonSideConfig extends GuiButtonElement {
     public void mouseClicked(int xAxis, int yAxis, int button) {
         if(isInRect(xAxis, yAxis, REL_X, REL_Y, HEIGHT, WIDTH) && !disabled) {
             if(button == 0) {
-                stepRole();
+                if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                    stepIndex(1);
+                } else {
+                    stepRole(1);
+                }
             } else if(button == 1) {
-                stepIndex();
+                if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                    stepIndex(-1);
+                } else {
+                    stepRole(-1);
+                }
             }
         }
     }

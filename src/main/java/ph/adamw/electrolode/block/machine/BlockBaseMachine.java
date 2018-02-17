@@ -1,9 +1,7 @@
 package ph.adamw.electrolode.block.machine;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -20,12 +18,9 @@ import net.minecraftforge.items.IItemHandler;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.manager.BlockManager;
 import ph.adamw.electrolode.block.BlockBase;
-import ph.adamw.electrolode.item.IExtendedDescription;
+import ph.adamw.electrolode.item.core.IExtendedDescription;
 import ph.adamw.electrolode.util.BlockUtils;
 import ph.adamw.electrolode.util.InventoryUtils;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 public abstract class BlockBaseMachine extends BlockBase implements ITileEntityProvider, IExtendedDescription {
     public static final PropertyDirection FACING = PropertyDirection.create("facing");

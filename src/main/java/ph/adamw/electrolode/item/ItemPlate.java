@@ -5,6 +5,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.item.core.EnumPlate;
+import ph.adamw.electrolode.item.core.IMetadataItem;
+import ph.adamw.electrolode.item.core.ItemBase;
 
 public class ItemPlate extends ItemBase implements IMetadataItem {
     public ItemPlate() {

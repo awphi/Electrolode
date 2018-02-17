@@ -6,9 +6,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileInventoriedMachine;
 import ph.adamw.electrolode.block.machine.TileItemMachine;
 import ph.adamw.electrolode.inventory.BaseMachineContainer;
 import ph.adamw.electrolode.util.GuiUtils;
+import ph.adamw.electrolode.util.ItemUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -25,7 +27,7 @@ public class GuiProxy implements IGuiHandler {
         }
 
         try {
-            Constructor constructor = entry.container.getDeclaredConstructor(IInventory.class, TileItemMachine.class);
+            Constructor constructor = entry.container.getDeclaredConstructor(IInventory.class, TileInventoriedMachine.class);
             return constructor.newInstance(player.inventory, te);
         } catch(InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
@@ -52,7 +54,7 @@ public class GuiProxy implements IGuiHandler {
 
         try {
             Constructor constructor = entry.guiMachineBasic.getDeclaredConstructor(TileBaseMachine.class, BaseMachineContainer.class);
-            Constructor cs = entry.container.getDeclaredConstructor(IInventory.class, TileItemMachine.class);
+            Constructor cs = entry.container.getDeclaredConstructor(IInventory.class, TileInventoriedMachine.class);
             return constructor.newInstance(te, cs.newInstance(player.inventory, te));
         } catch(InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();

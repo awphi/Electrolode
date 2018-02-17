@@ -20,7 +20,7 @@ import java.util.HashMap;
 public class GuiUtils {
     public enum CommonExtensions {
         BACK(I18n.format("gui.electrolode.back.name"), new TextureHelper(new ResourceLocation(Electrolode.MODID, "textures/gui/extensions/commonbuttons.png"), 16, 0, 16, 16)),
-        AUTO_EJECT(null, new TextureHelper(new ResourceLocation(Electrolode.MODID, "textures/gui/extensions/commonbuttons.png"), 32, 0, 16, 16));
+        AUTO_EJECT(I18n.format("gui.electrolode.eject.name"), new TextureHelper(new ResourceLocation(Electrolode.MODID, "textures/gui/extensions/commonbuttons.png"), 32, 0, 16, 16));
 
         private String toolTip;
         private TextureHelper textureHelper;
@@ -71,13 +71,16 @@ public class GuiUtils {
         return getGuiId(e.getClass());
     }
 
-    public static int nextInt(int start, int max, int min) {
-        start += 1;
+    public static int step(int start, int max, int min, int step) {
+        start += step;
         if(start == max) {
             start =  min;
+        } else if(start < min) {
+            start = (max - 1);
         }
+
         if((max - 1) - min == 1) {
-            start = -1;
+            start = min;
         }
         return start;
     }
@@ -95,8 +98,7 @@ public class GuiUtils {
             yRatio -= v;
 
             yCoord -= (int) (v * sprite.getIconHeight());
-
-            gui.drawTexturedModalRect(xCoord, yCoord, sprite, (int) (xRatio * sprite.getIconWidth()), (int) (v * sprite.getIconHeight()));
+            gui.drawTexturedModalRect(xCoord, yCoord, sprite.getOriginX(), (int) (sprite.getOriginY() + (1 - v)), (int) (xRatio * sprite.getIconWidth()), (int) (v * sprite.getIconHeight()));
         }
     }
 }

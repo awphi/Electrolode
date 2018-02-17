@@ -1,22 +1,26 @@
 package ph.adamw.electrolode.block.machine;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import ph.adamw.electrolode.block.EnumFaceRole;
+import ph.adamw.electrolode.inventory.fluid.DummyFluidTank;
 import ph.adamw.electrolode.inventory.fluid.FluidTankBase;
 import ph.adamw.electrolode.recipe.MachineRecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
 import ph.adamw.electrolode.recipe.RecipeUtils;
+import ph.adamw.electrolode.util.BlockUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class TileTankedMachine extends TileItemMachine {
+public abstract class TileTankedMachine extends TileInventoriedMachine {
     protected List<FluidTankBase> inputTanks = new ArrayList<>();
     protected List<FluidTankBase> outputTanks = new ArrayList<>();
 
@@ -40,16 +44,17 @@ public abstract class TileTankedMachine extends TileItemMachine {
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-            List<FluidTankBase> value = null;
+            List<FluidTankBase> value;
             if(faceMap.getRole(facing) == EnumFaceRole.INPUT_FLUID) {
                 value = inputTanks;
             } else if(faceMap.getRole(facing) == EnumFaceRole.OUTPUT_ITEM) {
                 value = outputTanks;
+            } else {
+                value = new ArrayList<>();
+                value.add(new DummyFluidTank());
             }
 
-            if(value != null) {
-                return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(value.get(faceMap.getContainerIndex(facing)));
-            }
+            return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(value.get(faceMap.getContainerIndex(facing)));
         }
 
         return super.getCapability(capability, facing);
@@ -61,7 +66,8 @@ public abstract class TileTankedMachine extends TileItemMachine {
 
     @Override
     protected void addPotentialFaceRoles() {
-        super.addPotentialFaceRoles();
+        potentialRoles.add(EnumFaceRole.INPUT_ITEM);
+        potentialRoles.add(EnumFaceRole.OUTPUT_ITEM);
         potentialRoles.add(EnumFaceRole.INPUT_FLUID);
         potentialRoles.add(EnumFaceRole.OUTPUT_FLUID);
     }
@@ -111,8 +117,7 @@ public abstract class TileTankedMachine extends TileItemMachine {
 
     @Override
     public MachineRecipeComponent[] getInputContents() {
-        List<MachineRecipeComponent> ret = new ArrayList<>();
-        ret.addAll(Arrays.asList(super.getInputContents()));
+        List<MachineRecipeComponent> ret = Arrays.asList(super.getInputContents());
         FluidStack[] inTank = getInputTankContents();
         for(int i = 0; i < getInputTanks(); i ++) {
             ret.add(new MachineRecipeComponent(inTank[i]));
@@ -122,8 +127,7 @@ public abstract class TileTankedMachine extends TileItemMachine {
 
     @Override
     public MachineRecipeComponent[] getOutputContents() {
-        List<MachineRecipeComponent> ret = new ArrayList<>();
-        ret.addAll(Arrays.asList(super.getOutputContents()));
+        List<MachineRecipeComponent> ret = Arrays.asList(super.getOutputContents());
         FluidStack[] outTank = getOutputTankContents();
         for(int i = 0; i < getOutputTanks(); i ++) {
             ret.add(new MachineRecipeComponent(outTank[i]));
@@ -147,7 +151,7 @@ public abstract class TileTankedMachine extends TileItemMachine {
         return x;
     }
 
-    protected boolean canTanksHoldRecipe(MachineRecipeComponent[] recipeOutput) {
+    private boolean canTanksHoldRecipe(MachineRecipeComponent[] recipeOutput) {
         int tankCount = 0;
         for(MachineRecipeComponent i : recipeOutput) {
             if(i.getType() == MachineRecipeComponent.Type.FLUID) {
@@ -164,7 +168,6 @@ public abstract class TileTankedMachine extends TileItemMachine {
         return true;
     }
 
-    @Override
     public boolean canProcess() {
         if(RecipeHandler.hasRecipe(this.getClass(), getInputContents())) {
             return RecipeUtils.canComponentArraysStack(getOutputContents(), getCurrentRecipeOutput()) && canTanksHoldRecipe(getCurrentRecipeOutput());
@@ -175,10 +178,33 @@ public abstract class TileTankedMachine extends TileItemMachine {
 
     @Override
     public void ejectOutput() {
+        super.ejectOutput();
 
+        int count = 0;
+        for (MachineRecipeComponent k : getOutputContents()) {
+            FluidStack j = k.getFluidStack();
+
+            if (j == null) {
+                continue;
+            }
+
+            for (EnumFacing i : faceMap.keySet()) {
+                if (faceMap.getRole(i) == EnumFaceRole.OUTPUT_FLUID) {
+                    TileEntity neighbour = world.getTileEntity(BlockUtils.getNeighbourPos(pos, i));
+                    if (neighbour == null) continue;
+                    IFluidHandler x = neighbour.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, i);
+                    if (x == null) continue;
+                    int attempt = x.fill(j, false);
+                    if (attempt != 0) {
+                        outputTanks.get(count).drain(attempt, true);
+                        x.fill(new FluidStack(j.getFluid(), attempt), true);
+                    }
+                }
+            }
+            count++;
+        }
     }
 
-    @Override
     public void processingComplete() {
         MachineRecipeComponent[] output = getCurrentRecipeOutput();
         MachineRecipeComponent[] input = getCurrentRecipeInput();

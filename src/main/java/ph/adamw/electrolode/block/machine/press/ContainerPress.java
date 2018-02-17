@@ -2,6 +2,7 @@ package ph.adamw.electrolode.block.machine.press;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraftforge.items.IItemHandler;
+import ph.adamw.electrolode.block.machine.TileInventoriedMachine;
 import ph.adamw.electrolode.block.machine.TileItemMachine;
 import ph.adamw.electrolode.inventory.BaseMachineContainer;
 import ph.adamw.electrolode.inventory.item.IDischargeSlot;
@@ -11,7 +12,7 @@ import ph.adamw.electrolode.inventory.item.SlotRecipeInput;
 public class ContainerPress extends BaseMachineContainer {
     private final int INPUT_0 = 0, INPUT_1 = 1, INPUT_2 = 2, OUTPUT = 3;
 
-    public ContainerPress(IInventory playerInv, TileItemMachine e) {
+    public ContainerPress(IInventory playerInv, TileInventoriedMachine e) {
         super(playerInv, e);
     }
 

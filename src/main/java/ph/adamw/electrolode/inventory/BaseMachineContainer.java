@@ -7,12 +7,13 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import ph.adamw.electrolode.block.machine.TileInventoriedMachine;
 import ph.adamw.electrolode.block.machine.TileItemMachine;
 import ph.adamw.electrolode.inventory.item.IDischargeSlot;
 import ph.adamw.electrolode.inventory.item.SlotDischarge;
 
 public abstract class BaseMachineContainer extends Container implements IDischargeSlot {
-    public TileItemMachine tileEntity;
+    public TileInventoriedMachine tileEntity;
     protected int TOTAL_PLAYER_INVENTORY_SIZE = 36;
 
     /*
@@ -29,10 +30,10 @@ public abstract class BaseMachineContainer extends Container implements IDischar
             0 -> 8 = hotbar
             9 -> 35 = player inventory
             36 -> 36 + (getInputSlots() - 1) = te inputs
-            36 + getInputSlots() -> (you getRole the idea)
+            36 + getInputSlots() -> (you get the idea)
     */
 
-    public BaseMachineContainer(IInventory playerInventory, TileItemMachine te) {
+    public BaseMachineContainer(IInventory playerInventory, TileInventoriedMachine te) {
         this.tileEntity = te;
 
         addPlayerSlots(playerInventory);
@@ -42,6 +43,9 @@ public abstract class BaseMachineContainer extends Container implements IDischar
         addSlotToContainer(new SlotDischarge(tileItemHandler, te.getCombinedSlots() - 1, pos[0], pos[1]));
     }
 
+    /**
+     * Edited transferStackInSlot implementation to check that item is valid for the slot.
+     */
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int sourceSlotIndex) {
         Slot sourceSlot = inventorySlots.get(sourceSlotIndex);
@@ -170,8 +174,11 @@ public abstract class BaseMachineContainer extends Container implements IDischar
 
     public abstract void addOwnSlots(IItemHandler itemHandler);
 
-    // Override this to change inventory slot locations - but for all standard size machine guis this works as is
-    // Key: If editing the number of player slots make sure to reflect that in TOTAL_PLAYER_INVENTORY_SIZE
+    /**
+     * Default player inventory slot assigning - 27 and 9 for the hotbar.
+     *  - Override if not using the standard 165x175 machine GUI
+     *  - Reflect this change by reassigning TOTAL_PLAYER_INVENTORY_SIZE
+     */
     public void addPlayerSlots(IInventory playerInventory) {
         // Slots for hotbar
         for (int row = 0; row < 9; row ++) {

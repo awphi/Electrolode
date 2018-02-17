@@ -2,6 +2,7 @@ package ph.adamw.electrolode.block.machine.purifier;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraftforge.items.IItemHandler;
+import ph.adamw.electrolode.block.machine.TileInventoriedMachine;
 import ph.adamw.electrolode.block.machine.TileItemMachine;
 import ph.adamw.electrolode.inventory.item.IDischargeSlot;
 import ph.adamw.electrolode.inventory.item.SlotOutput;
@@ -11,7 +12,7 @@ import ph.adamw.electrolode.inventory.item.SlotRecipeInput;
 public class ContainerPurifier extends BaseMachineContainer {
     private final int INPUT = 0, OUTPUT = 1;
 
-    public ContainerPurifier(IInventory playerInv, TileItemMachine e) {
+    public ContainerPurifier(IInventory playerInv, TileInventoriedMachine e) {
         super(playerInv, e);
     }
 
