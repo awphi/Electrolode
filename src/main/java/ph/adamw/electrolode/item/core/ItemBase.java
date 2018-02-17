@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.item;
+package ph.adamw.electrolode.item.core;
 
 import net.minecraft.item.Item;
 import ph.adamw.electrolode.manager.ItemManager;

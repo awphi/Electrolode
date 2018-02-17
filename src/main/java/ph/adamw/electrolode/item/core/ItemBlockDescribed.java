@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.item;
+package ph.adamw.electrolode.item.core;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.block.Block;

@@ -1,7 +1,13 @@
 package ph.adamw.electrolode.inventory.fluid;
 
 /**
- * Created by adamhodson on 15/02/2018.
+ * Simple dummy implementation to trick fluid pipes etc. into connecting to things that don't
+ * have a capability by providing a dummy to connect to.
  */
-public class DummyFluidTank {
+public class DummyFluidTank extends FluidTankBase {
+    public DummyFluidTank() {
+        super(0);
+        setCanDrain(false);
+        setCanFill(false);
+    }
 }
