@@ -4,7 +4,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import ph.adamw.electrolode.block.machine.TileInventoriedMachine;
-import ph.adamw.electrolode.recipe.MachineRecipeComponent;
+import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
+import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
 
 import javax.annotation.Nullable;
@@ -22,10 +23,9 @@ public class SlotRecipeInput extends SlotItemHandler {
 
     @Override
     public boolean isItemValid(@Nullable ItemStack stack) {
-        List<MachineRecipeComponent> components = new ArrayList<>();
-        components.addAll(Arrays.asList(machine.getInputContents()));
-        components.set(getSlotIndex(), new MachineRecipeComponent(stack));
+        final List<RecipeComponent> components = new ArrayList<>(Arrays.asList(machine.getInputContents()));
+        components.set(getSlotIndex(), new ItemStackRecipeComponent(stack));
 
-        return RecipeHandler.hasRecipeSoft(machine.getClass(), components.toArray(new MachineRecipeComponent[components.size()]));
+        return RecipeHandler.hasRecipeSoft(machine.getClass(), components.toArray(new RecipeComponent[0]));
     }
 }

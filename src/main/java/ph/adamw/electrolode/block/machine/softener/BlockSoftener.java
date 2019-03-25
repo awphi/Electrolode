@@ -10,6 +10,11 @@ public class BlockSoftener extends BlockBaseMachine {
         return "An electric machine that can be used to#s soften water to be used in industrial processes.";
     }
 
+    @Override
+    public Class<? extends TileEntity> getTileClass() {
+        return TileSoftener.class;
+    }
+
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileSoftener();
     }

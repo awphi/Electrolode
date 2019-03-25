@@ -6,7 +6,7 @@ import ph.adamw.electrolode.manager.ItemManager;
 public abstract class ItemBase extends Item {
     public ItemBase(int maxStack, boolean addToCreativeTab) {
         if(addToCreativeTab) {
-            setCreativeTab(ItemManager.CREATIVETAB);
+            setCreativeTab(ItemManager.CREATIVE_TAB);
         }
 
         setMaxStackSize(maxStack);

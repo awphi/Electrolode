@@ -13,7 +13,9 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import ph.adamw.electrolode.Config;
 import ph.adamw.electrolode.block.EnumFaceRole;
-import ph.adamw.electrolode.recipe.MachineRecipeComponent;
+import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
+import ph.adamw.electrolode.recipe.MachineRecipe;
+import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
 import ph.adamw.electrolode.util.BlockUtils;
 import ph.adamw.electrolode.util.GuiUtils;
@@ -42,6 +44,8 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
         if(!potentialRoles.contains(EnumFaceRole.NONE)) {
             potentialRoles.add(EnumFaceRole.NONE);
         }
+
+
     }
 
     public boolean canInteractWith(EntityPlayer playerIn) {
@@ -81,12 +85,14 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
         if(!world.isRemote) {
             if (canProcess()) {
                 if(extractEnergy(getEnergyUsage(), true) >= getEnergyUsage()) {
-                    processedTime++;
+                    processedTime ++;
                     extractEnergy(getEnergyUsage(), false);
-                    if (processedTime >= getBaseProcTime()) {
+
+                    if (processedTime >= getProcTime()) {
                         processingComplete();
                         resetProcess();
                     }
+
                     markForUpdate();
                 }
             } else {
@@ -170,7 +176,7 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
     /**
      *
      * @param face - Face to disable - NORTH = front, EAST = right etc.
-     *             (as if the machine is facing up from birds-eye view then round clockwise)
+     *             (as if the machine_recipes is facing up from birds-eye view then round clockwise)
      */
     protected void disableFace(EnumFacing face) {
         if(disabledFaces.contains(face)) return;
@@ -181,10 +187,10 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
             EnumFacing facing = this.getState().getValue(BlockBaseMachine.FACING);
             int i = 0;
             switch (face) {
-                case NORTH: i = 0;
-                case EAST: i = 1;
-                case SOUTH: i = 2;
-                case WEST: i = 3;
+                case NORTH: i = 0; break;
+                case EAST: i = 1; break;
+                case SOUTH: i = 2; break;
+                case WEST: i = 3; break;
             }
 
             for(int j = 0; j < i; j ++) {
@@ -217,10 +223,18 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
         }
     }
 
-    public abstract int getBaseProcTime();
+    private int getProcTime() {
+        final MachineRecipe recipe = getCurrentRecipe();
+
+        if(recipe == null) {
+            return Integer.MAX_VALUE;
+        }
+
+        return recipe.energy / getEnergyUsage();
+    }
 
     public double getCompletedPercentage() {
-        return (processedTime / (double) getBaseProcTime());
+        return (processedTime / (double) getProcTime());
     }
     /* --- */
 
@@ -229,7 +243,7 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
 
     public int getEnergyUsage() {
         // TODO: include upgrades and other things that affect it
-        // - Could be overridden in child classes to include other, machine-specific factors maybe.
+        // - Could be overridden in child classes to include other, machine_recipes-specific factors maybe.
         return getBaseEnergyUsage();
     }
 
@@ -301,16 +315,11 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
     }
     /* --- */
 
-    public abstract MachineRecipeComponent[] getInputContents();
+    public abstract RecipeComponent[] getInputContents();
 
-    public abstract MachineRecipeComponent[] getOutputContents();
+    public abstract RecipeComponent[] getOutputContents();
 
-    protected MachineRecipeComponent[] getCurrentRecipeOutput() {
-        return RecipeHandler.getOutput(this.getClass(), getInputContents());
-    }
-
-
-    protected MachineRecipeComponent[] getCurrentRecipeInput() {
-        return RecipeHandler.getInput(this.getClass(), getInputContents());
+    public MachineRecipe getCurrentRecipe() {
+        return RecipeHandler.getRecipe(this.getClass(), getInputContents());
     }
 }

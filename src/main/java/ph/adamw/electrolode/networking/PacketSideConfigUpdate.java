@@ -1,6 +1,7 @@
 package ph.adamw.electrolode.networking;
 
 import io.netty.buffer.ByteBuf;
+import lombok.NoArgsConstructor;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -12,6 +13,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
 
+@NoArgsConstructor
 public class PacketSideConfigUpdate implements IMessage {
     BlockPos pos;
     EnumFaceRole role;
@@ -24,8 +26,6 @@ public class PacketSideConfigUpdate implements IMessage {
         direction = side;
         containerIndex = index;
     }
-
-    public PacketSideConfigUpdate() {}
 
     @Override
     public void fromBytes(ByteBuf buf) {

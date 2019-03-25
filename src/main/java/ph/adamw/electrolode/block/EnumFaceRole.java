@@ -38,9 +38,16 @@ public enum EnumFaceRole {
         if(e == null) {
             return roles[0];
         }
-        int nextIndex = e.ordinal() + step;
-        nextIndex = nextIndex % roles.length;
-        return roles[nextIndex];
+
+        int c = e.ordinal() + step;
+
+        if(c < 0) {
+            c = roles.length - 1;
+        } else {
+            c %= roles.length;
+        }
+
+        return roles[c];
     }
 
     public static EnumFaceRole step(EnumFaceRole e, @Nonnull List<EnumFaceRole> pool, int step) {
@@ -49,10 +56,6 @@ public enum EnumFaceRole {
             e = EnumFaceRole.step(e, step);
         }
         return e;
-    }
-
-    public static EnumFaceRole previous(EnumFaceRole e) {
-        return step(e, -1);
     }
 
     public static EnumFaceRole getRole(int i) {

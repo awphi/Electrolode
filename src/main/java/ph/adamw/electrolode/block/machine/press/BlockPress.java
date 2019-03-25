@@ -9,6 +9,11 @@ public class BlockPress extends BlockBaseMachine {
         return "An electric machine that can be used to press#s clean powders and plates into other item and components.";
     }
 
+    @Override
+    public Class<? extends TileEntity> getTileClass() {
+        return TilePress.class;
+    }
+
     public TileEntity createNewTileEntity(World world, int i) {
         return new TilePress();
     }

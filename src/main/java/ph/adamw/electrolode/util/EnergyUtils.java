@@ -7,6 +7,10 @@ import ph.adamw.electrolode.block.machine.TileBaseMachine;
 
 public class EnergyUtils {
     public static boolean isItemStackChargeable(ItemStack itemstack) {
+        if(itemstack == null) {
+            return false;
+        }
+
         return itemstack.hasCapability(CapabilityEnergy.ENERGY, null);
     }
 

@@ -39,8 +39,7 @@ public abstract class BaseMachineContainer extends Container implements IDischar
         addPlayerSlots(playerInventory);
         IItemHandler tileItemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
         addOwnSlots(tileItemHandler);
-        int[] pos = this.getChargeSlotPos();
-        addSlotToContainer(new SlotDischarge(tileItemHandler, te.getCombinedSlots() - 1, pos[0], pos[1]));
+        addSlotToContainer(new SlotDischarge(tileItemHandler, te.getCombinedSlots() - 1, getChargeSlotPos()));
     }
 
     /**
@@ -176,7 +175,7 @@ public abstract class BaseMachineContainer extends Container implements IDischar
 
     /**
      * Default player inventory slot assigning - 27 and 9 for the hotbar.
-     *  - Override if not using the standard 165x175 machine GUI
+     *  - Override if not using the standard 165x175 machine_recipes GUI
      *  - Reflect this change by reassigning TOTAL_PLAYER_INVENTORY_SIZE
      */
     public void addPlayerSlots(IInventory playerInventory) {

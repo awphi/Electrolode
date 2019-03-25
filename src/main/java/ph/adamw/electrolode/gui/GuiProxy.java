@@ -33,13 +33,6 @@ public class GuiProxy implements IGuiHandler {
             e.printStackTrace();
         }
 
-        /*
-        switch(ID) {
-            default: return null;
-            case 1: return new ContainerPurifier(player.inventory, (TilePurifier) te);
-        }
-        */
-
         return null;
     }
 
@@ -59,13 +52,6 @@ public class GuiProxy implements IGuiHandler {
         } catch(InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
-
-        /*
-        switch(ID) {
-            default: return null;
-            case 1: return new GuiPurifier((TilePurifier) te, new ContainerPurifier(player.inventory, (TilePurifier) te));
-        }
-        */
 
         return null;
     }

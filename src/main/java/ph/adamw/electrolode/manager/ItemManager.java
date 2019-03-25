@@ -19,7 +19,6 @@ import java.util.HashMap;
 
 public class ItemManager {
     private static final HashMap<Class<? extends ItemBase>, ItemBase> itemMap = new HashMap<>();
-    private static IForgeRegistry<Item> registry;
 
     public static Item get(Class<? extends ItemBase> e) {
         return itemMap.get(e);
@@ -29,14 +28,14 @@ public class ItemManager {
         return itemMap.get(e).getItemName();
     }
 
-    public static final CreativeTabs CREATIVETAB = new CreativeTabs("electrolode") {
+    public static final CreativeTabs CREATIVE_TAB = new CreativeTabs("electrolode") {
         @Override
         public ItemStack getTabIconItem() {
             return new ItemStack(ModItems.POWDER, 1, 0);
         }
     };
 
-    private static void registerItem(Class<? extends ItemBase> item) {
+    private static void registerItem(final IForgeRegistry<Item> registry, Class<? extends ItemBase> item) {
         if(registry == null) {
             System.err.println("Attempted to register item at invalid time: " + item.getName());
             return;
@@ -61,10 +60,9 @@ public class ItemManager {
     }
 
     public static void registerItems(IForgeRegistry<Item> registry) {
-        ItemManager.registry = registry;
-        registerItem(ItemPowder.class);
-        registerItem(ItemPurifiedPowder.class);
-        registerItem(ItemPlate.class);
-        registerItem(ItemSalt.class);
+        registerItem(registry, ItemPowder.class);
+        registerItem(registry, ItemPurifiedPowder.class);
+        registerItem(registry, ItemPlate.class);
+        registerItem(registry, ItemSalt.class);
     }
 }

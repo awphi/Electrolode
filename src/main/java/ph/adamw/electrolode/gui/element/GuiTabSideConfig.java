@@ -22,7 +22,7 @@ public class GuiTabSideConfig extends GuiTab {
 
     public void mouseClicked(int xAxis, int yAxis, int button) {
         if(button == 0) {
-            if(isInRect(xAxis, yAxis, guiObj.getWidth(), Y_OFFSET, NORMAL_HEIGHT, NORMAL_WIDTH)) {
+            if(isInRect(xAxis, yAxis, guiObj.getWidth(), yOffset, normalHeight, normalWidth)) {
                 mc.displayGuiScreen(new GuiSideConfig(tileEntity));
             }
         }

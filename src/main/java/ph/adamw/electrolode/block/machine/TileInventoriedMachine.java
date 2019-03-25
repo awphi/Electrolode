@@ -12,22 +12,27 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.inventory.item.*;
-import ph.adamw.electrolode.recipe.MachineRecipeComponent;
+import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
+import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.util.BlockUtils;
 import ph.adamw.electrolode.util.EnergyUtils;
 
 public abstract class TileInventoriedMachine extends TileBaseMachine {
-    protected InputItemStackHandler inputOnlySlotsWrapper = new InputRecipeItemStackHandler(new ItemStackHandler(getInputSlots()), this.getClass());
-    protected OutputItemStackHandler outputOnlySlotsWrapper = new OutputItemStackHandler(new ItemStackHandler(getOutputSlots()));
-    protected ItemStackHandler chargeSlotWrapper = new ItemStackHandler(1);
-    protected CombinedInvWrapper allSlotsWrapper = new CombinedInvWrapper(inputOnlySlotsWrapper.internalSlot, outputOnlySlotsWrapper, chargeSlotWrapper);
+    InputItemStackHandler inputOnlySlotsWrapper = new InputRecipeItemStackHandler(new ItemStackHandler(getInputSlots()), this.getClass());
+    OutputItemStackHandler outputOnlySlotsWrapper = new OutputItemStackHandler(new ItemStackHandler(getOutputSlots()));
+    private ItemStackHandler chargeSlotWrapper = new ItemStackHandler(1);
+    private CombinedInvWrapper allSlotsWrapper = new CombinedInvWrapper(inputOnlySlotsWrapper.internalSlot, outputOnlySlotsWrapper, chargeSlotWrapper);
 
     public void ejectOutput() {
         int count = 0;
-        for (MachineRecipeComponent k : getOutputContents()) {
-            ItemStack j = k.getItemStack();
+        for (RecipeComponent k : getOutputContents()) {
+            if(!(k instanceof ItemStackRecipeComponent)) {
+                continue;
+            }
 
-            if (j == ItemStack.EMPTY) {
+            final ItemStack itemStack = ((ItemStackRecipeComponent) k).itemStack;
+
+            if (itemStack == ItemStack.EMPTY) {
                 continue;
             }
 
@@ -37,11 +42,11 @@ public abstract class TileInventoriedMachine extends TileBaseMachine {
                     if (neighbour == null) continue;
                     IItemHandler x = neighbour.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, i);
                     if (x == null) continue;
-                    ItemStack attempt = ItemHandlerHelper.insertItem(x, j, true);
-                    if (attempt != j) {
-                        ItemStack removed = outputOnlySlotsWrapper.extractItem(count, j.getCount() - attempt.getCount(), false);
+                    ItemStack attempt = ItemHandlerHelper.insertItem(x, itemStack, true);
+                    if (attempt != itemStack) {
+                        ItemStack removed = outputOnlySlotsWrapper.extractItem(count, itemStack.getCount() - attempt.getCount(), false);
                         if (removed != ItemStack.EMPTY) {
-                            ItemHandlerHelper.insertItem(x, j.copy(), false);
+                            ItemHandlerHelper.insertItem(x, itemStack.copy(), false);
                             break;
                         }
                     }
@@ -113,18 +118,18 @@ public abstract class TileInventoriedMachine extends TileBaseMachine {
         chargeSlotWrapper.deserializeNBT((NBTTagCompound) compound.getTag("chargeItem"));
     }
 
-    public MachineRecipeComponent[] getInputContents() {
-        MachineRecipeComponent[] ret = new MachineRecipeComponent[getInputSlots()];
+    public RecipeComponent[] getInputContents() {
+        ItemStackRecipeComponent[] ret = new ItemStackRecipeComponent[getInputSlots()];
         for(int i = 0; i < getInputSlots(); i ++) {
-            ret[i] = new MachineRecipeComponent(inputOnlySlotsWrapper.getStackInSlot(i));
+            ret[i] = new ItemStackRecipeComponent(inputOnlySlotsWrapper.getStackInSlot(i));
         }
         return ret;
     }
 
-    public MachineRecipeComponent[] getOutputContents() {
-        MachineRecipeComponent[] ret = new MachineRecipeComponent[getOutputSlots()];
+    public RecipeComponent[] getOutputContents() {
+        ItemStackRecipeComponent[] ret = new ItemStackRecipeComponent[getOutputSlots()];
         for(int i = 0; i < getOutputSlots(); i ++) {
-            ret[i] = new MachineRecipeComponent(outputOnlySlotsWrapper.getStackInSlot(i));
+            ret[i] = new ItemStackRecipeComponent(outputOnlySlotsWrapper.getStackInSlot(i));
         }
         return ret;
     }

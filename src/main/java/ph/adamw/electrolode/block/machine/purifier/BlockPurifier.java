@@ -6,7 +6,12 @@ import ph.adamw.electrolode.block.machine.BlockBaseMachine;
 
 public class BlockPurifier extends BlockBaseMachine {
     public String getDescription() {
-        return "An electric machine that can be used to#s purify dirty samples of certain elements.";
+        return "An electric purifying machine that can be used to#s clean dirty pulverized matter.";
+    }
+
+    @Override
+    public Class<? extends TileEntity> getTileClass() {
+        return TilePurifier.class;
     }
 
     public TileEntity createNewTileEntity(World worldIn, int meta) {

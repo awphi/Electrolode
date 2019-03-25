@@ -1,23 +1,17 @@
 package ph.adamw.electrolode.item.core;
 
 public enum EnumMineral {
-    CARBON("carbon", 0, "Coal"),
-    IRON("iron", 1, "Iron"),
-    GOLD("gold", 2, "Gold"),
-    TITANIUM("titanium", 3, "Titanium");
+    CARBON("carbon",  "Coal"),
+    IRON("iron",  "Iron"),
+    GOLD("gold",  "Gold"),
+    TITANIUM("titanium",  "Titanium");
 
     private String identifier;
-    private int ordinal;
     private String oreDictSuffix;
 
-    EnumMineral(String i, int ord, String x) {
+    EnumMineral(String i, String x) {
         identifier = i;
-        ordinal = ord;
         oreDictSuffix = x;
-    }
-
-    public int getOrdinal() {
-        return ordinal;
     }
 
     public String getName() {

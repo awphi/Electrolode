@@ -87,18 +87,17 @@ public class GuiUtils {
 
     public static void fillAreaWithSprite(Minecraft mc, GuiBaseContainer gui, TextureAtlasSprite sprite, ResourceLocation spriteMap, int x, int y, int width, int height) {
         mc.renderEngine.bindTexture(spriteMap);
-        double xRatio = (double) width / (double) sprite.getIconWidth();
         double yRatio = (double) height / (double) sprite.getIconHeight();
 
         int xCoord = x;
-        int yCoord = y + height;
+        int yCoord = y;
 
         while(yRatio > 0) {
             double v = Math.min(1, yRatio);
             yRatio -= v;
 
-            yCoord -= (int) (v * sprite.getIconHeight());
-            gui.drawTexturedModalRect(xCoord, yCoord, sprite.getOriginX(), (int) (sprite.getOriginY() + (1 - v)), (int) (xRatio * sprite.getIconWidth()), (int) (v * sprite.getIconHeight()));
+            gui.drawTexturedModalRect(xCoord, yCoord, sprite, width, (int) (v * sprite.getIconHeight()));
+            yCoord += (int) (v * sprite.getIconHeight());
         }
     }
 }

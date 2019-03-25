@@ -17,7 +17,7 @@ public abstract class BlockBase extends Block {
     public BlockBase(Material m, boolean addToCreativeTab) {
         super(m);
         if(addToCreativeTab) {
-            setCreativeTab(ItemManager.CREATIVETAB);
+            setCreativeTab(ItemManager.CREATIVE_TAB);
         }
     }
 

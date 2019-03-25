@@ -1,90 +1,68 @@
 package ph.adamw.electrolode.recipe;
 
+import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
+import org.lwjgl.Sys;
+import ph.adamw.electrolode.ModItems;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class RecipeHandler {
-    private static HashMap<Class<? extends TileBaseMachine>, HashMap<MachineRecipeComponent[], MachineRecipeComponent[]>> recipeMap = new HashMap<>();
+    private static HashMap<Class<? extends TileBaseMachine>, List<MachineRecipe>> recipeMap = new HashMap<>();
 
-    public static void addRecipe(Class<? extends TileBaseMachine> machine, MachineRecipeComponent[] i, MachineRecipeComponent[] o) {
-        recipeMap.computeIfAbsent(machine, k -> new HashMap<>());
-        recipeMap.get(machine).put(i, o);
+    public static void addRecipe(Class<? extends TileBaseMachine> machine, MachineRecipe recipe) {
+        recipeMap.computeIfAbsent(machine, k -> new LinkedList<>());
+        recipeMap.get(machine).add(recipe);
     }
 
-    public static void addRecipe(Class<? extends TileBaseMachine> machine, MachineRecipeComponent i, MachineRecipeComponent o) {
-        addRecipe(machine, new MachineRecipeComponent[] {i}, new MachineRecipeComponent[] {o});
-    }
+    private static MachineRecipe findRecipe(Class<? extends TileBaseMachine> machine, RecipeComponent[] input, boolean soft) {
+        final List<MachineRecipe> recipes = recipeMap.get(machine);
 
-    public static void addRecipe(Class<? extends TileBaseMachine> machine, MachineRecipeComponent[] i, MachineRecipeComponent o) {
-        addRecipe(machine, i, new MachineRecipeComponent[] {o});
-    }
+        if(recipes == null || recipes.size() == 0) {
+            return null;
+        }
 
-    public static void addRecipe(Class<? extends TileBaseMachine> machine, MachineRecipeComponent i, MachineRecipeComponent o[]) {
-        addRecipe(machine, new MachineRecipeComponent[] {i}, o);
-    }
-
-
-    /* getCurrentRecipeOutput & helpers */
-    private static MachineRecipeComponent[] getOutput(Class<? extends TileBaseMachine> machine, MachineRecipeComponent[] input, boolean returnInput, boolean soft) {
-        HashMap<MachineRecipeComponent[], MachineRecipeComponent[]> ioMap = recipeMap.get(machine);
-
-        if(ioMap == null) return null;
-
-        for(MachineRecipeComponent[] recipeMapEntry : ioMap.keySet()) {
-            if(recipeMapEntry.length != input.length) continue;
+        //TODO look into why this is turning up null
+        for(MachineRecipe recipe : recipes) {
+            if(recipe.input.length != input.length) {
+                continue;
+            }
 
             int validCount = 0;
-            for(int i = 0; i < recipeMapEntry.length; i ++) {
-                if(soft) {
-                    if (input[i].isValid(recipeMapEntry[i]) || input[i].isEmpty()) {
-                        validCount++;
-                    }
-                } else {
-                    if(input[i].isValid(recipeMapEntry[i])) {
-                        validCount++;
-                    }
+
+            for(int i = 0; i < recipe.input.length; i ++) {
+                if(!input[i].isSameType(recipe.input[i])) {
+                    break;
+                }
+
+                if (soft && (input[i].compare(recipe.input[i]) || input[i].isEmpty())) {
+                    validCount++;
+                } else if (!soft && input[i].compare(recipe.input[i])) {
+                    validCount++;
                 }
             }
 
-            if(validCount == recipeMapEntry.length) {
-                return returnInput ? recipeMapEntry : ioMap.get(recipeMapEntry);
+            if(validCount == recipe.input.length) {
+                return recipe;
             }
         }
 
         return null;
     }
 
-    public static MachineRecipeComponent[] getOutput(Class<? extends TileBaseMachine> machine, MachineRecipeComponent[] input) {
-        return getOutput(machine, input, false, false);
+    public static MachineRecipe getRecipe(Class<? extends TileBaseMachine> machine, RecipeComponent[] input) {
+        return findRecipe(machine, input, false);
     }
-
-    public static MachineRecipeComponent[] getOutput(Class<? extends TileBaseMachine> machine, MachineRecipeComponent input) {
-        return getOutput(machine, new MachineRecipeComponent[] {input}, false, false);
-    }
-
-    /* --- */
-
-    public static MachineRecipeComponent[] getInput(Class<? extends TileBaseMachine> machine, MachineRecipeComponent[] input) {
-        return getOutput(machine, input, true, false);
-    }
-
-    public static MachineRecipeComponent[] getInput(Class<? extends TileBaseMachine> machine, MachineRecipeComponent input) {
-        return getInput(machine, new MachineRecipeComponent[] {input});
-    }
-
 
     /* hasRecipe & helpers */
-    public static boolean hasRecipe(Class<? extends TileBaseMachine> machine, MachineRecipeComponent[] component) {
-        return getOutput(machine, component, false, false) != null;
+    public static boolean hasRecipe(Class<? extends TileBaseMachine> machine, RecipeComponent[] component) {
+        return findRecipe(machine, component,false) != null;
     }
 
-    public static boolean hasRecipe(Class<? extends TileBaseMachine> machine, MachineRecipeComponent component) {
-        return hasRecipe(machine, new MachineRecipeComponent[] {component});
-    }
-
-    public static boolean hasRecipeSoft(Class<? extends TileBaseMachine> machine, MachineRecipeComponent[] component) {
-        return getOutput(machine, component, false, true) != null;
+    public static boolean hasRecipeSoft(Class<? extends TileBaseMachine> machine, RecipeComponent[] component) {
+        return findRecipe(machine, component,true) != null;
     }
 }

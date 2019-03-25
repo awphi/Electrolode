@@ -1,6 +1,7 @@
 package ph.adamw.electrolode.networking;
 
 import io.netty.buffer.ByteBuf;
+import lombok.NoArgsConstructor;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -10,6 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
 
+@NoArgsConstructor
 public class PacketAutoEjectUpdate implements IMessage {
     BlockPos pos;
     boolean enabled;
@@ -19,8 +21,6 @@ public class PacketAutoEjectUpdate implements IMessage {
         pos = e;
 
     }
-
-    public PacketAutoEjectUpdate() {}
 
     @Override
     public void fromBytes(ByteBuf buf) {

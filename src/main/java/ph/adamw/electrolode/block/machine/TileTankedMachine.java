@@ -11,7 +11,9 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.inventory.fluid.DummyFluidTank;
 import ph.adamw.electrolode.inventory.fluid.FluidTankBase;
-import ph.adamw.electrolode.recipe.MachineRecipeComponent;
+import ph.adamw.electrolode.recipe.FluidStackRecipeComponent;
+import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
+import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
 import ph.adamw.electrolode.recipe.RecipeUtils;
 import ph.adamw.electrolode.util.BlockUtils;
@@ -47,11 +49,10 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
             List<FluidTankBase> value;
             if(faceMap.getRole(facing) == EnumFaceRole.INPUT_FLUID) {
                 value = inputTanks;
-            } else if(faceMap.getRole(facing) == EnumFaceRole.OUTPUT_ITEM) {
+            } else if(faceMap.getRole(facing) == EnumFaceRole.OUTPUT_FLUID) {
                 value = outputTanks;
             } else {
-                value = new ArrayList<>();
-                value.add(new DummyFluidTank());
+                return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(new DummyFluidTank());
             }
 
             return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(value.get(faceMap.getContainerIndex(facing)));
@@ -116,23 +117,23 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
     }
 
     @Override
-    public MachineRecipeComponent[] getInputContents() {
-        List<MachineRecipeComponent> ret = Arrays.asList(super.getInputContents());
+    public RecipeComponent[] getInputContents() {
+        List<RecipeComponent> ret = new ArrayList<>(Arrays.asList(super.getInputContents()));
         FluidStack[] inTank = getInputTankContents();
         for(int i = 0; i < getInputTanks(); i ++) {
-            ret.add(new MachineRecipeComponent(inTank[i]));
+            ret.add(new FluidStackRecipeComponent(inTank[i]));
         }
-        return ret.toArray(new MachineRecipeComponent[ret.size()]);
+        return ret.toArray(new RecipeComponent[0]);
     }
 
     @Override
-    public MachineRecipeComponent[] getOutputContents() {
-        List<MachineRecipeComponent> ret = Arrays.asList(super.getOutputContents());
+    public RecipeComponent[] getOutputContents() {
+        List<RecipeComponent> ret = new ArrayList<>(Arrays.asList(super.getOutputContents()));
         FluidStack[] outTank = getOutputTankContents();
         for(int i = 0; i < getOutputTanks(); i ++) {
-            ret.add(new MachineRecipeComponent(outTank[i]));
+            ret.add(new FluidStackRecipeComponent(outTank[i]));
         }
-        return ret.toArray(new MachineRecipeComponent[ret.size()]);
+        return ret.toArray(new RecipeComponent[0]);
     }
 
     public FluidStack[] getInputTankContents() {
@@ -151,17 +152,18 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
         return x;
     }
 
-    private boolean canTanksHoldRecipe(MachineRecipeComponent[] recipeOutput) {
+    private boolean canTanksHoldRecipe(RecipeComponent[] recipeOutput) {
         int tankCount = 0;
-        for(MachineRecipeComponent i : recipeOutput) {
-            if(i.getType() == MachineRecipeComponent.Type.FLUID) {
+        for(RecipeComponent i : recipeOutput) {
+            if(i instanceof FluidStackRecipeComponent) {
                 FluidTankBase tank = outputTanks.get(tankCount);
-                if(i.getFluidStack().amount <= (tank.getCapacity() - tank.getFluidAmount())) {
+                if(((FluidStackRecipeComponent) i).fluidStack.amount <= (tank.getCapacity() - tank.getFluidAmount())) {
                     continue;
                 } else {
                     return false;
                 }
             }
+
             tankCount ++;
         }
 
@@ -170,7 +172,7 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
 
     public boolean canProcess() {
         if(RecipeHandler.hasRecipe(this.getClass(), getInputContents())) {
-            return RecipeUtils.canComponentArraysStack(getOutputContents(), getCurrentRecipeOutput()) && canTanksHoldRecipe(getCurrentRecipeOutput());
+            return RecipeUtils.canComponentArraysStack(getCurrentRecipe().output, getOutputContents()) && canTanksHoldRecipe(getCurrentRecipe().output);
         }
 
         return false;
@@ -181,12 +183,12 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
         super.ejectOutput();
 
         int count = 0;
-        for (MachineRecipeComponent k : getOutputContents()) {
-            FluidStack j = k.getFluidStack();
-
-            if (j == null) {
+        for (RecipeComponent k : getOutputContents()) {
+            if (!(k instanceof FluidStackRecipeComponent)) {
                 continue;
             }
+
+            final FluidStackRecipeComponent component = (FluidStackRecipeComponent) k;
 
             for (EnumFacing i : faceMap.keySet()) {
                 if (faceMap.getRole(i) == EnumFaceRole.OUTPUT_FLUID) {
@@ -194,10 +196,10 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
                     if (neighbour == null) continue;
                     IFluidHandler x = neighbour.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, i);
                     if (x == null) continue;
-                    int attempt = x.fill(j, false);
+                    int attempt = x.fill(component.fluidStack, false);
                     if (attempt != 0) {
                         outputTanks.get(count).drain(attempt, true);
-                        x.fill(new FluidStack(j.getFluid(), attempt), true);
+                        x.fill(new FluidStack(component.fluidStack.getFluid(), attempt), true);
                     }
                 }
             }
@@ -206,32 +208,32 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
     }
 
     public void processingComplete() {
-        MachineRecipeComponent[] output = getCurrentRecipeOutput();
-        MachineRecipeComponent[] input = getCurrentRecipeInput();
+        RecipeComponent[] output = getCurrentRecipe().output;
+        RecipeComponent[] input = getCurrentRecipe().input;
 
         int tankCount = 0;
         int slotCount = 0;
 
-        for(int i = 0; i < output.length; i ++) {
-            if(output[i].getType() == MachineRecipeComponent.Type.ITEM) {
-                outputOnlySlotsWrapper.insertItemInternally(slotCount, output[i].getItemStack(), false);
-                slotCount ++;
-            } else if(output[i].getType() == MachineRecipeComponent.Type.FLUID) {
-                outputTanks.get(tankCount).fillInternal(output[i].getFluidStack(), true);
-                tankCount ++;
+        for (RecipeComponent component : output) {
+            if (component instanceof ItemStackRecipeComponent) {
+                outputOnlySlotsWrapper.insertItemInternally(slotCount, ((ItemStackRecipeComponent) component).itemStack, false);
+                slotCount++;
+            } else if (component instanceof FluidStackRecipeComponent) {
+                outputTanks.get(tankCount).fillInternal(((FluidStackRecipeComponent) component).fluidStack, true);
+                tankCount++;
             }
         }
 
         slotCount = 0;
         tankCount = 0;
 
-        for(int i = 0; i < input.length; i ++) {
-            if(input[i].getType() == MachineRecipeComponent.Type.ITEM) {
-                inputOnlySlotsWrapper.extractItemInternally(slotCount, input[i].getItemStack().getCount(), false);
-                slotCount ++;
-            } else if(input[i].getType() == MachineRecipeComponent.Type.FLUID) {
-                inputTanks.get(tankCount).drainInternal(input[i].getFluidStack(), true);
-                tankCount ++;
+        for (RecipeComponent component : input) {
+            if (component instanceof ItemStackRecipeComponent) {
+                inputOnlySlotsWrapper.extractItemInternally(slotCount, ((ItemStackRecipeComponent) component).itemStack.getCount(), false);
+                slotCount++;
+            } else if (component instanceof FluidStackRecipeComponent) {
+                inputTanks.get(tankCount).drainInternal(((FluidStackRecipeComponent) component).fluidStack, true);
+                tankCount++;
             }
         }
     }

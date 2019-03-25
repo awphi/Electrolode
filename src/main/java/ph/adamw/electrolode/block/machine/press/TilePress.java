@@ -11,10 +11,6 @@ public class TilePress extends TileItemMachine {
         return 1;
     }
 
-    public int getBaseProcTime() {
-        return 360;
-    }
-
     public int getBaseEnergyUsage() {
         return 240;
     }

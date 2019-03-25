@@ -1,5 +1,7 @@
 package ph.adamw.electrolode.block.machine.purifier;
 
+import net.minecraft.util.EnumFacing;
+import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.block.machine.TileItemMachine;
 
 
@@ -10,10 +12,6 @@ public class TilePurifier extends TileItemMachine {
 
     public int getOutputSlots() {
         return 1;
-    }
-
-    public int getBaseProcTime() {
-        return 80;
     }
 
     public int getBaseEnergyUsage() {

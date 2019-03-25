@@ -1,5 +1,6 @@
 package ph.adamw.electrolode.block.machine.softener;
 
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.FluidTank;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.block.machine.TileTankedMachine;
@@ -24,10 +25,6 @@ public class TileSoftener extends TileTankedMachine {
 
     protected void addOutputTanks() {
         outputTanks.add(new FluidTankBase(5000));
-    }
-
-    public int getBaseProcTime() {
-        return 80;
     }
 
     public int getBaseMaxEnergy() {

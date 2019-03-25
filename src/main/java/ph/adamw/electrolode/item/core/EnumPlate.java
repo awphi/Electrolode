@@ -1,20 +1,14 @@
 package ph.adamw.electrolode.item.core;
 
 public enum EnumPlate {
-    CONDUCTIVE("conductive", 0),
-    STRUCTURAL("structural", 1),
-    STRENGTHENED("strengthened", 2);
+    CONDUCTIVE("conductive"),
+    STRUCTURAL("structural"),
+    STRENGTHENED("strengthened");
 
     private String identifier;
-    private int ordinal;
 
-    EnumPlate(String i, int ord) {
+    EnumPlate(String i) {
         identifier = i;
-        ordinal = ord;
-    }
-
-    public int getOrdinal() {
-        return ordinal;
     }
 
     public String getName() {

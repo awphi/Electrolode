@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import ph.adamw.electrolode.Config;
 import ph.adamw.electrolode.manager.BlockManager;
+import ph.adamw.electrolode.manager.FluidManager;
 import ph.adamw.electrolode.manager.ItemManager;
 import ph.adamw.electrolode.gui.GuiProxy;
 import ph.adamw.electrolode.manager.GuiManager;
@@ -47,6 +48,9 @@ public class CommonProxy {
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         BlockManager.registerBlocks(event.getRegistry());
+        FluidManager.registerFluids();
+        FluidManager.registerFluidBlocks(event.getRegistry());
+        FluidManager.renderFluids();
         BlockManager.registerTileEntities();
     }
 

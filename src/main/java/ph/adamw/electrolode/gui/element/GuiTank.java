@@ -2,6 +2,7 @@ package ph.adamw.electrolode.gui.element;
 
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidTank;
 import ph.adamw.electrolode.Electrolode;
@@ -37,10 +38,12 @@ public class GuiTank extends GuiElement {
 
     public String getTooltip() {
         String e = "0";
+        String fl = I18n.format("tooltip.electrolode.empty");
         if(tank.getFluid() != null) {
             e = String.valueOf(tank.getFluidAmount());
+            fl = tank.getFluid().getLocalizedName();
         }
-        return e + " / " + tank.getCapacity() + " mB";
+        return fl + " - " + e + " mB";
     }
 
     public void preMouseClicked(int xAxis, int yAxis, int button) {

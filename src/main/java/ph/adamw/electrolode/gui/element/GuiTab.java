@@ -11,40 +11,40 @@ import java.util.List;
 
 public abstract class GuiTab extends GuiElement {
     public TileBaseMachine tileEntity;
-    public boolean rightAligned;
+    private boolean rightAligned;
 
-    public int NORMAL_HEIGHT;
-    public int NORMAL_WIDTH;
+    int normalHeight;
+    int normalWidth;
 
-    public int EXT_HEIGHT;
-    public int EXT_WIDTH;
+    private int extendedHeight;
+    private int extendedWidth;
 
-    public int Y_OFFSET;
+    int yOffset;
 
-    public GuiTab(ResourceLocation resource, GuiBaseContainer gui, TileBaseMachine e, int normalWidth, int normalHeight, int extendedWidth, int extendedHeight, int yOffset, boolean rightAligned) {
+    private GuiTab(ResourceLocation resource, GuiBaseContainer gui, TileBaseMachine e, int normalWidth, int normalHeight, int extendedWidth, int extendedHeight, int yOffset, boolean rightAligned) {
         super(gui, resource);
         tileEntity = e;
 
         this.rightAligned = rightAligned;
 
-        NORMAL_HEIGHT = normalHeight;
-        NORMAL_WIDTH = normalWidth;
+        this.normalHeight = normalHeight;
+        this.normalWidth = normalWidth;
 
-        EXT_HEIGHT = extendedHeight;
-        EXT_WIDTH = extendedWidth;
+        this.extendedHeight = extendedHeight;
+        this.extendedWidth = extendedWidth;
 
-        Y_OFFSET = yOffset;
+        this.yOffset = yOffset;
     }
 
     public GuiTab(ResourceLocation resource, GuiBaseContainer gui, TileBaseMachine e, int normalWidth, int normalHeight, int extendedWidth, int extendedHeight, int yOffset) {
         this(resource, gui, e, normalWidth, normalHeight, extendedWidth, extendedHeight, yOffset, true);
     }
 
-    public GuiTab(ResourceLocation resource, GuiBaseContainer gui, TileBaseMachine e, int yOffset) {
+    GuiTab(ResourceLocation resource, GuiBaseContainer gui, TileBaseMachine e, int yOffset) {
         this(resource, gui, e, 16, 24, 24, 24, yOffset, true);
     }
 
-    public GuiTab(ResourceLocation resource, GuiBaseContainer gui, TileBaseMachine e, int yOffset, boolean rightAligned) {
+    GuiTab(ResourceLocation resource, GuiBaseContainer gui, TileBaseMachine e, int yOffset, boolean rightAligned) {
         this(resource, gui, e, 16, 24, 24, 24, yOffset, rightAligned);
     }
 
@@ -63,18 +63,17 @@ public abstract class GuiTab extends GuiElement {
     public void renderBackground(int xAxis, int yAxis, int guiWidth, int guiHeight) {
         mc.renderEngine.bindTexture(resource);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        //TODO simplify this logic with some ????
         if(!isInTab(xAxis, yAxis)) {
             if(rightAligned) {
-                guiObj.drawTexturedModalRect(guiWidth + guiObj.getWidth(), guiHeight + Y_OFFSET, 0, 0, NORMAL_WIDTH, NORMAL_HEIGHT);
+                guiObj.drawTexturedModalRect(guiWidth + guiObj.getWidth(), guiHeight + yOffset, 0, 0, normalWidth, normalHeight);
             } else {
-                guiObj.drawTexturedModalRect(guiWidth - NORMAL_WIDTH, guiHeight + Y_OFFSET, EXT_WIDTH - NORMAL_WIDTH, 0, NORMAL_WIDTH, NORMAL_HEIGHT);
+                guiObj.drawTexturedModalRect(guiWidth - normalWidth, guiHeight + yOffset, extendedWidth - normalWidth, 0, normalWidth, normalHeight);
             }
         } else {
             if(rightAligned) {
-                guiObj.drawTexturedModalRect(guiWidth + guiObj.getWidth(), guiHeight + Y_OFFSET, 0, NORMAL_HEIGHT, EXT_WIDTH, EXT_HEIGHT);
+                guiObj.drawTexturedModalRect(guiWidth + guiObj.getWidth(), guiHeight + yOffset, 0, normalHeight, extendedWidth, extendedHeight);
             } else {
-                guiObj.drawTexturedModalRect(guiWidth - EXT_WIDTH, guiHeight + Y_OFFSET, 0, NORMAL_HEIGHT, EXT_WIDTH, EXT_HEIGHT);
+                guiObj.drawTexturedModalRect(guiWidth - extendedWidth, guiHeight + yOffset, 0, normalHeight, extendedWidth, extendedHeight);
             }
         }
     }
@@ -87,11 +86,11 @@ public abstract class GuiTab extends GuiElement {
         }
     }
 
-    protected boolean isInTab(int xAxis, int yAxis) {
+    private boolean isInTab(int xAxis, int yAxis) {
         if(rightAligned) {
-            return isInRect(xAxis, yAxis, guiObj.getWidth(), Y_OFFSET, NORMAL_HEIGHT, NORMAL_WIDTH);
+            return isInRect(xAxis, yAxis, guiObj.getWidth(), yOffset, normalHeight, normalWidth);
         } else {
-            return isInRect(xAxis, yAxis, -NORMAL_WIDTH, Y_OFFSET, NORMAL_HEIGHT, NORMAL_WIDTH);
+            return isInRect(xAxis, yAxis, -normalWidth, yOffset, normalHeight, normalWidth);
         }
     }
 }
