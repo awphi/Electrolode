@@ -45,8 +45,6 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
         if(!potentialRoles.contains(EnumFaceRole.NONE)) {
             potentialRoles.add(EnumFaceRole.NONE);
         }
-
-
     }
 
     public boolean canInteractWith(EntityPlayer playerIn) {
@@ -90,7 +88,7 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
     public void tick() {
         if(!world.isRemote) {
             if (canProcess()) {
-                setOnStateTexture(true);
+                //TODO Mark as on
                 if(extractEnergy(getEnergyUsage(), true) >= getEnergyUsage()) {
                     processedTime ++;
                     extractEnergy(getEnergyUsage(), false);
@@ -104,15 +102,8 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
                 }
             } else {
                 resetProcess();
-                setOnStateTexture(false);
+                //TODO Mark as off
             }
-        }
-    }
-
-    private void setOnStateTexture(boolean onState) {
-        final IBlockState b = world.getBlockState(getPos());
-        if(b.getBlock() instanceof BlockBaseMachine) {
-            ((BlockBaseMachine) b.getBlock()).setEnabledState(b, world, getPos(), onState);
         }
     }
 
@@ -191,9 +182,9 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
     /**
      *
      * @param face - Face to disable - NORTH = front, EAST = right etc.
-     *             (as if the machine_recipes is facing up from birds-eye view then round clockwise)
+     *             (as if the machine is facing up from birds-eye view then round clockwise)
      */
-    protected void disableFace(EnumFacing face) {
+    public void disableFace(EnumFacing face) {
         if(disabledFaces.contains(face)) return;
 
         if(face == EnumFacing.DOWN || face == EnumFacing.UP) {
@@ -258,7 +249,7 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
 
     public int getEnergyUsage() {
         // TODO: include upgrades and other things that affect it
-        // - Could be overridden in child classes to include other, machine_recipes-specific factors maybe.
+        // - Could be overridden in child classes to include other, machine-specific factors maybe.
         return getBaseEnergyUsage();
     }
 
@@ -317,12 +308,12 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
 
     @Override
     public boolean canExtract() {
-        return this.getBaseEnergyUsage() * 2 > 0;
+        return getEnergyUsage() > 0 && 0 < getEnergyStored();
     }
 
     @Override
     public boolean canReceive() {
-        return this.getBaseEnergyUsage() * 2 > 0;
+        return getEnergyUsage() > 0 && getMaxEnergyStored() > getEnergyStored();
     }
 
     public double getEnergyPercentage() {

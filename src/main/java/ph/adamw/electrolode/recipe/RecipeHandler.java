@@ -25,7 +25,6 @@ public class RecipeHandler {
             return null;
         }
 
-        //TODO look into why this is turning up null
         for(MachineRecipe recipe : recipes) {
             if(recipe.input.length != input.length) {
                 continue;

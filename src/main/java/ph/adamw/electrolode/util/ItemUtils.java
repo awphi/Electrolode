@@ -1,12 +1,8 @@
 package ph.adamw.electrolode.util;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ItemUtils {
     public static ItemStackRecipeComponent[] makeItemStackRecipeArray(ItemStack itemStack, int dupes) {

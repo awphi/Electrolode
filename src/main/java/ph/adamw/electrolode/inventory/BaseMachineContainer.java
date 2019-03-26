@@ -140,17 +140,17 @@ public abstract class BaseMachineContainer extends Container implements IDischar
                     break;
                 }
 
-                Slot slot1 = this.inventorySlots.get(i);
-                ItemStack itemstack1 = slot1.getStack();
+                Slot slot = this.inventorySlots.get(i);
+                ItemStack itemstack1 = slot.getStack();
 
-                if (itemstack1.isEmpty() && slot1.isItemValid(stack)) {
-                    if (stack.getCount() > slot1.getSlotStackLimit()) {
-                        slot1.putStack(stack.splitStack(slot1.getSlotStackLimit()));
+                if (itemstack1.isEmpty() && slot.isItemValid(stack)) {
+                    if (stack.getCount() > slot.getSlotStackLimit()) {
+                        slot.putStack(stack.splitStack(slot.getSlotStackLimit()));
                     } else {
-                        slot1.putStack(stack.splitStack(stack.getCount()));
+                        slot.putStack(stack.splitStack(stack.getCount()));
                     }
 
-                    slot1.onSlotChanged();
+                    slot.onSlotChanged();
                     flag = true;
                     break;
                 }
@@ -175,7 +175,7 @@ public abstract class BaseMachineContainer extends Container implements IDischar
 
     /**
      * Default player inventory slot assigning - 27 and 9 for the hotbar.
-     *  - Override if not using the standard 165x175 machine_recipes GUI
+     *  - Override if not using the standard 165x175 machine GUI
      *  - Reflect this change by reassigning TOTAL_PLAYER_INVENTORY_SIZE
      */
     public void addPlayerSlots(IInventory playerInventory) {

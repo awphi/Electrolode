@@ -47,11 +47,11 @@ public class CommonProxy {
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
+        // Register blocks also registers their associated TEs
         BlockManager.registerBlocks(event.getRegistry());
         FluidManager.registerFluids();
         FluidManager.registerFluidBlocks(event.getRegistry());
         FluidManager.renderFluids();
-        BlockManager.registerTileEntities();
     }
 
     @SubscribeEvent

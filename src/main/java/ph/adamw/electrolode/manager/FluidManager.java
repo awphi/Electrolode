@@ -21,14 +21,13 @@ public class FluidManager {
         return fluidMap.get(e);
     }
 
-    private static void registerFluid(Class<? extends FluidBase> e, boolean bucket) {
+    private static void registerFluid(Class<? extends FluidBase> e, boolean placeable) {
         try {
             fluidMap.put(e, e.newInstance());
             FluidRegistry.registerFluid(getFluid(e));
-            if(bucket) {
-                FluidRegistry.addBucketForFluid(getFluid(e));
-            }
-            registerFluidBlock(getFluid(e), getFluid(e).getMaterial());
+            FluidRegistry.addBucketForFluid(getFluid(e));
+
+            registerFluidBlock(getFluid(e), getFluid(e).getMaterial(), placeable);
         } catch (IllegalAccessException | InstantiationException ex) {
             ex.printStackTrace();
         }
@@ -40,17 +39,17 @@ public class FluidManager {
         }
     }
 
-    private static void registerFluidBlock(Fluid e, Material mat) {
-        fluidBlocks.add(new BlockFluidBase(e, mat));
-    }
-
-    public static void registerFluids() {
-        registerFluid(FluidSoftenedWater.class, true);
+    private static void registerFluidBlock(Fluid e, Material mat, boolean placeable) {
+        fluidBlocks.add(new BlockFluidBase(e, mat, placeable));
     }
 
     public static void renderFluids() {
         for(BlockFluidBase i : fluidBlocks) {
             i.render();
         }
+    }
+
+    public static void registerFluids() {
+        registerFluid(FluidSoftenedWater.class, false);
     }
 }

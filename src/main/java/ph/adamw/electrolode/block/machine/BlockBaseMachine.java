@@ -2,13 +2,9 @@ package ph.adamw.electrolode.block.machine;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -23,8 +19,6 @@ import ph.adamw.electrolode.item.core.IExtendedDescription;
 import ph.adamw.electrolode.util.InventoryUtils;
 
 public abstract class BlockBaseMachine extends BlockDirectional implements ITileEntityProvider, IExtendedDescription {
-    public static final PropertyBool ENABLED = PropertyBool.create("enabled");
-
     public BlockBaseMachine() {
         super(Material.ROCK, true);
         setHardness(4.0f);
@@ -35,19 +29,17 @@ public abstract class BlockBaseMachine extends BlockDirectional implements ITile
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, FACING, ENABLED);
+        return new BlockStateContainer(this, FACING);
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(FACING).getIndex() + (state.getValue(ENABLED) ? 8 : 0);
+        return state.getValue(FACING).getIndex();
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState()
-                .withProperty(FACING, EnumFacing.getFront(meta & 7))
-                .withProperty(ENABLED, (meta & 8) != 0);
+        return getDefaultState().withProperty(FACING, EnumFacing.getFront(meta & 7));
     }
 
 
@@ -76,14 +68,10 @@ public abstract class BlockBaseMachine extends BlockDirectional implements ITile
 
         TileBaseMachine te = (TileBaseMachine) world.getTileEntity(pos);
 
-        if(te != null) {
+        if (te != null) {
             playerIn.openGui(Electrolode.instance, te.getGuiId(), world, pos.getX(), pos.getY(), pos.getZ());
         }
 
         return true;
-    }
-
-    public void setEnabledState(IBlockState state, World world, BlockPos pos, boolean onState) {
-        world.setBlockState(pos, state.withProperty(ENABLED, onState), 3);
     }
 }

@@ -76,15 +76,16 @@ public abstract class TileInventoriedMachine extends TileBaseMachine {
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            ItemStackHandlerBase value;
+            final ItemStackHandlerBase value;
+
             if(facing == null) {
                 return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(allSlotsWrapper);
-            } else if(faceMap.getRole(facing) == EnumFaceRole.INPUT_ITEM) {
-                value = inputOnlySlotsWrapper;
-            } else if(faceMap.getRole(facing) == EnumFaceRole.OUTPUT_ITEM) {
-                value = outputOnlySlotsWrapper;
-            } else {
-                value = new DummyItemStackHandler();
+            }
+
+            switch(faceMap.getRole(facing)) {
+                case INPUT_ITEM: value = inputOnlySlotsWrapper;  break;
+                case OUTPUT_ITEM: value = outputOnlySlotsWrapper; break;
+                default: value = new DummyItemStackHandler();
             }
 
             value.setAllowedSlot(faceMap.getContainerIndex(facing));
@@ -99,6 +100,7 @@ public abstract class TileInventoriedMachine extends TileBaseMachine {
         if(!world.isRemote) {
             EnergyUtils.discharge(chargeSlotWrapper.getStackInSlot(0), this);
         }
+
         super.tick();
     }
 

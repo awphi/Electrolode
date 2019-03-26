@@ -7,17 +7,17 @@ import ph.adamw.electrolode.block.machine.TileBaseMachine;
 
 public class EnergyUtils {
     public static boolean isItemStackChargeable(ItemStack itemstack) {
-        if(itemstack == null) {
-            return false;
-        }
-
-        return itemstack.hasCapability(CapabilityEnergy.ENERGY, null);
+        return itemstack != null && itemstack.hasCapability(CapabilityEnergy.ENERGY, null);
     }
 
     public static void discharge(ItemStack itemStack, TileBaseMachine te) {
-        if(!isItemStackChargeable(itemStack)) return;
+        if(!isItemStackChargeable(itemStack)) {
+            return;
+        }
 
-        IEnergyStorage energyStorage = itemStack.getCapability(CapabilityEnergy.ENERGY, null);
+        final IEnergyStorage energyStorage = itemStack.getCapability(CapabilityEnergy.ENERGY, null);
+
+        //noinspection ConstantConditions
         if(energyStorage.getEnergyStored() - te.getEnergyUsage() > 0 && te.getEnergyStored() + te.getEnergyUsage() <= te.getMaxEnergyStored()) {
             energyStorage.extractEnergy(te.getEnergyUsage(), false);
             te.receiveEnergy(te.getEnergyUsage(), false);

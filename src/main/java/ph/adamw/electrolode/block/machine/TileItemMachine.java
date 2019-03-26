@@ -1,13 +1,11 @@
 package ph.adamw.electrolode.block.machine;
 
-import net.minecraft.item.ItemStack;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
 import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
 import ph.adamw.electrolode.recipe.RecipeUtils;
-import ph.adamw.electrolode.util.ItemUtils;
 
 public abstract class TileItemMachine extends TileInventoriedMachine {
     protected void addPotentialFaceRoles() {

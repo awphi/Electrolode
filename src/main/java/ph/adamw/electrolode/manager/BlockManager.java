@@ -79,9 +79,4 @@ public class BlockManager {
         registerBlock(registry, BlockPress.class);
         registerBlock(registry, BlockSoftener.class);
     }
-
-    //Register one-off TEs here, machine_recipes tile entities are register along with their block
-    public static void registerTileEntities() {
-
-    }
 }

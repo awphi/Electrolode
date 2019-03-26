@@ -16,14 +16,6 @@
       "east": {"y": 90},
       "up": {"x": -90},
       "down": {"x": 90}
-    },
-    "enabled": {
-      "false": {},
-      "true": {
-        "textures": {
-          "front": "electrolode:blocks/purifier/front_on"
-        }
-      }
     }
   }
 }
