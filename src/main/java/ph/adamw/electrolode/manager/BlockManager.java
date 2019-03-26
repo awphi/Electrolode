@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
+//TODO migrate to using forge registries instead of these managers
 public class BlockManager {
     private static final HashMap<Class<? extends BlockBase>, BlockBase> blockMap = new HashMap<>();
 

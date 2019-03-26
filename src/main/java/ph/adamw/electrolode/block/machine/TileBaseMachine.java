@@ -236,7 +236,7 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
             return Integer.MAX_VALUE;
         }
 
-        return recipe.energy / getEnergyUsage();
+        return recipe.getEnergy() / getEnergyUsage();
     }
 
     public double getCompletedPercentage() {

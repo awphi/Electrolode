@@ -13,6 +13,7 @@ import ph.adamw.electrolode.inventory.fluid.DummyFluidTank;
 import ph.adamw.electrolode.inventory.fluid.FluidTankBase;
 import ph.adamw.electrolode.recipe.FluidStackRecipeComponent;
 import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
+import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
 import ph.adamw.electrolode.recipe.RecipeUtils;
@@ -152,19 +153,19 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
         return x;
     }
 
-    private boolean canTanksHoldRecipe(RecipeComponent[] recipeOutput) {
+    private boolean canTanksHoldOutput(RecipeComponent[] output) {
         int tankCount = 0;
-        for(RecipeComponent i : recipeOutput) {
+        for(RecipeComponent i : output) {
             if(i instanceof FluidStackRecipeComponent) {
-                FluidTankBase tank = outputTanks.get(tankCount);
-                if(((FluidStackRecipeComponent) i).fluidStack.amount <= (tank.getCapacity() - tank.getFluidAmount())) {
-                    continue;
+                final FluidTankBase tank = outputTanks.get(tankCount);
+
+                if(((FluidStackRecipeComponent) i).copyOf().amount <= (tank.getCapacity() - tank.getFluidAmount())) {
+                    // i.e. yes this one can hold the i-th output so test the next tank on the next output
+                    tankCount ++;
                 } else {
                     return false;
                 }
             }
-
-            tankCount ++;
         }
 
         return true;
@@ -172,7 +173,10 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
 
     public boolean canProcess() {
         if(RecipeHandler.hasRecipe(this.getClass(), getInputContents())) {
-            return RecipeUtils.canComponentArraysStack(getCurrentRecipe().output, getOutputContents()) && canTanksHoldRecipe(getCurrentRecipe().output);
+            return RecipeUtils.canComponentArraysStack(
+                    getCurrentRecipe().getOutput(), getOutputContents())
+                    && canTanksHoldOutput(getCurrentRecipe().getOutput()
+            );
         }
 
         return false;
@@ -196,10 +200,10 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
                     if (neighbour == null) continue;
                     IFluidHandler x = neighbour.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, i);
                     if (x == null) continue;
-                    int attempt = x.fill(component.fluidStack, false);
+                    int attempt = x.fill(component.copyOf(), false);
                     if (attempt != 0) {
                         outputTanks.get(count).drain(attempt, true);
-                        x.fill(new FluidStack(component.fluidStack.getFluid(), attempt), true);
+                        x.fill(new FluidStack(component.copyOf().getFluid(), attempt), true);
                     }
                 }
             }
@@ -208,18 +212,19 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
     }
 
     public void processingComplete() {
-        RecipeComponent[] output = getCurrentRecipe().output;
-        RecipeComponent[] input = getCurrentRecipe().input;
+        final MachineRecipe recipe = getCurrentRecipe();
+        final RecipeComponent[] output = recipe.getOutput();
+        final RecipeComponent[] input = recipe.getInput();
 
         int tankCount = 0;
         int slotCount = 0;
 
         for (RecipeComponent component : output) {
             if (component instanceof ItemStackRecipeComponent) {
-                outputOnlySlotsWrapper.insertItemInternally(slotCount, ((ItemStackRecipeComponent) component).itemStack, false);
+                outputOnlySlotsWrapper.insertItemInternally(slotCount, ((ItemStackRecipeComponent) component).copyOf(), false);
                 slotCount++;
             } else if (component instanceof FluidStackRecipeComponent) {
-                outputTanks.get(tankCount).fillInternal(((FluidStackRecipeComponent) component).fluidStack, true);
+                outputTanks.get(tankCount).fillInternal(((FluidStackRecipeComponent) component).copyOf(), true);
                 tankCount++;
             }
         }
@@ -229,10 +234,10 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
 
         for (RecipeComponent component : input) {
             if (component instanceof ItemStackRecipeComponent) {
-                inputOnlySlotsWrapper.extractItemInternally(slotCount, ((ItemStackRecipeComponent) component).itemStack.getCount(), false);
+                inputOnlySlotsWrapper.extractItemInternally(slotCount, ((ItemStackRecipeComponent) component).copyOf().getCount(), false);
                 slotCount++;
             } else if (component instanceof FluidStackRecipeComponent) {
-                inputTanks.get(tankCount).drainInternal(((FluidStackRecipeComponent) component).fluidStack, true);
+                inputTanks.get(tankCount).drainInternal(((FluidStackRecipeComponent) component).copyOf(), true);
                 tankCount++;
             }
         }

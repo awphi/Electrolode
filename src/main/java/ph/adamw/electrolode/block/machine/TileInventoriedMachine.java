@@ -30,7 +30,7 @@ public abstract class TileInventoriedMachine extends TileBaseMachine {
                 continue;
             }
 
-            final ItemStack itemStack = ((ItemStackRecipeComponent) k).itemStack;
+            final ItemStack itemStack = ((ItemStackRecipeComponent) k).copyOf();
 
             if (itemStack == ItemStack.EMPTY) {
                 continue;
@@ -124,7 +124,7 @@ public abstract class TileInventoriedMachine extends TileBaseMachine {
     public RecipeComponent[] getInputContents() {
         ItemStackRecipeComponent[] ret = new ItemStackRecipeComponent[getInputSlots()];
         for(int i = 0; i < getInputSlots(); i ++) {
-            ret[i] = new ItemStackRecipeComponent(inputOnlySlotsWrapper.getStackInSlot(i));
+            ret[i] = new ItemStackRecipeComponent(inputOnlySlotsWrapper.getStackInSlot(i).copy());
         }
         return ret;
     }
@@ -132,7 +132,7 @@ public abstract class TileInventoriedMachine extends TileBaseMachine {
     public RecipeComponent[] getOutputContents() {
         ItemStackRecipeComponent[] ret = new ItemStackRecipeComponent[getOutputSlots()];
         for(int i = 0; i < getOutputSlots(); i ++) {
-            ret[i] = new ItemStackRecipeComponent(outputOnlySlotsWrapper.getStackInSlot(i));
+            ret[i] = new ItemStackRecipeComponent(outputOnlySlotsWrapper.getStackInSlot(i).copy());
         }
         return ret;
     }

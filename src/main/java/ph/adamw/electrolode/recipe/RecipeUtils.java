@@ -1,17 +1,17 @@
 package ph.adamw.electrolode.recipe;
 
 public class RecipeUtils {
-    public static boolean canComponentArraysStack(RecipeComponent[] a, RecipeComponent[] b) {
-        if(a.length != b.length) {
+    public static boolean canComponentArraysStack(RecipeComponent[] attempted, RecipeComponent[] onto) {
+        if(attempted.length != onto.length) {
             return false;
         }
 
-        for(int i = 0; i < a.length; i ++) {
-            if(a[i].isEmpty() || b[i].isEmpty()) {
+        for(int i = 0; i < attempted.length; i ++) {
+            if(attempted[i].isEmpty() || onto[i].isEmpty()) {
                 continue;
             }
 
-            if(!a[i].isSameType(b[i]) || !a[i].canStack(b[i])) {
+            if(!attempted[i].isSameType(onto[i]) || !attempted[i].canStack(onto[i])) {
                 return false;
             }
         }

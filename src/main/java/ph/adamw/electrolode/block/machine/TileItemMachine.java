@@ -15,8 +15,9 @@ public abstract class TileItemMachine extends TileInventoriedMachine {
 
     public boolean canProcess() {
         if (RecipeHandler.hasRecipe(this.getClass(), getInputContents())) {
-            return RecipeUtils.canComponentArraysStack(getCurrentRecipe().output, getOutputContents());
+            return RecipeUtils.canComponentArraysStack(getCurrentRecipe().getOutput(), getOutputContents());
         }
+
         return false;
     }
 
@@ -24,14 +25,18 @@ public abstract class TileItemMachine extends TileInventoriedMachine {
         final MachineRecipe recipe = getCurrentRecipe();
 
         int c = 0;
-        for(RecipeComponent i : recipe.output) {
-            outputOnlySlotsWrapper.insertItemInternally(c, ((ItemStackRecipeComponent) i).itemStack, false);
+        for(RecipeComponent i : recipe.getOutput()) {
+            if(i instanceof ItemStackRecipeComponent) {
+                outputOnlySlotsWrapper.insertItemInternally(c, ((ItemStackRecipeComponent) i).copyOf(), false);
+            }
             c ++;
         }
 
         c = 0;
-        for(RecipeComponent i : recipe.input) {
-            inputOnlySlotsWrapper.extractItemInternally(c, ((ItemStackRecipeComponent) i).itemStack.getCount(), false);
+        for(RecipeComponent i : recipe.getInput()) {
+            if(i instanceof ItemStackRecipeComponent) {
+                inputOnlySlotsWrapper.extractItemInternally(c, ((ItemStackRecipeComponent) i).copyOf().getCount(), false);
+            }
             c ++;
         }
     }

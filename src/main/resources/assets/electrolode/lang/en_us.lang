@@ -17,7 +17,7 @@ item.electrolode.goldpowderpurified.name=Purified Gold Powder
 item.electrolode.titaniumpowderpurified.name=Purified Titanium Powder
 
 item.electrolode.structuralplate.name=Structural Plate
-item.electrode.conductiveplate.name=Conductive Plate
+item.electrolode.conductiveplate.name=Conductive Plate
 item.electrolode.strengthenedplate.name=Strengthened Plate
 
 itemGroup.electrolode=Electrolode

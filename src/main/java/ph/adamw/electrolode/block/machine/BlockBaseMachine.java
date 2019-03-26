@@ -10,17 +10,19 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.BlockDirectional;
 import ph.adamw.electrolode.manager.BlockManager;
 import ph.adamw.electrolode.item.core.IExtendedDescription;
+import ph.adamw.electrolode.rendering.RenderMachine;
 import ph.adamw.electrolode.util.InventoryUtils;
 
 public abstract class BlockBaseMachine extends BlockDirectional implements ITileEntityProvider, IExtendedDescription {
     public BlockBaseMachine() {
-        super(Material.ROCK, true);
+        super(Material.IRON, true);
         setHardness(4.0f);
         BlockManager.registerTileEntity(getTileClass(), getBlockName());
     }
@@ -40,6 +42,21 @@ public abstract class BlockBaseMachine extends BlockDirectional implements ITile
     @Override
     public IBlockState getStateFromMeta(int meta) {
         return getDefaultState().withProperty(FACING, EnumFacing.getFront(meta & 7));
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) {
+        return true;
+    }
+
+    @Override
+    public boolean isFullCube(IBlockState state) {
+        return true;
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
     }
 
 
@@ -73,5 +90,11 @@ public abstract class BlockBaseMachine extends BlockDirectional implements ITile
         }
 
         return true;
+    }
+
+    @Override
+    public void initModel() {
+        super.initModel();
+        ClientRegistry.bindTileEntitySpecialRenderer(TileBaseMachine.class, new RenderMachine());
     }
 }

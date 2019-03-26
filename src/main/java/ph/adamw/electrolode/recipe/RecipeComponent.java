@@ -1,6 +1,6 @@
 package ph.adamw.electrolode.recipe;
 
-public abstract class RecipeComponent<T extends RecipeComponent> {
+public abstract class RecipeComponent<T extends RecipeComponent, E> {
 	public abstract boolean compare(T other);
 
 	public abstract boolean isEmpty();
@@ -10,4 +10,6 @@ public abstract class RecipeComponent<T extends RecipeComponent> {
 	}
 
 	public abstract boolean canStack(T other);
+
+	public abstract E copyOf();
 }

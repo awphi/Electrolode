@@ -2,8 +2,8 @@ package ph.adamw.electrolode.recipe;
 
 import net.minecraftforge.fluids.FluidStack;
 
-public class FluidStackRecipeComponent extends RecipeComponent<FluidStackRecipeComponent> {
-	public final FluidStack fluidStack;
+public class FluidStackRecipeComponent extends RecipeComponent<FluidStackRecipeComponent, FluidStack> {
+	private final FluidStack fluidStack;
 
 	public FluidStackRecipeComponent(FluidStack fluidStack) {
 		this.fluidStack = fluidStack;
@@ -11,8 +11,9 @@ public class FluidStackRecipeComponent extends RecipeComponent<FluidStackRecipeC
 
 	@Override
 	public boolean compare(FluidStackRecipeComponent other) {
-		FluidStack th = this.fluidStack;
-		FluidStack oth = other.fluidStack;
+		final FluidStack th = this.copyOf();
+		final FluidStack oth = other.copyOf();
+
 		if (th == null) {
 			return false;
 		} else {
@@ -27,6 +28,11 @@ public class FluidStackRecipeComponent extends RecipeComponent<FluidStackRecipeC
 
 	@Override
 	public boolean canStack(FluidStackRecipeComponent other) {
-		return fluidStack.getFluid().equals(other.fluidStack.getFluid()) && FluidStack.areFluidStackTagsEqual(fluidStack, other.fluidStack);
+		return fluidStack.getFluid().equals(other.copyOf().getFluid()) && FluidStack.areFluidStackTagsEqual(copyOf(), other.copyOf());
+	}
+
+	@Override
+	public FluidStack copyOf() {
+		return fluidStack.copy();
 	}
 }

@@ -3,8 +3,8 @@ package ph.adamw.electrolode.recipe;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-public class ItemStackRecipeComponent extends RecipeComponent<ItemStackRecipeComponent> {
-	public final ItemStack itemStack;
+public class ItemStackRecipeComponent extends RecipeComponent<ItemStackRecipeComponent, ItemStack> {
+	private final ItemStack itemStack;
 
 	public ItemStackRecipeComponent(ItemStack itemStack) {
 		this.itemStack = itemStack;
@@ -12,10 +12,12 @@ public class ItemStackRecipeComponent extends RecipeComponent<ItemStackRecipeCom
 
 	@Override
 	public boolean compare(ItemStackRecipeComponent other) {
-		final ItemStack th = itemStack;
-		final ItemStack oth = other.itemStack;
-		return th.getItem().equals(oth.getItem()) && th.getItemDamage() == oth.getItemDamage() && th.getMetadata() == oth.getMetadata();
+		final ItemStack thisStack = copyOf();
+		final ItemStack otherStack = other.copyOf();
 
+		return thisStack.getItem().equals(otherStack.getItem())
+				&& thisStack.getItemDamage() == otherStack.getItemDamage()
+				&& thisStack.getMetadata() == otherStack.getMetadata();
 	}
 
 	@Override
@@ -25,7 +27,14 @@ public class ItemStackRecipeComponent extends RecipeComponent<ItemStackRecipeCom
 
 	@Override
 	public boolean canStack(ItemStackRecipeComponent other) {
-		return ItemHandlerHelper.canItemStacksStack(itemStack, other.itemStack);
+		final ItemStack th = copyOf();
+		final ItemStack oth = other.copyOf();
+		return ItemHandlerHelper.canItemStacksStack(copyOf(), other.copyOf()) && th.getCount() + oth.getCount() <= th.getMaxStackSize();
+	}
+
+	@Override
+	public ItemStack copyOf() {
+		return itemStack.copy();
 	}
 
 

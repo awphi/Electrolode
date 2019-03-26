@@ -18,7 +18,7 @@ public class RecipeHandler {
         recipeMap.get(machine).add(recipe);
     }
 
-    private static MachineRecipe findRecipe(Class<? extends TileBaseMachine> machine, RecipeComponent[] input, boolean soft) {
+    private static MachineRecipe findRecipe(Class<? extends TileBaseMachine> machine, RecipeComponent[] userInput, boolean soft) {
         final List<MachineRecipe> recipes = recipeMap.get(machine);
 
         if(recipes == null || recipes.size() == 0) {
@@ -26,25 +26,27 @@ public class RecipeHandler {
         }
 
         for(MachineRecipe recipe : recipes) {
-            if(recipe.input.length != input.length) {
+            final RecipeComponent[] desiredInput = recipe.getInput();
+
+            if(desiredInput.length != userInput.length) {
                 continue;
             }
 
             int validCount = 0;
 
-            for(int i = 0; i < recipe.input.length; i ++) {
-                if(!input[i].isSameType(recipe.input[i])) {
+            for(int i = 0; i < desiredInput.length; i ++) {
+                if(!userInput[i].isSameType(desiredInput[i])) {
                     break;
                 }
 
-                if (soft && (input[i].compare(recipe.input[i]) || input[i].isEmpty())) {
+                if (soft && (userInput[i].compare(desiredInput[i]) || userInput[i].isEmpty())) {
                     validCount++;
-                } else if (!soft && input[i].compare(recipe.input[i])) {
+                } else if (!soft && userInput[i].compare(desiredInput[i])) {
                     validCount++;
                 }
             }
 
-            if(validCount == recipe.input.length) {
+            if(validCount == desiredInput.length) {
                 return recipe;
             }
         }
