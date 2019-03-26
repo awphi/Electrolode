@@ -2,6 +2,7 @@ package ph.adamw.electrolode.block.machine;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -16,43 +17,39 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import ph.adamw.electrolode.Electrolode;
+import ph.adamw.electrolode.block.BlockDirectional;
 import ph.adamw.electrolode.manager.BlockManager;
-import ph.adamw.electrolode.block.BlockBase;
 import ph.adamw.electrolode.item.core.IExtendedDescription;
-import ph.adamw.electrolode.util.BlockUtils;
 import ph.adamw.electrolode.util.InventoryUtils;
 
-public abstract class BlockBaseMachine extends BlockBase implements ITileEntityProvider, IExtendedDescription {
-    public static final PropertyDirection FACING = PropertyDirection.create("facing");
+public abstract class BlockBaseMachine extends BlockDirectional implements ITileEntityProvider, IExtendedDescription {
+    public static final PropertyBool ENABLED = PropertyBool.create("enabled");
 
     public BlockBaseMachine() {
         super(Material.ROCK, true);
         setHardness(4.0f);
-        setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         BlockManager.registerTileEntity(getTileClass(), getBlockName());
     }
 
     public abstract Class<? extends TileEntity> getTileClass();
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        world.setBlockState(pos, state.withProperty(FACING, BlockUtils.getFacingFromEntity(pos, placer, false)), 2);
-    }
-
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(FACING, EnumFacing.getFront(meta & 7));
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, FACING, ENABLED);
     }
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(FACING).getIndex();
+        return state.getValue(FACING).getIndex() + (state.getValue(ENABLED) ? 8 : 0);
     }
 
     @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, FACING);
+    public IBlockState getStateFromMeta(int meta) {
+        return getDefaultState()
+                .withProperty(FACING, EnumFacing.getFront(meta & 7))
+                .withProperty(ENABLED, (meta & 8) != 0);
     }
+
 
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
@@ -84,5 +81,9 @@ public abstract class BlockBaseMachine extends BlockBase implements ITileEntityP
         }
 
         return true;
+    }
+
+    public void setEnabledState(IBlockState state, World world, BlockPos pos, boolean onState) {
+        world.setBlockState(pos, state.withProperty(ENABLED, onState), 3);
     }
 }

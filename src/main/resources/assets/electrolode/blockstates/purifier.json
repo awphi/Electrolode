@@ -1,7 +1,10 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "electrolode:purifier"
+    "model": "electrolode:purifier",
+    "textures": {
+      "front": "electrolode:blocks/purifier/front_off"
+    }
   },
   "variants": {
     "normal": [{}],
@@ -13,6 +16,14 @@
       "east": {"y": 90},
       "up": {"x": -90},
       "down": {"x": 90}
+    },
+    "enabled": {
+      "false": {},
+      "true": {
+        "textures": {
+          "front": "electrolode:blocks/purifier/front_on"
+        }
+      }
     }
   }
 }

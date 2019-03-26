@@ -53,7 +53,7 @@ public class RecipeHandler {
         return null;
     }
 
-    public static MachineRecipe getRecipe(Class<? extends TileBaseMachine> machine, RecipeComponent[] input) {
+    public static MachineRecipe findRecipe(Class<? extends TileBaseMachine> machine, RecipeComponent[] input) {
         return findRecipe(machine, input, false);
     }
 

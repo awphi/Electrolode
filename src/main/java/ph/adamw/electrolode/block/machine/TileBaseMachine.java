@@ -8,12 +8,13 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import ph.adamw.electrolode.Config;
 import ph.adamw.electrolode.block.EnumFaceRole;
-import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
 import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
@@ -69,6 +70,11 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
     }
 
     @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
+        return oldState.getBlock() != newState.getBlock();
+    }
+
+    @Override
     public void update() {
         tick();
 
@@ -84,6 +90,7 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
     public void tick() {
         if(!world.isRemote) {
             if (canProcess()) {
+                setOnStateTexture(true);
                 if(extractEnergy(getEnergyUsage(), true) >= getEnergyUsage()) {
                     processedTime ++;
                     extractEnergy(getEnergyUsage(), false);
@@ -97,7 +104,15 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
                 }
             } else {
                 resetProcess();
+                setOnStateTexture(false);
             }
+        }
+    }
+
+    private void setOnStateTexture(boolean onState) {
+        final IBlockState b = world.getBlockState(getPos());
+        if(b.getBlock() instanceof BlockBaseMachine) {
+            ((BlockBaseMachine) b.getBlock()).setEnabledState(b, world, getPos(), onState);
         }
     }
 
@@ -320,6 +335,6 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
     public abstract RecipeComponent[] getOutputContents();
 
     public MachineRecipe getCurrentRecipe() {
-        return RecipeHandler.getRecipe(this.getClass(), getInputContents());
+        return RecipeHandler.findRecipe(this.getClass(), getInputContents());
     }
 }

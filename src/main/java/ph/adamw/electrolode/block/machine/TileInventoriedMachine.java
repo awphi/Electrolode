@@ -69,6 +69,7 @@ public abstract class TileInventoriedMachine extends TileBaseMachine {
         if(processedTime > 0 && autoEject) {
             ejectOutput();
         }
+
         super.resetProcess();
     }
 
