@@ -3,7 +3,7 @@
   "defaults": {
     "model": "electrolode:purifier",
     "textures": {
-      "front": "electrolode:blocks/purifier/front_off"
+      "front": "electrolode:blocks/purifier/front"
     }
   },
   "variants": {
