@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.rendering;
+package ph.adamw.electrolode.rendering.machine;
 
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;

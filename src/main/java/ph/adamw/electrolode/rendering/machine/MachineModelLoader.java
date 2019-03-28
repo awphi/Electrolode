@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.rendering;
+package ph.adamw.electrolode.rendering.machine;
 
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;

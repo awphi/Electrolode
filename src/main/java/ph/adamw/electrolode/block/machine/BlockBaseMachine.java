@@ -8,21 +8,24 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.block.BlockDirectional;
+import ph.adamw.electrolode.block.BlockHorizontalDirectional;
 import ph.adamw.electrolode.manager.BlockManager;
 import ph.adamw.electrolode.item.core.IExtendedDescription;
-import ph.adamw.electrolode.rendering.BakedMachineModel;
+import ph.adamw.electrolode.rendering.machine.BakedMachineModel;
+import ph.adamw.electrolode.rendering.machine.MachineTESR;
 import ph.adamw.electrolode.util.InventoryUtils;
 
-public abstract class BlockBaseMachine extends BlockDirectional implements ITileEntityProvider, IExtendedDescription {
+public abstract class BlockBaseMachine extends BlockHorizontalDirectional implements ITileEntityProvider, IExtendedDescription {
     public BlockBaseMachine() {
         super(Material.IRON, true);
         setHardness(4.0f);
@@ -95,6 +98,11 @@ public abstract class BlockBaseMachine extends BlockDirectional implements ITile
     }
 
     @Override
+    public EnumBlockRenderType getRenderType(IBlockState state) {
+        return EnumBlockRenderType.INVISIBLE;
+    }
+
+    @Override
     public void initModel() {
         // To make sure that our baked model model is chosen for all states we use this custom state mapper:
         final BlockBaseMachine t = this;
@@ -107,5 +115,7 @@ public abstract class BlockBaseMachine extends BlockDirectional implements ITile
         };
 
         ModelLoader.setCustomStateMapper(this, ignoreState);
+
+        ClientRegistry.bindTileEntitySpecialRenderer(getTileClass(), new MachineTESR());
     }
 }

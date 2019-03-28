@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.rendering;
+package ph.adamw.electrolode.rendering.machine;
 
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.client.renderer.block.model.IBakedModel;

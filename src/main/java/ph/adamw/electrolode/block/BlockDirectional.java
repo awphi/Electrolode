@@ -22,7 +22,7 @@ public abstract class BlockDirectional extends BlockBase {
 		world.setBlockState(pos, state.withProperty(FACING, getFacingFromEntity(pos, placer)), 2);
 	}
 
-	public static EnumFacing getFacingFromEntity(BlockPos clickedBlock, EntityLivingBase entity) {
+	public EnumFacing getFacingFromEntity(BlockPos clickedBlock, EntityLivingBase entity) {
 		return EnumFacing.getFacingFromVector(
 				(float) (entity.posX - clickedBlock.getX()),
 				(float) (entity.posY - clickedBlock.getY()),

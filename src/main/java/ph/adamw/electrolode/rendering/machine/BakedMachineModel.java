@@ -1,7 +1,6 @@
-package ph.adamw.electrolode.rendering;
+package ph.adamw.electrolode.rendering.machine;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -11,12 +10,8 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
-import net.minecraftforge.common.model.IModelState;
-import org.lwjgl.Sys;
 import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.block.BlockDirectional;
+import ph.adamw.electrolode.block.BlockHorizontalDirectional;
 import ph.adamw.electrolode.block.machine.BlockBaseMachine;
 
 import javax.annotation.Nullable;
@@ -41,8 +36,6 @@ public class BakedMachineModel implements IBakedModel {
 
 	@Override
 	public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
-		System.out.println("Regetting quads!");
-
 		if(state == null) {
 			return Collections.emptyList();
 		}
@@ -54,16 +47,18 @@ public class BakedMachineModel implements IBakedModel {
 			faceLocation = new ResourceLocation(Electrolode.MODID, "blocks/machine/" + ((BlockBaseMachine) state.getBlock()).getBlockName() + "_front");
 		}
 
+		//TODO implement a facemap extended property into the machine block and then use that here to dynamically render io ports.
+
 		TextureAtlasSprite sprite = bakedTextureGetter.apply(BASE_LOC);
 
 		for(EnumFacing i : EnumFacing.VALUES) {
-			if(i.equals(state.getValue(BlockDirectional.FACING))) {
+			if(i.equals(state.getValue(BlockHorizontalDirectional.FACING))) {
 				sprite = bakedTextureGetter.apply(faceLocation);
 			}
 
 			quads.add(BakedModelUtils.generateDirectionalQuad(i, sprite, format));
 
-			if(i.equals(state.getValue(BlockDirectional.FACING))) {
+			if(i.equals(state.getValue(BlockHorizontalDirectional.FACING))) {
 				sprite = bakedTextureGetter.apply(BASE_LOC);
 			}
 		}

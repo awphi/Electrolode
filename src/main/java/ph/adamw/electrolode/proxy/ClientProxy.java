@@ -1,7 +1,6 @@
 package ph.adamw.electrolode.proxy;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -9,7 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import ph.adamw.electrolode.manager.BlockManager;
 import ph.adamw.electrolode.manager.ItemManager;
-import ph.adamw.electrolode.rendering.MachineModelLoader;
+import ph.adamw.electrolode.rendering.machine.MachineModelLoader;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
