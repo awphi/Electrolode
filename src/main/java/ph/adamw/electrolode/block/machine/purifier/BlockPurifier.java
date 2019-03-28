@@ -3,6 +3,7 @@ package ph.adamw.electrolode.block.machine.purifier;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import ph.adamw.electrolode.block.machine.BlockBaseMachine;
+import ph.adamw.electrolode.block.machine.TileBaseMachine;
 
 public class BlockPurifier extends BlockBaseMachine {
     public String getDescription() {
@@ -10,7 +11,7 @@ public class BlockPurifier extends BlockBaseMachine {
     }
 
     @Override
-    public Class<? extends TileEntity> getTileClass() {
+    public Class<? extends TileBaseMachine> getTileClass() {
         return TilePurifier.class;
     }
 

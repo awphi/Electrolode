@@ -4,18 +4,22 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.BlockDirectional;
 import ph.adamw.electrolode.manager.BlockManager;
 import ph.adamw.electrolode.item.core.IExtendedDescription;
+import ph.adamw.electrolode.rendering.BakedMachineModel;
 import ph.adamw.electrolode.util.InventoryUtils;
 
 public abstract class BlockBaseMachine extends BlockDirectional implements ITileEntityProvider, IExtendedDescription {
@@ -25,7 +29,7 @@ public abstract class BlockBaseMachine extends BlockDirectional implements ITile
         BlockManager.registerTileEntity(getTileClass(), getBlockName());
     }
 
-    public abstract Class<? extends TileEntity> getTileClass();
+    public abstract Class<? extends TileBaseMachine> getTileClass();
 
     @Override
     protected BlockStateContainer createBlockState() {
@@ -92,6 +96,16 @@ public abstract class BlockBaseMachine extends BlockDirectional implements ITile
 
     @Override
     public void initModel() {
-        super.initModel();
+        // To make sure that our baked model model is chosen for all states we use this custom state mapper:
+        final BlockBaseMachine t = this;
+
+        StateMapperBase ignoreState = new StateMapperBase() {
+            @Override
+            protected ModelResourceLocation getModelResourceLocation(IBlockState iBlockState) {
+                return BakedMachineModel.getModelResourceLocation(t);
+            }
+        };
+
+        ModelLoader.setCustomStateMapper(this, ignoreState);
     }
 }

@@ -68,7 +68,7 @@ public class BlockManager {
     }
 
     private static Block nameBlock(Block i, String name) {
-        return i.setUnlocalizedName(Electrolode.MODID + "." + name).setRegistryName(Electrolode.MODID + ":" + name);
+        return i.setUnlocalizedName(Electrolode.MODID + "." + name).setRegistryName(name);
     }
 
     public static void registerTileEntity(Class<? extends TileEntity> e, String name) {

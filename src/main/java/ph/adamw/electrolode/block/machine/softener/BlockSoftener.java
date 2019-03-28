@@ -3,6 +3,7 @@ package ph.adamw.electrolode.block.machine.softener;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import ph.adamw.electrolode.block.machine.BlockBaseMachine;
+import ph.adamw.electrolode.block.machine.TileBaseMachine;
 import ph.adamw.electrolode.block.machine.purifier.TilePurifier;
 
 public class BlockSoftener extends BlockBaseMachine {
@@ -11,7 +12,7 @@ public class BlockSoftener extends BlockBaseMachine {
     }
 
     @Override
-    public Class<? extends TileEntity> getTileClass() {
+    public Class<? extends TileBaseMachine> getTileClass() {
         return TileSoftener.class;
     }
 
