@@ -30,7 +30,10 @@ public abstract class BlockBase extends Block {
 
 
     @SideOnly(Side.CLIENT)
-    public void initModel() {
+    public void initModel() {}
+
+    @SideOnly(Side.CLIENT)
+    public void initItemModel() {
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
     }
 }

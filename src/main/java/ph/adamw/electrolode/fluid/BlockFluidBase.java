@@ -14,6 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 
 public class BlockFluidBase extends BlockFluidClassic {
+    //TODO use this placeable flag to block placement of it FROM BUCKETS MAINLY
     private final boolean placeable;
 
     public BlockFluidBase(Fluid fluid, Material mat, boolean placeable) {
@@ -22,16 +23,6 @@ public class BlockFluidBase extends BlockFluidClassic {
         setUnlocalizedName(getRegistryName().toString());
         fluid.setBlock(this);
         this.placeable = placeable;
-    }
-
-    //TODO fix this still being placeable even when false
-    @Override
-    public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-        if(placeable) {
-            return super.canPlaceBlockAt(worldIn, pos);
-        }
-
-        return false;
     }
 
     @SideOnly(Side.CLIENT)

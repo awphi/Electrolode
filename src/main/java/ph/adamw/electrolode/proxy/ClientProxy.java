@@ -3,6 +3,7 @@ package ph.adamw.electrolode.proxy;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,5 +24,11 @@ public class ClientProxy extends CommonProxy {
     public static void registerModels(ModelRegistryEvent event) {
         ItemManager.initModels();
         BlockManager.initModels();
+        BlockManager.initItemModels();
+    }
+
+    @Override
+    public void postInit(FMLPostInitializationEvent e) {
+        super.postInit(e);
     }
 }

@@ -1,7 +1,6 @@
 package ph.adamw.electrolode.block.machine;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -9,9 +8,6 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -187,7 +183,7 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
         if(face == EnumFacing.DOWN || face == EnumFacing.UP) {
             disabledFaces.add(face);
         } else {
-            EnumFacing facing = this.getState().getValue(BlockBaseMachine.FACING);
+            EnumFacing facing = this.getState().getValue(BlockMachine.FACING);
             int i = 0;
             switch (face) {
                 case NORTH: i = 0; break;

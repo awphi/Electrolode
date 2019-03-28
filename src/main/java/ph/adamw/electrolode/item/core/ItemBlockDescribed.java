@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
-import ph.adamw.electrolode.block.machine.BlockBaseMachine;
+import ph.adamw.electrolode.block.machine.BlockMachine;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -24,7 +24,7 @@ public class ItemBlockDescribed extends ItemBlock {
     }
 
     public ItemBlockDescribed(Block e) {
-        this(e, (BlockBaseMachine) e);
+        this(e, (BlockMachine) e);
     }
 
     @Override

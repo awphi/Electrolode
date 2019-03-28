@@ -2,10 +2,10 @@ package ph.adamw.electrolode.block.machine.press;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import ph.adamw.electrolode.block.machine.BlockBaseMachine;
+import ph.adamw.electrolode.block.machine.BlockMachine;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
 
-public class BlockPress extends BlockBaseMachine {
+public class BlockPress extends BlockMachine {
     public String getDescription() {
         return "An electric machine that can be used to press#s clean powders and plates into other item and components.";
     }

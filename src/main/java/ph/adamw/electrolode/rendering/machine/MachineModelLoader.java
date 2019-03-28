@@ -31,6 +31,7 @@ public class MachineModelLoader implements ICustomModelLoader {
 
 	@Override
 	public IModel loadModel(ResourceLocation modelLocation) {
+		System.out.println("Requested to load from " + modelLocation.toString());
 		return MODEL;
 	}
 

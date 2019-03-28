@@ -80,4 +80,11 @@ public class BlockManager {
         registerBlock(registry, BlockPress.class);
         registerBlock(registry, BlockSoftener.class);
     }
+
+    @SideOnly(Side.CLIENT)
+	public static void initItemModels() {
+        for(BlockBase i : blockMap.values()) {
+            i.initItemModel();
+        }
+	}
 }

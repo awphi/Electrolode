@@ -12,18 +12,15 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.BlockHorizontalDirectional;
-import ph.adamw.electrolode.block.machine.BlockBaseMachine;
+import ph.adamw.electrolode.block.machine.BlockMachine;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 
 public class BakedMachineModel implements IBakedModel {
-	private final static Map<BlockBaseMachine, ModelResourceLocation> locationMap = new HashMap<>();
 	private static final ResourceLocation BASE_LOC = new ResourceLocation(Electrolode.MODID, "blocks/machine/base");
 
 	private final Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter;
@@ -43,8 +40,8 @@ public class BakedMachineModel implements IBakedModel {
 		final List<BakedQuad> quads = new ArrayList<>();
 		ResourceLocation faceLocation = null;
 
-		if(state.getBlock() instanceof BlockBaseMachine) {
-			faceLocation = new ResourceLocation(Electrolode.MODID, "blocks/machine/" + ((BlockBaseMachine) state.getBlock()).getBlockName() + "_front");
+		if(state.getBlock() instanceof BlockMachine) {
+			faceLocation = new ResourceLocation(Electrolode.MODID, "blocks/machine/" + ((BlockMachine) state.getBlock()).getBlockName() + "_front");
 		}
 
 		//TODO implement a facemap extended property into the machine block and then use that here to dynamically render io ports.
@@ -93,14 +90,10 @@ public class BakedMachineModel implements IBakedModel {
 
 	@Override
 	public ItemOverrideList getOverrides() {
-		return null;
+		return ItemOverrideList.NONE;
 	}
 
-	public static ModelResourceLocation getModelResourceLocation(BlockBaseMachine block) {
-		if(!locationMap.containsKey(block)) {
-			locationMap.put(block, new ModelResourceLocation(Electrolode.MODID + ":machine_" + block.getBlockName()));
-		}
-
-		return locationMap.get(block);
+	public static ModelResourceLocation getModelResourceLocation(BlockMachine block) {
+		return new ModelResourceLocation(Electrolode.MODID + ":machine_" + block.getBlockName());
 	}
 }

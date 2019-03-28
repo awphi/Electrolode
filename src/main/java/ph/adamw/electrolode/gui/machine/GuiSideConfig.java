@@ -6,7 +6,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.block.machine.BlockBaseMachine;
+import ph.adamw.electrolode.block.machine.BlockMachine;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.gui.element.GuiButtonEject;
@@ -23,7 +23,7 @@ public class GuiSideConfig extends GuiBaseContainer {
                 return false;
             }
         });
-        EnumFacing facing = tileEntity.getState().getValue(BlockBaseMachine.FACING);
+        EnumFacing facing = tileEntity.getState().getValue(BlockMachine.FACING);
 
         //Top
         guiElements.add(new GuiButtonSideConfig(this, 64, 22, EnumFacing.UP));

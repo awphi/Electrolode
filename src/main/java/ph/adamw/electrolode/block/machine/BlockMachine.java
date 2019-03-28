@@ -7,6 +7,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -25,8 +26,8 @@ import ph.adamw.electrolode.rendering.machine.BakedMachineModel;
 import ph.adamw.electrolode.rendering.machine.MachineTESR;
 import ph.adamw.electrolode.util.InventoryUtils;
 
-public abstract class BlockBaseMachine extends BlockHorizontalDirectional implements ITileEntityProvider, IExtendedDescription {
-    public BlockBaseMachine() {
+public abstract class BlockMachine extends BlockHorizontalDirectional implements ITileEntityProvider, IExtendedDescription {
+    public BlockMachine() {
         super(Material.IRON, true);
         setHardness(4.0f);
         BlockManager.registerTileEntity(getTileClass(), getBlockName());
@@ -104,13 +105,12 @@ public abstract class BlockBaseMachine extends BlockHorizontalDirectional implem
 
     @Override
     public void initModel() {
-        // To make sure that our baked model model is chosen for all states we use this custom state mapper:
-        final BlockBaseMachine t = this;
+        final ModelResourceLocation resourceLocation = BakedMachineModel.getModelResourceLocation(this);
 
         StateMapperBase ignoreState = new StateMapperBase() {
             @Override
             protected ModelResourceLocation getModelResourceLocation(IBlockState iBlockState) {
-                return BakedMachineModel.getModelResourceLocation(t);
+                return resourceLocation;
             }
         };
 
