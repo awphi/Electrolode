@@ -24,5 +24,6 @@ public class PacketHandler {
     private static void registerMessages() {
         INSTANCE.registerMessage(PacketSideConfigUpdate.Handler.class, PacketSideConfigUpdate.class, nextID(), Side.SERVER);
         INSTANCE.registerMessage(PacketAutoEjectUpdate.Handler.class, PacketAutoEjectUpdate.class, nextID(), Side.SERVER);
+        INSTANCE.registerMessage(PacketGuiRequest.Handler.class, PacketGuiRequest.class, nextID(), Side.SERVER);
     }
 }

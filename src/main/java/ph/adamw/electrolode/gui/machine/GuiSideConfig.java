@@ -12,6 +12,9 @@ import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.gui.element.GuiButtonEject;
 import ph.adamw.electrolode.gui.element.GuiButtonSideConfig;
 import ph.adamw.electrolode.gui.element.GuiButtonElement;
+import ph.adamw.electrolode.networking.PacketAutoEjectUpdate;
+import ph.adamw.electrolode.networking.PacketGuiRequest;
+import ph.adamw.electrolode.networking.PacketHandler;
 import ph.adamw.electrolode.util.BlockUtils;
 import ph.adamw.electrolode.util.GuiUtils;
 
@@ -64,17 +67,11 @@ public class GuiSideConfig extends GuiBaseContainer {
         return new ResourceLocation(Electrolode.MODID, "textures/gui/sideconfig.png");
     }
 
-    @Override
-    public void onGuiClosed() {
-        super.onGuiClosed();
-    }
-
     public void onAction(int id, int mbp) {
         if(mbp == 0) {
             BlockPos pos = tileEntity.getPos();
             switch (id) {
-                case 0:
-                    mc.player.openGui(Electrolode.MODID, tileEntity.getGuiId(), mc.player.world, pos.getX(), pos.getY(), pos.getZ());
+                case 0: PacketHandler.INSTANCE.sendToServer(new PacketGuiRequest(tileEntity.getGuiId(), mc.player, pos));
             }
         }
     }
