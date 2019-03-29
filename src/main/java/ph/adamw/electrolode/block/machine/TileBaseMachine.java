@@ -134,7 +134,7 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
         }
         compound.setIntArray("configuredFaces", x);
         for(int i : x) {
-            compound.setInteger(EnumFacing.byIndex(i).getName() + "role", faceMap.getRole(EnumFacing.byIndex(i)).getValue());
+            compound.setInteger(EnumFacing.byIndex(i).getName() + "role", faceMap.getRole(EnumFacing.byIndex(i)).ordinal());
             compound.setInteger(EnumFacing.byIndex(i).getName() + "index", faceMap.getContainerIndex(EnumFacing.byIndex(i)));
         }
 

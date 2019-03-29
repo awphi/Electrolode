@@ -94,12 +94,12 @@ public class GuiButtonSideConfig extends GuiButtonElement {
 
         if(!disabled) {
             if (!isInRect(xAxis, yAxis, REL_X, REL_Y, HEIGHT, WIDTH)) {
-                guiObj.drawTexturedModalRect(guiWidth + REL_X, guiHeight + REL_Y, 0, current.getValue() * HEIGHT, WIDTH, HEIGHT);
+                guiObj.drawTexturedModalRect(guiWidth + REL_X, guiHeight + REL_Y, 0, current.ordinal() * HEIGHT, WIDTH, HEIGHT);
             } else {
-                guiObj.drawTexturedModalRect(guiWidth + REL_X, guiHeight + REL_Y, WIDTH, current.getValue() * HEIGHT, WIDTH, HEIGHT);
+                guiObj.drawTexturedModalRect(guiWidth + REL_X, guiHeight + REL_Y, WIDTH, current.ordinal() * HEIGHT, WIDTH, HEIGHT);
             }
         } else {
-            guiObj.drawTexturedModalRect(guiWidth + REL_X * 2, guiHeight + REL_Y, WIDTH, current.getValue() * HEIGHT, WIDTH, HEIGHT);
+            guiObj.drawTexturedModalRect(guiWidth + REL_X * 2, guiHeight + REL_Y, WIDTH, current.ordinal() * HEIGHT, WIDTH, HEIGHT);
         }
     }
 

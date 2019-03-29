@@ -38,7 +38,7 @@ public class PacketSideConfigUpdate implements IMessage {
     @Override
     public void toBytes(ByteBuf buf) {
         buf.writeLong(pos.toLong());
-        buf.writeInt(role.getValue());
+        buf.writeInt(role.ordinal());
         buf.writeInt(direction.getIndex());
         buf.writeInt(containerIndex);
     }

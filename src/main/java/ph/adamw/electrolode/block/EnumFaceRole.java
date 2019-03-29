@@ -33,10 +33,6 @@ public enum EnumFaceRole {
         unlocalizedName = u;
     }
 
-    public int getValue() {
-        return ordinal();
-    }
-
     private static EnumFaceRole step(EnumFaceRole e, int step) {
         if(e == null) {
             return roles[0];
@@ -55,9 +51,11 @@ public enum EnumFaceRole {
 
     public static EnumFaceRole step(EnumFaceRole e, @Nonnull List<EnumFaceRole> pool, int step) {
         e = EnumFaceRole.step(e, step);
+
         while(!pool.contains(e)) {
             e = EnumFaceRole.step(e, step);
         }
+
         return e;
     }
 
