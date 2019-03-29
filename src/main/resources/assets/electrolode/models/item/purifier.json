@@ -1,5 +1,5 @@
 {
-  "parent": "electrolode:block/machine_purifier",
+  "parent": "electrolode:block/purifier",
   "display": {
     "thirdperson": {
       "rotation": [ 10, -45, 170 ],

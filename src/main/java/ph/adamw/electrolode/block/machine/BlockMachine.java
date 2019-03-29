@@ -23,10 +23,12 @@ import net.minecraftforge.items.IItemHandler;
 import org.lwjgl.Sys;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.BlockHorizontalDirectional;
+import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.block.state.FaceMapProperty;
 import ph.adamw.electrolode.manager.BlockManager;
 import ph.adamw.electrolode.item.core.IExtendedDescription;
 import ph.adamw.electrolode.rendering.machine.MachineTESR;
+import ph.adamw.electrolode.rendering.particle.ParticleDiggingUnregistered;
 import ph.adamw.electrolode.util.InventoryUtils;
 
 public abstract class BlockMachine extends BlockHorizontalDirectional implements ITileEntityProvider, IExtendedDescription {
@@ -98,6 +100,28 @@ public abstract class BlockMachine extends BlockHorizontalDirectional implements
 
         if (te != null) {
             playerIn.openGui(Electrolode.instance, te.getGuiId(), world, pos.getX(), pos.getY(), pos.getZ());
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean addDestroyEffects(World world, BlockPos pos, ParticleManager manager) {
+        if(!(world.getBlockState(pos).getBlock() instanceof BlockMachine)) {
+            return false;
+        }
+
+        IBlockState state = world.getBlockState(pos);
+
+        for (int j = 0; j < 4; ++j) {
+            for (int k = 0; k < 4; ++k) {
+                for (int l = 0; l < 4; ++l) {
+                    double d0 = ((double)j + 0.5D) / 4.0D;
+                    double d1 = ((double)k + 0.5D) / 4.0D;
+                    double d2 = ((double)l + 0.5D) / 4.0D;
+                    manager.addEffect((new ParticleDiggingUnregistered(world, (double)pos.getX() + d0, (double)pos.getY() + d1, (double)pos.getZ() + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D, state, EnumFaceRole.NONE.resolveResourceLocation())).setBlockPos(pos));
+                }
+            }
         }
 
         return true;

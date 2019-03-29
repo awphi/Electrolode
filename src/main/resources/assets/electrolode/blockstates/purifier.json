@@ -1,5 +1,6 @@
 {
-  "variants": {
-    "normal": { "model": "electrolode:machine_purifier" }
+  "forge_marker": 1,
+  "defaults": {
+    "model": "electrolode:purifier"
   }
 }

@@ -32,7 +32,7 @@ public abstract class TileInventoriedMachine extends TileBaseMachine {
 
             final ItemStack itemStack = ((ItemStackRecipeComponent) k).copyOf();
 
-            if (itemStack == ItemStack.EMPTY) {
+            if (itemStack == null || itemStack == ItemStack.EMPTY) {
                 continue;
             }
 
@@ -45,6 +45,7 @@ public abstract class TileInventoriedMachine extends TileBaseMachine {
                     ItemStack attempt = ItemHandlerHelper.insertItem(x, itemStack, true);
                     if (attempt != itemStack) {
                         ItemStack removed = outputOnlySlotsWrapper.extractItem(count, itemStack.getCount() - attempt.getCount(), false);
+
                         if (removed != ItemStack.EMPTY) {
                             ItemHandlerHelper.insertItem(x, itemStack.copy(), false);
                             break;
@@ -52,6 +53,7 @@ public abstract class TileInventoriedMachine extends TileBaseMachine {
                     }
                 }
             }
+
             count++;
         }
     }

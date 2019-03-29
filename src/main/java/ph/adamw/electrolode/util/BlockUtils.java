@@ -16,18 +16,14 @@ public class BlockUtils {
     }
 
     public static BlockPos getNeighbourPos(BlockPos e, EnumFacing facing) {
-        int x = e.getX();
-        int y = e.getY();
-        int z = e.getZ();
         switch(facing) {
-            case WEST: x--;
-            case EAST: x++;
-            case NORTH: z--;
-            case SOUTH: z++;
-            case UP: y++;
-            case DOWN: y--;
-            default: break;
+            case WEST: e.west();
+            case EAST: e.east();
+            case NORTH: e.north();
+            case SOUTH: e.south();
+            case UP: e.up();
+            case DOWN: e.down();
+            default: return e;
         }
-        return new BlockPos(x, y, z);
     }
 }
