@@ -1,6 +1,5 @@
 package ph.adamw.electrolode.util;
 
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 

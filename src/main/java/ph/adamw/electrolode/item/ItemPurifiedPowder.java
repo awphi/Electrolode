@@ -28,7 +28,7 @@ public class ItemPurifiedPowder extends ItemBase implements IMetadataItem {
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack i) {
+    public String getTranslationKey(ItemStack i) {
         if(i.getItemDamage() <= EnumMineral.values().length-1) {
             return "item." + Electrolode.MODID + "." + EnumMineral.values()[i.getItemDamage()].getName().toLowerCase() + "powderpurified";
         }

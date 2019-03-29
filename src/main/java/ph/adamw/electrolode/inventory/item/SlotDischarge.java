@@ -7,9 +7,6 @@ import ph.adamw.electrolode.gui.GuiPoint;
 import ph.adamw.electrolode.util.EnergyUtils;
 
 import javax.annotation.Nullable;
-import javax.vecmath.Point2d;
-import java.awt.*;
-import java.awt.geom.Point2D;
 
 public class SlotDischarge extends SlotItemHandler {
     public SlotDischarge(IItemHandler itemHandler, int index, GuiPoint point) {

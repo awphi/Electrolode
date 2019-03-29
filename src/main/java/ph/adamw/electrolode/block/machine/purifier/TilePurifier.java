@@ -1,7 +1,5 @@
 package ph.adamw.electrolode.block.machine.purifier;
 
-import net.minecraft.util.EnumFacing;
-import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.block.machine.TileItemMachine;
 
 

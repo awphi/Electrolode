@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import ph.adamw.electrolode.block.machine.TileInventoriedMachine;
-import ph.adamw.electrolode.block.machine.TileItemMachine;
 import ph.adamw.electrolode.inventory.item.IDischargeSlot;
 import ph.adamw.electrolode.inventory.item.SlotDischarge;
 

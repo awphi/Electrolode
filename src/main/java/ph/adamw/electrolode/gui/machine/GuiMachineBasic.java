@@ -18,7 +18,7 @@ public abstract class GuiMachineBasic extends GuiBaseContainer {
     }
 
     public String getUnlocalizedTitle() {
-        return tileEntity.getWorld().getBlockState(tileEntity.getPos()).getBlock().getUnlocalizedName() + ".name";
+        return tileEntity.getWorld().getBlockState(tileEntity.getPos()).getBlock().getTranslationKey() + ".name";
     }
 
     @Override

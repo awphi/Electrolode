@@ -33,6 +33,6 @@ public class FluidStackRecipeComponent extends RecipeComponent<FluidStackRecipeC
 
 	@Override
 	public FluidStack copyOf() {
-		return fluidStack.copy();
+		return fluidStack == null ? null : fluidStack.copy();
 	}
 }

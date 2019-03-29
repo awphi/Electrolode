@@ -1,7 +1,5 @@
 package ph.adamw.electrolode.block.machine.softener;
 
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fluids.FluidTank;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.block.machine.TileTankedMachine;
 import ph.adamw.electrolode.inventory.fluid.FluidTankBase;

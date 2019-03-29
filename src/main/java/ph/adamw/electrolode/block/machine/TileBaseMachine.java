@@ -107,13 +107,13 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
         if (compound.hasKey("processedTime")) {
             /* Side configuration */
             for(int i : compound.getIntArray("configuredFaces")) {
-                int roleId = compound.getInteger(EnumFacing.getFront(i).getName() + "role");
-                int index = compound.getInteger(EnumFacing.getFront(i).getName() + "index");
-                faceMap.put(EnumFacing.getFront(i), EnumFaceRole.getRole(roleId), index);
+                int roleId = compound.getInteger(EnumFacing.byIndex(i).getName() + "role");
+                int index = compound.getInteger(EnumFacing.byIndex(i).getName() + "index");
+                faceMap.put(EnumFacing.byIndex(i), EnumFaceRole.getRole(roleId), index);
             }
 
             for(int i : compound.getIntArray("disabledFaces")) {
-                disabledFaces.add(EnumFacing.getFront(i));
+                disabledFaces.add(EnumFacing.byIndex(i));
             }
             /* --- */
             processedTime = compound.getDouble("processedTime");
@@ -134,8 +134,8 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
         }
         compound.setIntArray("configuredFaces", x);
         for(int i : x) {
-            compound.setInteger(EnumFacing.getFront(i).getName() + "role", faceMap.getRole(EnumFacing.getFront(i)).getValue());
-            compound.setInteger(EnumFacing.getFront(i).getName() + "index", faceMap.getContainerIndex(EnumFacing.getFront(i)));
+            compound.setInteger(EnumFacing.byIndex(i).getName() + "role", faceMap.getRole(EnumFacing.byIndex(i)).getValue());
+            compound.setInteger(EnumFacing.byIndex(i).getName() + "index", faceMap.getContainerIndex(EnumFacing.byIndex(i)));
         }
 
         int[] y = new int[disabledFaces.size()];
@@ -170,6 +170,12 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
         super.onDataPacket(net, packet);
         handleUpdateTag(packet.getNbtCompound());
     }
+
+    @Override
+    public boolean hasFastRenderer() {
+        return true;
+    }
+
     /* --- */
 
     /**

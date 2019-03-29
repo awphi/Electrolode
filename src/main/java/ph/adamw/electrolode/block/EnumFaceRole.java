@@ -1,37 +1,40 @@
 package ph.adamw.electrolode.block;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.ResourceLocation;
+import ph.adamw.electrolode.Electrolode;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public enum EnumFaceRole {
-    NONE (0, "enum.electrolode.facerole.none"),
-    INPUT_ITEM(1, "enum.electrolode.facerole.input"),
-    OUTPUT_ITEM(2, "enum.electrolode.facerole.output"),
-    INPUT_FLUID(3, "enum.electrolode.facerole.inputfluid"),
-    OUTPUT_FLUID(4, "enum.electrolode.facerole.outputfluid");
+    NONE ("enum.electrolode.facerole.none"),
+    INPUT_ITEM("enum.electrolode.facerole.input"),
+    OUTPUT_ITEM("enum.electrolode.facerole.output"),
+    INPUT_FLUID("enum.electrolode.facerole.inputfluid"),
+    OUTPUT_FLUID("enum.electrolode.facerole.outputfluid");
 
-    int phase;
     private String unlocalizedName;
+
+    private static final Map<EnumFaceRole, ResourceLocation> resourceLocationCache = new HashMap<>();
 
     static EnumFaceRole[] roles = EnumFaceRole.values();
     private static HashMap<Integer, EnumFaceRole> map = new HashMap<>();
 
     static {
         for (EnumFaceRole eenum : EnumFaceRole.values()) {
-            map.put(eenum.phase, eenum);
+            map.put(eenum.ordinal(), eenum);
         }
     }
 
-    EnumFaceRole(int x, String u) {
-        this.phase = x;
+    EnumFaceRole(String u) {
         unlocalizedName = u;
     }
 
     public int getValue() {
-        return this.phase;
+        return ordinal();
     }
 
     private static EnumFaceRole step(EnumFaceRole e, int step) {
@@ -64,5 +67,13 @@ public enum EnumFaceRole {
 
     public String getLocalizedName() {
         return I18n.format(unlocalizedName);
+    }
+
+    public ResourceLocation resolveResourceLocation() {
+        if(!resourceLocationCache.containsKey(this)) {
+            resourceLocationCache.put(this, new ResourceLocation(Electrolode.MODID,"blocks/machine/" + name().toLowerCase()));
+        }
+
+        return resourceLocationCache.get(this);
     }
 }

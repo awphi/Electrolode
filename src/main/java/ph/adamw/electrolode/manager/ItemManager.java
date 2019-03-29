@@ -30,7 +30,7 @@ public class ItemManager {
 
     public static final CreativeTabs CREATIVE_TAB = new CreativeTabs("electrolode") {
         @Override
-        public ItemStack getTabIconItem() {
+        public ItemStack createIcon() {
             return new ItemStack(ModItems.POWDER, 1, 0);
         }
     };
@@ -56,7 +56,7 @@ public class ItemManager {
     }
 
     private static Item nameItem(Item i, String name) {
-        return i.setUnlocalizedName(Electrolode.MODID + "." + name).setRegistryName(Electrolode.MODID + ":" + name);
+        return i.setTranslationKey(Electrolode.MODID + "." + name).setRegistryName(Electrolode.MODID + ":" + name);
     }
 
     public static void registerItems(IForgeRegistry<Item> registry) {

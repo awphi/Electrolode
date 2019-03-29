@@ -2,11 +2,11 @@
   "parent": "block/cube",
   "textures": {
     "particle": "electrolode:blocks/machine/purifier_front",
-    "down": "electrolode:blocks/machine/base",
-    "up": "electrolode:blocks/machine/base",
+    "down": "electrolode:blocks/machine/none",
+    "up": "electrolode:blocks/machine/none",
     "north": "electrolode:blocks/machine/purifier_front",
-    "east": "electrolode:blocks/machine/base",
-    "south": "electrolode:blocks/machine/base",
-    "west": "electrolode:blocks/machine/base"
+    "east": "electrolode:blocks/machine/none",
+    "south": "electrolode:blocks/machine/none",
+    "west": "electrolode:blocks/machine/none"
   }
 }

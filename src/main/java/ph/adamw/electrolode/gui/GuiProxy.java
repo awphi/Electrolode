@@ -7,10 +7,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
 import ph.adamw.electrolode.block.machine.TileInventoriedMachine;
-import ph.adamw.electrolode.block.machine.TileItemMachine;
 import ph.adamw.electrolode.inventory.BaseMachineContainer;
 import ph.adamw.electrolode.util.GuiUtils;
-import ph.adamw.electrolode.util.ItemUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

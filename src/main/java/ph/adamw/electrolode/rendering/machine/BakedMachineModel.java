@@ -5,14 +5,16 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.property.IExtendedBlockState;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.BlockHorizontalDirectional;
+import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.block.machine.BlockMachine;
+import ph.adamw.electrolode.util.SidedHashMap;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -21,8 +23,6 @@ import java.util.List;
 import java.util.function.Function;
 
 public class BakedMachineModel implements IBakedModel {
-	private static final ResourceLocation BASE_LOC = new ResourceLocation(Electrolode.MODID, "blocks/machine/base");
-
 	private final Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter;
 	private final VertexFormat format;
 
@@ -39,25 +39,29 @@ public class BakedMachineModel implements IBakedModel {
 
 		final List<BakedQuad> quads = new ArrayList<>();
 		ResourceLocation faceLocation = null;
+		SidedHashMap faceMap = null;
 
 		if(state.getBlock() instanceof BlockMachine) {
 			faceLocation = new ResourceLocation(Electrolode.MODID, "blocks/machine/" + ((BlockMachine) state.getBlock()).getBlockName() + "_front");
+
+			if(state instanceof IExtendedBlockState) {
+				faceMap = ((IExtendedBlockState) state).getValue(BlockMachine.FACEMAP_PROP);
+			}
 		}
 
-		//TODO implement a facemap extended property into the machine block and then use that here to dynamically render io ports.
-
-		TextureAtlasSprite sprite = bakedTextureGetter.apply(BASE_LOC);
-
 		for(EnumFacing i : EnumFacing.VALUES) {
+			TextureAtlasSprite sprite = bakedTextureGetter.apply(EnumFaceRole.NONE.resolveResourceLocation());
+
+			if(faceMap != null) {
+				sprite = bakedTextureGetter.apply(faceMap.get(i).getRole().resolveResourceLocation());
+			}
+
+			//Overwrite it if it's the face since we don't draw IO ports on the face
 			if(i.equals(state.getValue(BlockHorizontalDirectional.FACING))) {
 				sprite = bakedTextureGetter.apply(faceLocation);
 			}
 
 			quads.add(BakedModelUtils.generateDirectionalQuad(i, sprite, format));
-
-			if(i.equals(state.getValue(BlockHorizontalDirectional.FACING))) {
-				sprite = bakedTextureGetter.apply(BASE_LOC);
-			}
 		}
 
 		return quads;
@@ -80,7 +84,7 @@ public class BakedMachineModel implements IBakedModel {
 
 	@Override
 	public TextureAtlasSprite getParticleTexture() {
-		return bakedTextureGetter.apply(BASE_LOC);
+		return bakedTextureGetter.apply(EnumFaceRole.NONE.resolveResourceLocation());
 	}
 
 	@Override
@@ -91,9 +95,5 @@ public class BakedMachineModel implements IBakedModel {
 	@Override
 	public ItemOverrideList getOverrides() {
 		return ItemOverrideList.NONE;
-	}
-
-	public static ModelResourceLocation getModelResourceLocation(BlockMachine block) {
-		return new ModelResourceLocation(Electrolode.MODID + ":machine_" + block.getBlockName());
 	}
 }

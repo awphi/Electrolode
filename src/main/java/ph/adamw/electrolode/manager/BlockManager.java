@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -16,9 +17,7 @@ import ph.adamw.electrolode.block.machine.softener.BlockSoftener;
 import ph.adamw.electrolode.item.core.IExtendedDescription;
 import ph.adamw.electrolode.item.core.ItemBlockDescribed;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Set;
 
 //TODO migrate to using forge registries instead of these managers
 public class BlockManager {
@@ -68,11 +67,11 @@ public class BlockManager {
     }
 
     private static Block nameBlock(Block i, String name) {
-        return i.setUnlocalizedName(Electrolode.MODID + "." + name).setRegistryName(name);
+        return i.setTranslationKey(Electrolode.MODID + "." + name).setRegistryName(name);
     }
 
     public static void registerTileEntity(Class<? extends TileEntity> e, String name) {
-        GameRegistry.registerTileEntity(e, Electrolode.MODID + "_" + name);
+        GameRegistry.registerTileEntity(e, new ResourceLocation(Electrolode.MODID, "tile_" + name));
     }
 
     public static void registerBlocks(IForgeRegistry<Block> registry) {

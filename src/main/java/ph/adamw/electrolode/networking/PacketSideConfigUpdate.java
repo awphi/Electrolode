@@ -10,7 +10,6 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import org.lwjgl.Sys;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
 
@@ -32,7 +31,7 @@ public class PacketSideConfigUpdate implements IMessage {
     public void fromBytes(ByteBuf buf) {
         pos = BlockPos.fromLong(buf.readLong());
         role = EnumFaceRole.getRole(buf.readInt());
-        direction = EnumFacing.getFront(buf.readInt());
+        direction = EnumFacing.byIndex(buf.readInt());
         containerIndex = buf.readInt();
     }
 

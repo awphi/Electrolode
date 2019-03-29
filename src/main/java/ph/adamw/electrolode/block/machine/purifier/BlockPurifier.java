@@ -1,7 +1,5 @@
 package ph.adamw.electrolode.block.machine.purifier;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import ph.adamw.electrolode.block.machine.BlockMachine;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
 
@@ -13,10 +11,6 @@ public class BlockPurifier extends BlockMachine {
     @Override
     public Class<? extends TileBaseMachine> getTileClass() {
         return TilePurifier.class;
-    }
-
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TilePurifier();
     }
 
     public String getBlockName() {

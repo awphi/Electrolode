@@ -1,9 +1,5 @@
 package ph.adamw.electrolode.recipe;
 
-import net.minecraft.block.material.Material;
-import net.minecraft.item.ItemStack;
-import org.lwjgl.Sys;
-import ph.adamw.electrolode.ModItems;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
 
 import java.util.HashMap;

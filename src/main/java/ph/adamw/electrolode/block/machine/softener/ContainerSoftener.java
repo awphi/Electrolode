@@ -3,10 +3,8 @@ package ph.adamw.electrolode.block.machine.softener;
 import net.minecraft.inventory.IInventory;
 import net.minecraftforge.items.IItemHandler;
 import ph.adamw.electrolode.block.machine.TileInventoriedMachine;
-import ph.adamw.electrolode.block.machine.TileItemMachine;
 import ph.adamw.electrolode.gui.GuiPoint;
 import ph.adamw.electrolode.inventory.BaseMachineContainer;
-import ph.adamw.electrolode.inventory.item.IDischargeSlot;
 import ph.adamw.electrolode.inventory.item.SlotRecipeInput;
 
 public class ContainerSoftener extends BaseMachineContainer {

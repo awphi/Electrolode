@@ -28,7 +28,7 @@ public class ItemPlate extends ItemBase implements IMetadataItem {
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack i) {
+    public String getTranslationKey(ItemStack i) {
         if(i.getItemDamage() <= EnumPlate.values().length-1) {
             return "item." + Electrolode.MODID + "." + EnumPlate.values()[i.getItemDamage()].getName().toLowerCase() + "plate";
         }

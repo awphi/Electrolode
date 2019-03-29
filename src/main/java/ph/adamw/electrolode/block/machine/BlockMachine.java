@@ -1,32 +1,37 @@
 package ph.adamw.electrolode.block.machine;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.block.statemap.StateMapperBase;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleDigging;
+import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import org.lwjgl.Sys;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.BlockHorizontalDirectional;
+import ph.adamw.electrolode.block.state.FaceMapProperty;
 import ph.adamw.electrolode.manager.BlockManager;
 import ph.adamw.electrolode.item.core.IExtendedDescription;
-import ph.adamw.electrolode.rendering.machine.BakedMachineModel;
 import ph.adamw.electrolode.rendering.machine.MachineTESR;
 import ph.adamw.electrolode.util.InventoryUtils;
 
 public abstract class BlockMachine extends BlockHorizontalDirectional implements ITileEntityProvider, IExtendedDescription {
+    public static final FaceMapProperty FACEMAP_PROP = new FaceMapProperty();
+
     public BlockMachine() {
         super(Material.IRON, true);
         setHardness(4.0f);
@@ -35,19 +40,19 @@ public abstract class BlockMachine extends BlockHorizontalDirectional implements
 
     public abstract Class<? extends TileBaseMachine> getTileClass();
 
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
+        try {
+            return getTileClass().newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        throw new RuntimeException("Could no instantiate " + getTileClass().getSimpleName() + " it needs to have an accessible noargs constructor!");
+    }
+
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, FACING);
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(FACING).getIndex();
-    }
-
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(FACING, EnumFacing.getFront(meta & 7));
+        return new ExtendedBlockState.Builder(this).add(FACING).add(FACEMAP_PROP).build();
     }
 
     @Override
@@ -100,22 +105,11 @@ public abstract class BlockMachine extends BlockHorizontalDirectional implements
 
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.INVISIBLE;
+        return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
     @Override
     public void initModel() {
-        final ModelResourceLocation resourceLocation = BakedMachineModel.getModelResourceLocation(this);
-
-        StateMapperBase ignoreState = new StateMapperBase() {
-            @Override
-            protected ModelResourceLocation getModelResourceLocation(IBlockState iBlockState) {
-                return resourceLocation;
-            }
-        };
-
-        ModelLoader.setCustomStateMapper(this, ignoreState);
-
         ClientRegistry.bindTileEntitySpecialRenderer(getTileClass(), new MachineTESR());
     }
 }

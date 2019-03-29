@@ -2,7 +2,6 @@ package ph.adamw.electrolode.util;
 
 import net.minecraft.util.EnumFacing;
 import ph.adamw.electrolode.block.EnumFaceRole;
-import ph.adamw.electrolode.networking.PacketAutoEjectUpdate;
 
 import java.util.HashMap;
 
@@ -42,17 +41,17 @@ public class SidedHashMap extends HashMap<EnumFacing, SidedHashMap.SidedMapValue
      *  Wildcards:
      *      -1 = All slots of that EnumFaceRole
      */
-    class SidedMapValue {
-        int containerIndex;
-        EnumFaceRole role;
+    public class SidedMapValue {
+        private int containerIndex;
+        private EnumFaceRole role;
 
         SidedMapValue(EnumFaceRole role, int index) {
             this.role = role;
             this.containerIndex = index;
         }
 
-        public SidedMapValue(EnumFaceRole role) {
-            this(role, -1);
+        public EnumFaceRole getRole() {
+            return role;
         }
     }
 }
