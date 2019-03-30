@@ -5,11 +5,15 @@ import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.block.EnumFaceRole;
 
 public class TextureManager {
-	private static void registerSprite(ResourceLocation loc) {
+	public static void registerSprite(ResourceLocation loc) {
 		Minecraft.getMinecraft().getTextureMapBlocks().registerSprite(loc);
 	}
 
-	public static void registerTexture() {
+	public static void registerTextures() {
+		for(ResourceLocation resourceLocation : FluidManager.getFluidResources()) {
+			registerSprite(resourceLocation);
+		}
+
 		for(EnumFaceRole role : EnumFaceRole.values()) {
 			registerSprite(role.resolveResourceLocation());
 		}

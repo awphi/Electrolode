@@ -13,7 +13,7 @@ import ph.adamw.electrolode.manager.ItemManager;
 /*
  * Simple little wrapper class to make referencing items neater and easier.
  */
-public class ModItems {
+public class ElectrolodeItems {
     public static final Item POWDER = getRegisteredItem(ItemPowder.class);
     public static final Item POWDER_PURIFIED = getRegisteredItem(ItemPurifiedPowder.class);
     public static final Item PLATE = getRegisteredItem(ItemPlate.class);

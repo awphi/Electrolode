@@ -1,7 +1,7 @@
 package ph.adamw.electrolode.manager;
 
 import net.minecraft.item.ItemStack;
-import ph.adamw.electrolode.ModItems;
+import ph.adamw.electrolode.ElectrolodeItems;
 import ph.adamw.electrolode.block.machine.press.TilePress;
 import ph.adamw.electrolode.item.core.EnumMineral;
 import ph.adamw.electrolode.item.core.EnumPlate;
@@ -18,31 +18,31 @@ public class RecipeManager {
     public static void registerMachineRecipes() {
         // Structural Plate
         ItemStackRecipeComponent[] ingredients
-                = ItemUtils.makeItemStackRecipeArray(new ItemStack(ModItems.POWDER_PURIFIED, 1, EnumMineral.IRON.ordinal()), 3);
+                = ItemUtils.makeItemStackRecipeArray(new ItemStack(ElectrolodeItems.POWDER_PURIFIED, 1, EnumMineral.IRON.ordinal()), 3);
         MachineRecipe recipe = new MachineRecipe(
                 ingredients,
-                new ItemStackRecipeComponent(new ItemStack(ModItems.PLATE, 1, EnumPlate.STRUCTURAL.ordinal())),
+                new ItemStackRecipeComponent(new ItemStack(ElectrolodeItems.PLATE, 1, EnumPlate.STRUCTURAL.ordinal())),
                 1000
         );
         RecipeHandler.addRecipe(TilePress.class, recipe);
 
         // Strengthened Plate
         ingredients =
-                ItemUtils.makeItemStackRecipeArray(new ItemStack(ModItems.POWDER_PURIFIED, 1, EnumMineral.CARBON.ordinal()), 3);
+                ItemUtils.makeItemStackRecipeArray(new ItemStack(ElectrolodeItems.POWDER_PURIFIED, 1, EnumMineral.CARBON.ordinal()), 3);
         recipe = new MachineRecipe(
                 ingredients,
-                new ItemStackRecipeComponent(new ItemStack(ModItems.PLATE, 1, EnumPlate.STRENGTHENED.ordinal())),
+                new ItemStackRecipeComponent(new ItemStack(ElectrolodeItems.PLATE, 1, EnumPlate.STRENGTHENED.ordinal())),
                 1000
         );
         RecipeHandler.addRecipe(TilePress.class, recipe);
 
         // Conductive Plate
         ingredients =
-                ItemUtils.makeItemStackRecipeArray(new ItemStack(ModItems.POWDER_PURIFIED, 1, EnumMineral.CARBON.ordinal()), 3);
-        ingredients[1] = new ItemStackRecipeComponent(new ItemStack(ModItems.POWDER_PURIFIED, 1, EnumMineral.GOLD.ordinal()));
+                ItemUtils.makeItemStackRecipeArray(new ItemStack(ElectrolodeItems.POWDER_PURIFIED, 1, EnumMineral.CARBON.ordinal()), 3);
+        ingredients[1] = new ItemStackRecipeComponent(new ItemStack(ElectrolodeItems.POWDER_PURIFIED, 1, EnumMineral.GOLD.ordinal()));
         recipe = new MachineRecipe(
                 ingredients,
-                new ItemStackRecipeComponent(new ItemStack(ModItems.PLATE, 1, EnumPlate.CONDUCTIVE.ordinal())),
+                new ItemStackRecipeComponent(new ItemStack(ElectrolodeItems.PLATE, 1, EnumPlate.CONDUCTIVE.ordinal())),
                 1000
         );
         RecipeHandler.addRecipe(TilePress.class, recipe);

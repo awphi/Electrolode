@@ -2,17 +2,15 @@ package ph.adamw.electrolode.networking;
 
 import io.netty.buffer.ByteBuf;
 import lombok.NoArgsConstructor;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import ph.adamw.electrolode.Electrolode;
+
+import java.util.UUID;
 
 @NoArgsConstructor
 public class PacketGuiRequest implements IMessage {
@@ -29,19 +27,23 @@ public class PacketGuiRequest implements IMessage {
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		id = buf.readInt();
-		int nameLength = buf.readInt();
-		byte[] name = new byte[nameLength];
-		buf.readBytes(name);
+
+		int uuidLength = buf.readInt();
+		byte[] uuid = new byte[uuidLength];
+
+		buf.readBytes(uuid);
 		player = FMLCommonHandler.instance().getMinecraftServerInstance()
-				.getPlayerList().getPlayerByUsername(new String(name));
+				.getPlayerList().getPlayerByUUID(UUID.fromString(new String(uuid)));
 		pos = BlockPos.fromLong(buf.readLong());
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
+		byte[] uuid = player.getUniqueID().toString().getBytes();
+
 		buf.writeInt(id);
-		buf.writeInt(player.getName().getBytes().length);
-		buf.writeBytes(player.getName().getBytes());
+		buf.writeInt(uuid.length);
+		buf.writeBytes(uuid);
 		buf.writeLong(pos.toLong());
 	}
 

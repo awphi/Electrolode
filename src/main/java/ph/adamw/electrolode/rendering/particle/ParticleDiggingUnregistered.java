@@ -1,7 +1,6 @@
 package ph.adamw.electrolode.rendering.particle;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleDigging;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;

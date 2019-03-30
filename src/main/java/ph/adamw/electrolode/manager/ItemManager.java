@@ -7,7 +7,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.ModItems;
+import ph.adamw.electrolode.ElectrolodeItems;
 import ph.adamw.electrolode.item.ItemSalt;
 import ph.adamw.electrolode.item.core.ItemBase;
 import ph.adamw.electrolode.item.ItemPlate;
@@ -31,7 +31,7 @@ public class ItemManager {
     public static final CreativeTabs CREATIVE_TAB = new CreativeTabs("electrolode") {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ModItems.POWDER, 1, 0);
+            return new ItemStack(ElectrolodeItems.POWDER, 1, 0);
         }
     };
 

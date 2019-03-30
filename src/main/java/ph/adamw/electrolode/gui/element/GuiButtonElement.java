@@ -4,7 +4,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.util.GuiUtils;
-import ph.adamw.electrolode.util.TextureHelper;
+import ph.adamw.electrolode.util.TextureWrapper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,18 +43,18 @@ public class GuiButtonElement extends GuiElement {
             this(gui, id, resource, x, y, width, height, null);
     }
 
-    public GuiButtonElement(GuiBaseContainer gui, int id, TextureHelper helper, int x, int y, int width, int height, String tooltip) {
+    public GuiButtonElement(GuiBaseContainer gui, int id, TextureWrapper helper, int x, int y, int width, int height, String tooltip) {
         this(gui, id, helper.resource, x, y, width, height, tooltip);
         ORIGIN_X = helper.X_ORIGIN;
         ORIGIN_Y = helper.Y_ORIGIN;
     }
 
-    public GuiButtonElement(GuiBaseContainer gui, int id, TextureHelper helper, int x, int y, String toolTip) {
+    public GuiButtonElement(GuiBaseContainer gui, int id, TextureWrapper helper, int x, int y, String toolTip) {
         this(gui, id, helper, x, y, helper.WIDTH, helper.HEIGHT, toolTip);
     }
 
     public GuiButtonElement(GuiBaseContainer gui, int id, GuiUtils.CommonExtensions button, int x, int y) {
-        this(gui, id, button.getTextureHelper(), x, y, button.getTooltip());
+        this(gui, id, button.getTextureWrapper(), x, y, button.getTooltip());
     }
 
     public void preMouseClicked(int xAxis, int yAxis, int button) {}

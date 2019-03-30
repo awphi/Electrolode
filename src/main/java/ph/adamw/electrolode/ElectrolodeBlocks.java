@@ -12,7 +12,7 @@ import ph.adamw.electrolode.manager.BlockManager;
 /*
  * Simple little wrapper class to make referencing blocks neater and easier.
  */
-public class ModBlocks {
+public class ElectrolodeBlocks {
     public static final Block PURIFIER = getRegisteredBlock(BlockPurifier.class);
     public static final Block PRESS = getRegisteredBlock(BlockPress.class);
     public static final Block SOFTENER = getRegisteredBlock(BlockSoftener.class);

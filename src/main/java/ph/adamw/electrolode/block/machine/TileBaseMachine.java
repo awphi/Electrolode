@@ -13,6 +13,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import ph.adamw.electrolode.Config;
 import ph.adamw.electrolode.block.EnumFaceRole;
+import ph.adamw.electrolode.manager.GuiManager;
 import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
@@ -30,7 +31,7 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
     public boolean autoEject = Config.autoEjectDefault;
 
     public int getGuiId() {
-        return GuiUtils.getGuiId(this);
+        return GuiManager.getGuiId(this);
     }
 
     public SidedHashMap faceMap = new SidedHashMap();

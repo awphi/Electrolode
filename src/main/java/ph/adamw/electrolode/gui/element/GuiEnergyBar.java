@@ -4,7 +4,7 @@ import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
-import ph.adamw.electrolode.util.TextureHelper;
+import ph.adamw.electrolode.util.TextureWrapper;
 
 public class GuiEnergyBar extends GuiElement {
     private TileBaseMachine tileEntity;
@@ -28,14 +28,14 @@ public class GuiEnergyBar extends GuiElement {
         this.vertical = vertical;
     }
 
-    public GuiEnergyBar(TileBaseMachine te, GuiBaseContainer gui, TextureHelper helper, int x, int y, boolean vertical) {
+    public GuiEnergyBar(TileBaseMachine te, GuiBaseContainer gui, TextureWrapper helper, int x, int y, boolean vertical) {
         this(te, gui, helper.resource, x, y, helper.WIDTH, helper.HEIGHT, vertical);
         TEXTURE_X = helper.X_ORIGIN;
         TEXTURE_Y = helper.Y_ORIGIN;
     }
 
     public GuiEnergyBar(TileBaseMachine te, GuiBaseContainer gui, int x, int y, int width, int height, boolean vertical) {
-        this(te, gui, new TextureHelper(new ResourceLocation(Electrolode.MODID, "textures/gui/extensions/commonenergybars.png"), 0, 0, width, height), x, y, vertical);
+        this(te, gui, new TextureWrapper(new ResourceLocation(Electrolode.MODID, "textures/gui/extensions/commonenergybars.png"), 0, 0, width, height), x, y, vertical);
     }
 
     public void renderBackground(int xAxis, int yAxis, int guiWidth, int guiHeight) {

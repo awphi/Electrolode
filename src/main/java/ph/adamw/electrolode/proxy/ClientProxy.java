@@ -27,7 +27,7 @@ public class ClientProxy extends CommonProxy {
 
     @SubscribeEvent
     public static void preStitch(TextureStitchEvent.Pre event) {
-        TextureManager.registerTexture();
+        TextureManager.registerTextures();
     }
 
     @Override

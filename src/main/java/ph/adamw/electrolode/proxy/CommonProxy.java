@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import ph.adamw.electrolode.Config;
+import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.manager.BlockManager;
 import ph.adamw.electrolode.manager.FluidManager;
 import ph.adamw.electrolode.manager.ItemManager;
@@ -31,7 +32,9 @@ public class CommonProxy {
         config = new Configuration(new File(directory.getPath(), "electrolode.cfg"));
         Config.readConfig();
 
-        PacketHandler.registerMessages("ELECTROLODE");
+        FluidManager.registerFluids();
+
+        PacketHandler.registerMessages(Electrolode.MODID.toUpperCase());
     }
 
     public void init(FMLInitializationEvent e) {
@@ -49,9 +52,6 @@ public class CommonProxy {
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         // Register blocks also registers their associated TEs
         BlockManager.registerBlocks(event.getRegistry());
-        FluidManager.registerFluids();
-        FluidManager.registerFluidBlocks(event.getRegistry());
-        FluidManager.renderFluids();
     }
 
     @SubscribeEvent

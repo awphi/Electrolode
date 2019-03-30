@@ -6,7 +6,7 @@ import ph.adamw.electrolode.block.BlockBase;
 import ph.adamw.electrolode.block.machine.TileBaseMachine;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.util.EnumGuiDirection;
-import ph.adamw.electrolode.util.TextureHelper;
+import ph.adamw.electrolode.util.TextureWrapper;
 
 public class GuiProgressBar extends GuiElement {
     private int PLACEHOLDER_X;
@@ -40,7 +40,7 @@ public class GuiProgressBar extends GuiElement {
         this(te, gui, res, x, y, 0, 0, width, height, dir);
     }
 
-    public GuiProgressBar(TileBaseMachine te, GuiBaseContainer gui, TextureHelper helper, int x, int y, EnumGuiDirection dir) {
+    public GuiProgressBar(TileBaseMachine te, GuiBaseContainer gui, TextureWrapper helper, int x, int y, EnumGuiDirection dir) {
         this(te, gui, helper.resource, x, y, helper.X_ORIGIN, helper.Y_ORIGIN, helper.WIDTH, helper.HEIGHT, dir);
     }
 
