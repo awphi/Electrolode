@@ -11,7 +11,7 @@ public class SidedHashMap extends HashMap<EnumFacing, SidedHashMap.SidedMapValue
         if(this.containsKey(key)) {
             return super.get(key);
         } else {
-            return new SidedMapValue(EnumFaceRole.NONE, -1);
+            return new SidedMapValue(EnumFaceRole.NO_ROLE, -1);
         }
     }
 
@@ -19,7 +19,7 @@ public class SidedHashMap extends HashMap<EnumFacing, SidedHashMap.SidedMapValue
         if(this.containsKey(key)) {
             return super.get(key).role;
         } else {
-            return EnumFaceRole.NONE;
+            return EnumFaceRole.NO_ROLE;
         }
     }
 

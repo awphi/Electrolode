@@ -17,7 +17,6 @@ import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
 import ph.adamw.electrolode.recipe.RecipeUtils;
-import ph.adamw.electrolode.util.BlockUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -184,6 +183,7 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
 
     @Override
     public void ejectOutput() {
+        //Ejects the itemstacks (if necessary)
         super.ejectOutput();
 
         int count = 0;
@@ -196,7 +196,7 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
 
             for (EnumFacing i : faceMap.keySet()) {
                 if (faceMap.getRole(i) == EnumFaceRole.OUTPUT_FLUID) {
-                    TileEntity neighbour = world.getTileEntity(BlockUtils.getNeighbourPos(pos, i));
+                    TileEntity neighbour = world.getTileEntity(pos.offset(i));
                     if (neighbour == null) continue;
                     IFluidHandler x = neighbour.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, i);
                     if (x == null) continue;

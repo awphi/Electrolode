@@ -14,7 +14,6 @@ import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.inventory.item.*;
 import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeComponent;
-import ph.adamw.electrolode.util.BlockUtils;
 import ph.adamw.electrolode.util.EnergyUtils;
 
 public abstract class TileInventoriedMachine extends TileBaseMachine {
@@ -38,7 +37,7 @@ public abstract class TileInventoriedMachine extends TileBaseMachine {
 
             for (EnumFacing i : faceMap.keySet()) {
                 if (faceMap.getRole(i) == EnumFaceRole.OUTPUT_ITEM) {
-                    TileEntity neighbour = world.getTileEntity(BlockUtils.getNeighbourPos(pos, i));
+                    TileEntity neighbour = world.getTileEntity(pos.offset(i));
                     if (neighbour == null) continue;
                     IItemHandler x = neighbour.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, i);
                     if (x == null) continue;

@@ -17,7 +17,7 @@ public class ContainerPurifier extends BaseMachineContainer {
 
     public void addOwnSlots(IItemHandler itemHandler) {
         addSlotToContainer(new SlotRecipeInput(itemHandler, INPUT, 63, 20, tileEntity));
-        addSlotToContainer(new SlotOutput(itemHandler, OUTPUT, 123, 36));
+        addSlotToContainer(new SlotOutput(itemHandler, OUTPUT, 123, 35));
     }
 
     public GuiPoint getChargeSlotPos() {

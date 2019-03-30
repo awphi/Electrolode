@@ -16,7 +16,6 @@ import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
-import ph.adamw.electrolode.util.BlockUtils;
 import ph.adamw.electrolode.util.GuiUtils;
 import ph.adamw.electrolode.util.SidedHashMap;
 
@@ -40,8 +39,8 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
 
     public TileBaseMachine() {
         addPotentialFaceRoles();
-        if(!potentialRoles.contains(EnumFaceRole.NONE)) {
-            potentialRoles.add(EnumFaceRole.NONE);
+        if(!potentialRoles.contains(EnumFaceRole.NO_ROLE)) {
+            potentialRoles.add(EnumFaceRole.NO_ROLE);
         }
     }
 
@@ -199,7 +198,7 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
             }
 
             for(int j = 0; j < i; j ++) {
-                facing = BlockUtils.getNextEnumFacing(facing);
+                facing = facing.rotateY();
             }
 
             disabledFaces.add(facing);
@@ -273,10 +272,12 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
         if (!canReceive()) return 0;
 
         int energyReceived = Math.min(getMaxEnergyStored() - energy, Math.min(getMaxReceive(), maxReceive));
+
         if (!simulate) {
             energy += energyReceived;
             markForUpdate();
         }
+
         return energyReceived;
     }
 
@@ -285,19 +286,21 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
         if (!canExtract()) return 0;
 
         int energyExtracted = Math.min(energy, Math.min(getMaxExtract(), maxExtract));
+
         if (!simulate) {
             energy -= energyExtracted;
             markForUpdate();
         }
+
         return energyExtracted;
     }
 
     public int getMaxReceive() {
-        return getEnergyUsage() * 2;
+        return (int) (getEnergyUsage() * 1.1f);
     }
 
     public int getMaxExtract() {
-        return getEnergyUsage() * 2;
+        return (int) (getEnergyUsage() * 1.1f);
     }
 
     @Override

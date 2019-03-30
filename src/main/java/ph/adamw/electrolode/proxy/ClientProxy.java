@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import ph.adamw.electrolode.manager.BlockManager;
 import ph.adamw.electrolode.manager.ItemManager;
-import ph.adamw.electrolode.rendering.machine.MachineModel;
+import ph.adamw.electrolode.manager.TextureManager;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
@@ -27,7 +27,7 @@ public class ClientProxy extends CommonProxy {
 
     @SubscribeEvent
     public static void preStitch(TextureStitchEvent.Pre event) {
-        MachineModel.registerBlocklessMachineTextures();
+        TextureManager.registerTexture();
     }
 
     @Override

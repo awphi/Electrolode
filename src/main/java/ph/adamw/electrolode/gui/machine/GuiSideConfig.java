@@ -12,10 +12,8 @@ import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.gui.element.GuiButtonEject;
 import ph.adamw.electrolode.gui.element.GuiButtonSideConfig;
 import ph.adamw.electrolode.gui.element.GuiButtonElement;
-import ph.adamw.electrolode.networking.PacketAutoEjectUpdate;
 import ph.adamw.electrolode.networking.PacketGuiRequest;
 import ph.adamw.electrolode.networking.PacketHandler;
-import ph.adamw.electrolode.util.BlockUtils;
 import ph.adamw.electrolode.util.GuiUtils;
 
 public class GuiSideConfig extends GuiBaseContainer {
@@ -34,13 +32,13 @@ public class GuiSideConfig extends GuiBaseContainer {
         guiElements.add(new GuiButtonSideConfig(this, 64, 58, EnumFacing.DOWN));
         //Front
         guiElements.add(new GuiButtonSideConfig(this, 64, 40, facing));
-        facing = BlockUtils.getNextEnumFacing(facing);
+        facing = facing.rotateY();
         //Left
         guiElements.add(new GuiButtonSideConfig(this, 46, 40, facing));
-        facing = BlockUtils.getNextEnumFacing(facing);
+        facing = facing.rotateY();
         //Back
         guiElements.add(new GuiButtonSideConfig(this, 82, 58, facing));
-        facing = BlockUtils.getNextEnumFacing(facing);
+        facing = facing.rotateY();
         //Right
         guiElements.add(new GuiButtonSideConfig(this, 82, 40, facing));
 

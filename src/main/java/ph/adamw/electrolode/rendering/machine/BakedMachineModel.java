@@ -1,5 +1,7 @@
 package ph.adamw.electrolode.rendering.machine;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -23,13 +25,15 @@ import java.util.List;
 import java.util.function.Function;
 
 public class BakedMachineModel implements IBakedModel {
-	private final Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter;
-	private final VertexFormat format;
+	@Getter
+	@Setter
+	private Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter;
 
-	public BakedMachineModel(VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
-		this.bakedTextureGetter = bakedTextureGetter;
-		this.format = format;
-	}
+	@Getter
+	@Setter
+	private VertexFormat format;
+
+	public final static BakedMachineModel MODEL = new BakedMachineModel();
 
 	@Override
 	public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
@@ -50,7 +54,7 @@ public class BakedMachineModel implements IBakedModel {
 		}
 
 		for(EnumFacing i : EnumFacing.VALUES) {
-			TextureAtlasSprite sprite = bakedTextureGetter.apply(EnumFaceRole.NONE.resolveResourceLocation());
+			TextureAtlasSprite sprite = bakedTextureGetter.apply(EnumFaceRole.NO_ROLE.resolveResourceLocation());
 
 			if(faceMap != null) {
 				sprite = bakedTextureGetter.apply(faceMap.get(i).getRole().resolveResourceLocation());
@@ -84,7 +88,7 @@ public class BakedMachineModel implements IBakedModel {
 
 	@Override
 	public TextureAtlasSprite getParticleTexture() {
-		return bakedTextureGetter.apply(EnumFaceRole.NONE.resolveResourceLocation());
+		return bakedTextureGetter.apply(EnumFaceRole.NO_ROLE.resolveResourceLocation());
 	}
 
 	@Override

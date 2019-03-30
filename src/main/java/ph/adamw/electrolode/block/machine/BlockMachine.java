@@ -1,30 +1,21 @@
 package ph.adamw.electrolode.block.machine;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleDigging;
 import net.minecraft.client.particle.ParticleManager;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import org.lwjgl.Sys;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.BlockHorizontalDirectional;
 import ph.adamw.electrolode.block.EnumFaceRole;
@@ -123,7 +114,7 @@ public abstract class BlockMachine extends BlockHorizontalDirectional implements
                     double d0 = ((double)j + 0.5D) / 4.0D;
                     double d1 = ((double)k + 0.5D) / 4.0D;
                     double d2 = ((double)l + 0.5D) / 4.0D;
-                    manager.addEffect((new ParticleDiggingUnregistered(world, (double)pos.getX() + d0, (double)pos.getY() + d1, (double)pos.getZ() + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D, state, EnumFaceRole.NONE.resolveResourceLocation())).setBlockPos(pos));
+                    manager.addEffect((new ParticleDiggingUnregistered(world, (double)pos.getX() + d0, (double)pos.getY() + d1, (double)pos.getZ() + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D, state, EnumFaceRole.NO_ROLE.resolveResourceLocation())).setBlockPos(pos));
                 }
             }
         }

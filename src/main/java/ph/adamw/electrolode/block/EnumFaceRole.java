@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public enum EnumFaceRole {
-    NONE ("enum.electrolode.facerole.none"),
+    NO_ROLE("enum.electrolode.facerole.none"),
     INPUT_ITEM("enum.electrolode.facerole.input"),
     OUTPUT_ITEM("enum.electrolode.facerole.output"),
     INPUT_FLUID("enum.electrolode.facerole.inputfluid"),

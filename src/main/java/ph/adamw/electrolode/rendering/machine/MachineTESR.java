@@ -17,8 +17,10 @@ public class MachineTESR extends FastTESR<TileBaseMachine> {
 		final BlockPos pos = te.getPos();
 		final IExtendedBlockState state = ((IExtendedBlockState) getWorld().getBlockState(pos))
 				.withProperty(BlockMachine.FACEMAP_PROP, te.faceMap);
-		final IBakedModel model =
-				MachineModel.MODEL.bake(MachineModel.MODEL.getDefaultState(), DefaultVertexFormats.ITEM, ModelLoader.defaultTextureGetter());
+
+		BakedMachineModel.MODEL.setBakedTextureGetter(ModelLoader.defaultTextureGetter());
+		BakedMachineModel.MODEL.setFormat(DefaultVertexFormats.ITEM);
+		final IBakedModel model = BakedMachineModel.MODEL;
 
 		buffer.setTranslation(x - pos.getX(), y - pos.getY(), z - pos.getZ());
 

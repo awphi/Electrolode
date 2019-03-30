@@ -76,7 +76,7 @@ public class GuiButtonSideConfig extends GuiButtonElement {
 
     @Override
     public String getTooltip() {
-        if(current != EnumFaceRole.NONE) {
+        if(current != EnumFaceRole.NO_ROLE) {
             String unlocalized = "tooltip.electrolode." + current.name().toLowerCase().split("_")[1] + "index";
             if(containerIndex == -1) {
                 return getTooltipSpecific() + "#n" + I18n.format(unlocalized) + " " + I18n.format("tooltip.electrolode.allindex");

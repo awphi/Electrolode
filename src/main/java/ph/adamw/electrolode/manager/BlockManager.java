@@ -45,13 +45,6 @@ public class BlockManager {
         return blockMap.get(e).getBlockName();
     }
 
-    @SideOnly(Side.CLIENT)
-    public static void initModels() {
-        for(BlockBase i : blockMap.values()) {
-            i.initModel();
-        }
-    }
-
     public static void registerItemBlocks(IForgeRegistry<Item> registry) {
         for(BlockBase i : blockMap.values()) {
             if(i.getRegistryName() == null) {
@@ -79,6 +72,14 @@ public class BlockManager {
         registerBlock(registry, BlockPress.class);
         registerBlock(registry, BlockSoftener.class);
     }
+
+    @SideOnly(Side.CLIENT)
+    public static void initModels() {
+        for(BlockBase i : blockMap.values()) {
+            i.initModel();
+        }
+    }
+
 
     @SideOnly(Side.CLIENT)
 	public static void initItemModels() {
