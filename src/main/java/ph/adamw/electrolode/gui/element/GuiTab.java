@@ -2,7 +2,7 @@ package ph.adamw.electrolode.gui.element;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileMachine;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.gui.machine.GuiSideConfig;
 
@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class GuiTab extends GuiElement {
-    public TileBaseMachine tileEntity;
+    public TileMachine tileEntity;
     private boolean rightAligned;
 
     int normalHeight;
@@ -21,7 +21,7 @@ public abstract class GuiTab extends GuiElement {
 
     int yOffset;
 
-    private GuiTab(ResourceLocation resource, GuiBaseContainer gui, TileBaseMachine e, int normalWidth, int normalHeight, int extendedWidth, int extendedHeight, int yOffset, boolean rightAligned) {
+    private GuiTab(ResourceLocation resource, GuiBaseContainer gui, TileMachine e, int normalWidth, int normalHeight, int extendedWidth, int extendedHeight, int yOffset, boolean rightAligned) {
         super(gui, resource);
         tileEntity = e;
 
@@ -36,15 +36,15 @@ public abstract class GuiTab extends GuiElement {
         this.yOffset = yOffset;
     }
 
-    public GuiTab(ResourceLocation resource, GuiBaseContainer gui, TileBaseMachine e, int normalWidth, int normalHeight, int extendedWidth, int extendedHeight, int yOffset) {
+    public GuiTab(ResourceLocation resource, GuiBaseContainer gui, TileMachine e, int normalWidth, int normalHeight, int extendedWidth, int extendedHeight, int yOffset) {
         this(resource, gui, e, normalWidth, normalHeight, extendedWidth, extendedHeight, yOffset, true);
     }
 
-    GuiTab(ResourceLocation resource, GuiBaseContainer gui, TileBaseMachine e, int yOffset) {
+    GuiTab(ResourceLocation resource, GuiBaseContainer gui, TileMachine e, int yOffset) {
         this(resource, gui, e, 16, 24, 24, 24, yOffset, true);
     }
 
-    GuiTab(ResourceLocation resource, GuiBaseContainer gui, TileBaseMachine e, int yOffset, boolean rightAligned) {
+    GuiTab(ResourceLocation resource, GuiBaseContainer gui, TileMachine e, int yOffset, boolean rightAligned) {
         this(resource, gui, e, 16, 24, 24, 24, yOffset, rightAligned);
     }
 

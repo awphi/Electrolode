@@ -23,7 +23,7 @@ import ph.adamw.electrolode.util.SidedHashMap;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TileBaseMachine extends TileEntity implements ITickable, IEnergyStorage {
+public abstract class TileMachine extends TileEntity implements ITickable, IEnergyStorage {
     double processedTime = 0;
     private int energy = 0;
     private boolean toUpdate = false;
@@ -38,7 +38,7 @@ public abstract class TileBaseMachine extends TileEntity implements ITickable, I
     private List<EnumFacing> disabledFaces = new ArrayList<>();
     public List<EnumFaceRole> potentialRoles = new ArrayList<>();
 
-    public TileBaseMachine() {
+    public TileMachine() {
         addPotentialFaceRoles();
         if(!potentialRoles.contains(EnumFaceRole.NO_ROLE)) {
             potentialRoles.add(EnumFaceRole.NO_ROLE);

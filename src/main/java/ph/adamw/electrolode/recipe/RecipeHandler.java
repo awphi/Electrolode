@@ -1,20 +1,21 @@
 package ph.adamw.electrolode.recipe;
 
-import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileMachine;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 public class RecipeHandler {
-    private static HashMap<Class<? extends TileBaseMachine>, List<MachineRecipe>> recipeMap = new HashMap<>();
+    private static HashMap<Class<? extends TileMachine>, List<MachineRecipe>> recipeMap = new HashMap<>();
 
-    public static void addRecipe(Class<? extends TileBaseMachine> machine, MachineRecipe recipe) {
+    public static void addRecipe(Class<? extends TileMachine> machine, MachineRecipe recipe) {
         recipeMap.computeIfAbsent(machine, k -> new LinkedList<>());
         recipeMap.get(machine).add(recipe);
     }
 
-    private static MachineRecipe findRecipe(Class<? extends TileBaseMachine> machine, RecipeComponent[] userInput, boolean soft) {
+    @SuppressWarnings("unchecked")
+    private static MachineRecipe findRecipe(Class<? extends TileMachine> machine, RecipeComponent[] userInput, boolean soft) {
         final List<MachineRecipe> recipes = recipeMap.get(machine);
 
         if(recipes == null || recipes.size() == 0) {
@@ -50,16 +51,15 @@ public class RecipeHandler {
         return null;
     }
 
-    public static MachineRecipe findRecipe(Class<? extends TileBaseMachine> machine, RecipeComponent[] input) {
+    public static MachineRecipe findRecipe(Class<? extends TileMachine> machine, RecipeComponent[] input) {
         return findRecipe(machine, input, false);
     }
 
-    /* hasRecipe & helpers */
-    public static boolean hasRecipe(Class<? extends TileBaseMachine> machine, RecipeComponent[] component) {
-        return findRecipe(machine, component,false) != null;
+    public static boolean hasRecipe(Class<? extends TileMachine> machine, RecipeComponent[] component) {
+        return findRecipe(machine, component) != null;
     }
 
-    public static boolean hasRecipeSoft(Class<? extends TileBaseMachine> machine, RecipeComponent[] component) {
+    public static boolean hasRecipeSoft(Class<? extends TileMachine> machine, RecipeComponent[] component) {
         return findRecipe(machine, component,true) != null;
     }
 }

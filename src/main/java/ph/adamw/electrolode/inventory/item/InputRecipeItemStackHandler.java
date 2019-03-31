@@ -2,15 +2,15 @@ package ph.adamw.electrolode.inventory.item;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
-import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileMachine;
 import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
 import ph.adamw.electrolode.util.ItemUtils;
 
 public class InputRecipeItemStackHandler extends InputItemStackHandler {
-    private Class<? extends TileBaseMachine> machineType;
+    private Class<? extends TileMachine> machineType;
 
-    public InputRecipeItemStackHandler(ItemStackHandler e, Class<? extends TileBaseMachine> te) {
+    public InputRecipeItemStackHandler(ItemStackHandler e, Class<? extends TileMachine> te) {
         super(e);
         machineType = te;
     }

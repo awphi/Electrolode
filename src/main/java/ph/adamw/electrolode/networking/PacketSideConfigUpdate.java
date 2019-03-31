@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import ph.adamw.electrolode.block.EnumFaceRole;
-import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileMachine;
 
 @NoArgsConstructor
 public class PacketSideConfigUpdate implements IMessage {
@@ -55,7 +55,7 @@ public class PacketSideConfigUpdate implements IMessage {
             World world = playerEntity.getEntityWorld();
             // Check if the chunk is loaded to prevent abuse
             if (world.isBlockLoaded(message.pos)) {
-                TileBaseMachine te = (TileBaseMachine) world.getTileEntity(message.pos);
+                TileMachine te = (TileMachine) world.getTileEntity(message.pos);
                 if(te == null) return;
                 te.faceMap.put(message.direction, message.role, message.containerIndex);
                 te.markForUpdate();

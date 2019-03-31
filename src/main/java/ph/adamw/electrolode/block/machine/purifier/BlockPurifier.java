@@ -1,7 +1,7 @@
 package ph.adamw.electrolode.block.machine.purifier;
 
 import ph.adamw.electrolode.block.machine.BlockMachine;
-import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileMachine;
 
 public class BlockPurifier extends BlockMachine {
     public String getDescription() {
@@ -9,7 +9,7 @@ public class BlockPurifier extends BlockMachine {
     }
 
     @Override
-    public Class<? extends TileBaseMachine> getTileClass() {
+    public Class<? extends TileMachine> getTileClass() {
         return TilePurifier.class;
     }
 

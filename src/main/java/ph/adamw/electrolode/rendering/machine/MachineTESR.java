@@ -9,11 +9,11 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.animation.FastTESR;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import ph.adamw.electrolode.block.machine.BlockMachine;
-import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileMachine;
 
-public class MachineTESR extends FastTESR<TileBaseMachine> {
+public class MachineTESR extends FastTESR<TileMachine> {
 	@Override
-	public void renderTileEntityFast(TileBaseMachine te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer) {
+	public void renderTileEntityFast(TileMachine te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer) {
 		final BlockPos pos = te.getPos();
 		final IExtendedBlockState state = ((IExtendedBlockState) getWorld().getBlockState(pos))
 				.withProperty(BlockMachine.FACEMAP_PROP, te.faceMap);

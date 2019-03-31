@@ -22,6 +22,7 @@ import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.block.state.FaceMapProperty;
 import ph.adamw.electrolode.manager.BlockManager;
 import ph.adamw.electrolode.item.core.IExtendedDescription;
+import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.rendering.machine.MachineTESR;
 import ph.adamw.electrolode.rendering.particle.ParticleDiggingUnregistered;
 import ph.adamw.electrolode.util.InventoryUtils;
@@ -35,7 +36,7 @@ public abstract class BlockMachine extends BlockHorizontalDirectional implements
         BlockManager.registerTileEntity(getTileClass(), getBlockName());
     }
 
-    public abstract Class<? extends TileBaseMachine> getTileClass();
+    public abstract Class<? extends TileMachine> getTileClass();
 
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         try {
@@ -44,7 +45,7 @@ public abstract class BlockMachine extends BlockHorizontalDirectional implements
             e.printStackTrace();
         }
 
-        throw new RuntimeException("Could no instantiate " + getTileClass().getSimpleName() + " it needs to have an accessible noargs constructor!");
+        throw new RuntimeException("Could not instantiate " + getTileClass().getSimpleName() + " it needs to have an accessible no-args constructor!");
     }
 
     @Override
@@ -91,7 +92,7 @@ public abstract class BlockMachine extends BlockHorizontalDirectional implements
             return true;
         }
 
-        TileBaseMachine te = (TileBaseMachine) world.getTileEntity(pos);
+        TileMachine te = (TileMachine) world.getTileEntity(pos);
 
         if (te != null) {
             playerIn.openGui(Electrolode.instance, te.getGuiId(), world, pos.getX(), pos.getY(), pos.getZ());
@@ -114,7 +115,7 @@ public abstract class BlockMachine extends BlockHorizontalDirectional implements
                     double d0 = ((double)j + 0.5D) / 4.0D;
                     double d1 = ((double)k + 0.5D) / 4.0D;
                     double d2 = ((double)l + 0.5D) / 4.0D;
-                    manager.addEffect((new ParticleDiggingUnregistered(world, (double)pos.getX() + d0, (double)pos.getY() + d1, (double)pos.getZ() + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D, state, EnumFaceRole.NO_ROLE.resolveResourceLocation())).setBlockPos(pos));
+                    manager.addEffect((new ParticleDiggingUnregistered(world, (double) pos.getX() + d0, (double) pos.getY() + d1, (double)pos.getZ() + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D, state, EnumFaceRole.NO_ROLE.resolveResourceLocation())).setBlockPos(pos));
                 }
             }
         }

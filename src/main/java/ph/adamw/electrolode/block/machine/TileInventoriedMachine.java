@@ -16,7 +16,7 @@ import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.util.EnergyUtils;
 
-public abstract class TileInventoriedMachine extends TileBaseMachine {
+public abstract class TileInventoriedMachine extends TileMachine {
     InputItemStackHandler inputOnlySlotsWrapper = new InputRecipeItemStackHandler(new ItemStackHandler(getInputSlots()), this.getClass());
     OutputItemStackHandler outputOnlySlotsWrapper = new OutputItemStackHandler(new ItemStackHandler(getOutputSlots()));
     private ItemStackHandler chargeSlotWrapper = new ItemStackHandler(1);

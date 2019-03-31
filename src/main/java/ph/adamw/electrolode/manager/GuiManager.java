@@ -1,6 +1,6 @@
 package ph.adamw.electrolode.manager;
 
-import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileMachine;
 import ph.adamw.electrolode.block.machine.press.ContainerPress;
 import ph.adamw.electrolode.block.machine.press.TilePress;
 import ph.adamw.electrolode.block.machine.purifier.ContainerPurifier;
@@ -13,7 +13,6 @@ import ph.adamw.electrolode.gui.machine.GuiPress;
 import ph.adamw.electrolode.gui.machine.GuiPurifier;
 import ph.adamw.electrolode.gui.machine.GuiSoftener;
 import ph.adamw.electrolode.inventory.BaseMachineContainer;
-import ph.adamw.electrolode.util.GuiUtils;
 
 import java.util.HashMap;
 
@@ -26,11 +25,11 @@ public class GuiManager {
 
     private static HashMap<Integer, GuiEntry> guiMap = new HashMap<>();
 
-    public static int getGuiId(TileBaseMachine e) {
+    public static int getGuiId(TileMachine e) {
         return getGuiId(e.getClass());
     }
 
-    public static void registerGui(Class<? extends GuiMachineBasic> gui, Class<? extends BaseMachineContainer> cont, Class<? extends TileBaseMachine> tile) {
+    public static void registerGui(Class<? extends GuiMachineBasic> gui, Class<? extends BaseMachineContainer> cont, Class<? extends TileMachine> tile) {
         guiMap.put(nextID(), new GuiEntry(gui, cont, tile));
     }
 
@@ -42,7 +41,7 @@ public class GuiManager {
         return null;
     }
 
-    public static int getGuiId(Class<? extends TileBaseMachine> e) {
+    public static int getGuiId(Class<? extends TileMachine> e) {
         for(Integer i : guiMap.keySet()) {
             if(guiMap.get(i).tileEntity == e) return i;
         }

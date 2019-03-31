@@ -3,7 +3,7 @@ package ph.adamw.electrolode.gui.machine;
 import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.EnumFaceRole;
-import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileMachine;
 import ph.adamw.electrolode.block.machine.TileTankedMachine;
 import ph.adamw.electrolode.gui.element.GuiEnergyBar;
 import ph.adamw.electrolode.gui.element.GuiProgressBar;
@@ -13,7 +13,7 @@ import ph.adamw.electrolode.util.EnumGuiDirection;
 import ph.adamw.electrolode.util.TextureWrapper;
 
 public class GuiSoftener extends GuiMachineBasic {
-    public GuiSoftener(TileBaseMachine tileEntity, BaseMachineContainer container) {
+    public GuiSoftener(TileMachine tileEntity, BaseMachineContainer container) {
         super(tileEntity, container);
         TileTankedMachine te = (TileTankedMachine) tileEntity;
         guiElements.add(new GuiEnergyBar(tileEntity, this, 20, 21, 22, 45, true));

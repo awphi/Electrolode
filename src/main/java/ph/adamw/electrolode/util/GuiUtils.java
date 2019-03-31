@@ -1,5 +1,6 @@
 package ph.adamw.electrolode.util;
 
+import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.I18n;
@@ -12,20 +13,15 @@ public class GuiUtils {
         BACK(I18n.format("gui.electrolode.back.name"), new TextureWrapper(new ResourceLocation(Electrolode.MODID, "textures/gui/extensions/commonbuttons.png"), 16, 0, 16, 16)),
         AUTO_EJECT(I18n.format("gui.electrolode.eject.name"), new TextureWrapper(new ResourceLocation(Electrolode.MODID, "textures/gui/extensions/commonbuttons.png"), 32, 0, 16, 16));
 
+        @Getter
         private String toolTip;
+
+        @Getter
         private TextureWrapper textureWrapper;
 
         CommonExtensions(String x, TextureWrapper tx) {
             toolTip = x;
             textureWrapper = tx;
-        }
-
-        public TextureWrapper getTextureWrapper() {
-            return textureWrapper;
-        }
-
-        public String getTooltip() {
-            return toolTip;
         }
     }
 

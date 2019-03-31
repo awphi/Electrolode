@@ -3,7 +3,7 @@ package ph.adamw.electrolode.inventory.fluid;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileMachine;
 
 import javax.annotation.Nullable;
 
@@ -22,8 +22,8 @@ public class FluidTankBase extends FluidTank {
 
     @Override
     public void onContentsChanged() {
-        if(this.tile instanceof TileBaseMachine) {
-            ((TileBaseMachine) this.tile).markForUpdate();
+        if(this.tile instanceof TileMachine) {
+            ((TileMachine) this.tile).markForUpdate();
         }
     }
 }

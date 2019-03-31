@@ -3,12 +3,12 @@ package ph.adamw.electrolode.gui.element;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileMachine;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.gui.machine.GuiSideConfig;
 
 public class GuiTabSideConfig extends GuiTab {
-    public GuiTabSideConfig(GuiBaseContainer gui, TileBaseMachine e) {
+    public GuiTabSideConfig(GuiBaseContainer gui, TileMachine e) {
         //Default width, height, ext width, ext height & left aligned, y offset = +5 from centre
         super(new ResourceLocation(Electrolode.MODID, "textures/gui/extensions/sideconfigtab.png"), gui, e, 5);
     }

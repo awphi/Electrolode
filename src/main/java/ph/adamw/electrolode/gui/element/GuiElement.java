@@ -27,11 +27,11 @@ public abstract class GuiElement {
 
     public void mouseWheel(int x, int y, int delta) {}
 
-    /* Renders most everything else */
-    public abstract void renderBackground(int xAxis, int yAxis, int guiWidth, int guiHeight);
-
     /* For rendering custom tooltips when mouse is with certain area */
     public abstract void renderForeground(int xAxis, int yAxis);
+
+    /* Renders most everything else */
+    public abstract void renderBackground(int xAxis, int yAxis, int guiWidth, int guiHeight);
 
     public abstract String getTooltip();
 

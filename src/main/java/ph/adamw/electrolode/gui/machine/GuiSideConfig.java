@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.machine.BlockMachine;
-import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileMachine;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.gui.element.GuiButtonEject;
 import ph.adamw.electrolode.gui.element.GuiButtonSideConfig;
@@ -17,7 +17,7 @@ import ph.adamw.electrolode.networking.PacketHandler;
 import ph.adamw.electrolode.util.GuiUtils;
 
 public class GuiSideConfig extends GuiBaseContainer {
-    public GuiSideConfig(TileBaseMachine te) {
+    public GuiSideConfig(TileMachine te) {
         super(te, new Container() {
             @Override
             public boolean canInteractWith(EntityPlayer playerIn) {

@@ -3,7 +3,7 @@ package ph.adamw.electrolode.gui.element;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.block.BlockBase;
-import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileMachine;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.util.EnumGuiDirection;
 import ph.adamw.electrolode.util.TextureWrapper;
@@ -19,10 +19,10 @@ public class GuiProgressBar extends GuiElement {
     private int HEIGHT;
 
     private EnumGuiDirection direction;
-    private TileBaseMachine tileEntity;
+    private TileMachine tileEntity;
     private String tooltipSpecific;
 
-    public GuiProgressBar(TileBaseMachine te, GuiBaseContainer gui, ResourceLocation res, int x, int y, int u, int v, int width, int height, EnumGuiDirection dir) {
+    public GuiProgressBar(TileMachine te, GuiBaseContainer gui, ResourceLocation res, int x, int y, int u, int v, int width, int height, EnumGuiDirection dir) {
         super(gui, res);
         PLACEHOLDER_X = x;
         PLACEHOLDER_Y = y;
@@ -36,11 +36,11 @@ public class GuiProgressBar extends GuiElement {
         tooltipSpecific = I18n.format("tooltip.electrolode." + tooltipSpecific + "progress");
     }
 
-    public GuiProgressBar(TileBaseMachine te, GuiBaseContainer gui, ResourceLocation res, int x, int y, int width, int height, EnumGuiDirection dir) {
+    public GuiProgressBar(TileMachine te, GuiBaseContainer gui, ResourceLocation res, int x, int y, int width, int height, EnumGuiDirection dir) {
         this(te, gui, res, x, y, 0, 0, width, height, dir);
     }
 
-    public GuiProgressBar(TileBaseMachine te, GuiBaseContainer gui, TextureWrapper helper, int x, int y, EnumGuiDirection dir) {
+    public GuiProgressBar(TileMachine te, GuiBaseContainer gui, TextureWrapper helper, int x, int y, EnumGuiDirection dir) {
         this(te, gui, helper.resource, x, y, helper.X_ORIGIN, helper.Y_ORIGIN, helper.WIDTH, helper.HEIGHT, dir);
     }
 
@@ -53,6 +53,7 @@ public class GuiProgressBar extends GuiElement {
 
         double progress = tileEntity.getCompletedPercentage();
         tooltip = Math.round(tileEntity.getCompletedPercentage() * 100) + "% " + tooltipSpecific;
+
         // For some reason this doesn't render properly when in a switch?
         if(direction == EnumGuiDirection.RIGHT) {
             guiObj.drawTexturedModalRect(guiWidth + PLACEHOLDER_X, guiHeight + PLACEHOLDER_Y, BAR_U, BAR_V, (int) (progress * WIDTH), HEIGHT);

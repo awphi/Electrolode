@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
-import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileMachine;
 import ph.adamw.electrolode.gui.element.GuiElement;
 
 import java.io.IOException;
@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.Set;
 
 public abstract class GuiBaseContainer extends GuiContainer {
-    public TileBaseMachine tileEntity;
+    public TileMachine tileEntity;
     public Set<GuiElement> guiElements = new HashSet<>();
 
-    public GuiBaseContainer(TileBaseMachine tileEntity, Container container) {
+    public GuiBaseContainer(TileMachine tileEntity, Container container) {
         super(container);
 
         xSize = getWidth();

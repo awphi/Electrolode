@@ -3,11 +3,11 @@ package ph.adamw.electrolode.gui.element;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.block.machine.TileBaseMachine;
+import ph.adamw.electrolode.block.machine.TileMachine;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
 
 public class GuiTabEnergy extends GuiTab {
-    public GuiTabEnergy(GuiBaseContainer gui, TileBaseMachine e) {
+    public GuiTabEnergy(GuiBaseContainer gui, TileMachine e) {
         //Default width, height, ext width, ext height & left aligned, y offset = +5 from top
         super(new ResourceLocation(Electrolode.MODID, "textures/gui/extensions/energytab.png"), gui, e, 5, false);
     }
