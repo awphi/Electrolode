@@ -50,7 +50,7 @@ public class GuiEnergyBar extends GuiElement {
     }
 
     public void renderForeground(int xAxis, int yAxis) {
-        if(isInRect(xAxis, yAxis, X_POS, Y_POS, HEIGHT, WIDTH) && getTooltip() != null) {
+        if(isInRect(xAxis, yAxis, X_POS, Y_POS, HEIGHT, WIDTH) && getTooltip() != null && !getTooltip().isEmpty()) {
             displayTooltip(getTooltip(), xAxis, yAxis);
         }
     }

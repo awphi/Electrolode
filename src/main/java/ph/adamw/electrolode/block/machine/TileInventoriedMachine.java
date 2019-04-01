@@ -19,7 +19,7 @@ import ph.adamw.electrolode.util.EnergyUtils;
 public abstract class TileInventoriedMachine extends TileMachine {
     InputItemStackHandler inputOnlySlotsWrapper = new InputRecipeItemStackHandler(new ItemStackHandler(getInputSlots()), this.getClass());
     OutputItemStackHandler outputOnlySlotsWrapper = new OutputItemStackHandler(new ItemStackHandler(getOutputSlots()));
-    private ItemStackHandler chargeSlotWrapper = new ItemStackHandler(1);
+    protected ItemStackHandler chargeSlotWrapper = new ItemStackHandler(1);
     private CombinedInvWrapper allSlotsWrapper = new CombinedInvWrapper(inputOnlySlotsWrapper.internalSlot, outputOnlySlotsWrapper, chargeSlotWrapper);
 
     public void ejectOutput() {
@@ -62,7 +62,7 @@ public abstract class TileInventoriedMachine extends TileMachine {
     public abstract int getOutputSlots();
 
     public int getCombinedSlots() {
-        return getInputSlots() + getOutputSlots() + 1;
+        return getInputSlots() + getOutputSlots() + chargeSlotWrapper.getSlots();
     }
 
     @Override

@@ -13,7 +13,7 @@ import ph.adamw.electrolode.inventory.fluid.DummyFluidTank;
 import ph.adamw.electrolode.inventory.fluid.FluidTankBase;
 import ph.adamw.electrolode.recipe.FluidStackRecipeComponent;
 import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
-import ph.adamw.electrolode.recipe.MachineRecipe;
+import ph.adamw.electrolode.recipe.ElectrolodeRecipe;
 import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
 import ph.adamw.electrolode.recipe.RecipeUtils;
@@ -21,6 +21,7 @@ import ph.adamw.electrolode.recipe.RecipeUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class TileTankedMachine extends TileInventoriedMachine {
     protected List<FluidTankBase> inputTanks = new ArrayList<>();
@@ -119,37 +120,19 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
     @Override
     public RecipeComponent[] getInputContents() {
         List<RecipeComponent> ret = new ArrayList<>(Arrays.asList(super.getInputContents()));
-        FluidStack[] inTank = getInputTankContents();
-        for(int i = 0; i < getInputTanks(); i ++) {
-            ret.add(new FluidStackRecipeComponent(inTank[i]));
-        }
+        ret.addAll(inputTanks.stream()
+                .map(fluidTankBase -> new FluidStackRecipeComponent(fluidTankBase.getFluid())).collect(Collectors.toSet()));
+
         return ret.toArray(new RecipeComponent[0]);
     }
 
     @Override
     public RecipeComponent[] getOutputContents() {
         List<RecipeComponent> ret = new ArrayList<>(Arrays.asList(super.getOutputContents()));
-        FluidStack[] outTank = getOutputTankContents();
-        for(int i = 0; i < getOutputTanks(); i ++) {
-            ret.add(new FluidStackRecipeComponent(outTank[i]));
-        }
+        ret.addAll(outputTanks.stream()
+                .map(fluidTankBase -> new FluidStackRecipeComponent(fluidTankBase.getFluid())).collect(Collectors.toSet()));
+
         return ret.toArray(new RecipeComponent[0]);
-    }
-
-    public FluidStack[] getInputTankContents() {
-        FluidStack[] x = new FluidStack[getInputTanks()];
-        for(int i = 0; i < getInputTanks(); i ++) {
-            x[i] = inputTanks.get(i).getFluid();
-        }
-        return x;
-    }
-
-    private FluidStack[] getOutputTankContents() {
-        FluidStack[] x = new FluidStack[getOutputTanks()];
-        for(int i = 0; i < getOutputTanks(); i ++) {
-            x[i] = outputTanks.get(i).getFluid();
-        }
-        return x;
     }
 
     private boolean canTanksHoldOutput(RecipeComponent[] output) {
@@ -212,7 +195,7 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
     }
 
     public void processingComplete() {
-        final MachineRecipe recipe = getCurrentRecipe();
+        final ElectrolodeRecipe recipe = getCurrentRecipe();
         final RecipeComponent[] output = recipe.getOutput();
         final RecipeComponent[] input = recipe.getInput();
 

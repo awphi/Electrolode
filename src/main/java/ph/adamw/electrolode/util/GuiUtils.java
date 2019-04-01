@@ -14,13 +14,13 @@ public class GuiUtils {
         AUTO_EJECT(I18n.format("gui.electrolode.eject.name"), new TextureWrapper(new ResourceLocation(Electrolode.MODID, "textures/gui/extensions/commonbuttons.png"), 32, 0, 16, 16));
 
         @Getter
-        private String toolTip;
+        private String tooltip;
 
         @Getter
         private TextureWrapper textureWrapper;
 
-        CommonExtensions(String x, TextureWrapper tx) {
-            toolTip = x;
+        CommonExtensions(String tooltip, TextureWrapper tx) {
+            this.tooltip = tooltip;
             textureWrapper = tx;
         }
     }

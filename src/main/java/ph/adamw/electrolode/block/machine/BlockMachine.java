@@ -22,7 +22,6 @@ import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.block.state.FaceMapProperty;
 import ph.adamw.electrolode.manager.BlockManager;
 import ph.adamw.electrolode.item.core.IExtendedDescription;
-import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.rendering.machine.MachineTESR;
 import ph.adamw.electrolode.rendering.particle.ParticleDiggingUnregistered;
 import ph.adamw.electrolode.util.InventoryUtils;

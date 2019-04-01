@@ -14,20 +14,18 @@ import net.minecraftforge.energy.IEnergyStorage;
 import ph.adamw.electrolode.Config;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.manager.GuiManager;
-import ph.adamw.electrolode.recipe.MachineRecipe;
+import ph.adamw.electrolode.recipe.ElectrolodeRecipe;
 import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
-import ph.adamw.electrolode.util.GuiUtils;
 import ph.adamw.electrolode.util.SidedHashMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TileMachine extends TileEntity implements ITickable, IEnergyStorage {
+public abstract class TileMachine<T extends ElectrolodeRecipe> extends TileEntity implements ITickable, IEnergyStorage {
     double processedTime = 0;
     private int energy = 0;
     private boolean toUpdate = false;
-    private int currentEnergyUsage;
     public boolean autoEject = Config.autoEjectDefault;
 
     public int getGuiId() {
@@ -118,7 +116,6 @@ public abstract class TileMachine extends TileEntity implements ITickable, IEner
             /* --- */
             processedTime = compound.getDouble("processedTime");
             energy = compound.getInteger("energyStored");
-            currentEnergyUsage = compound.getInteger("energyUsage");
             autoEject = compound.getBoolean("autoEject");
         }
     }
@@ -148,7 +145,6 @@ public abstract class TileMachine extends TileEntity implements ITickable, IEner
 
         compound.setDouble("processedTime", processedTime);
         compound.setInteger("energyStored", energy);
-        compound.setInteger("energyUsage", currentEnergyUsage);
         compound.setBoolean("autoEject", autoEject);
         return compound;
     }
@@ -228,8 +224,8 @@ public abstract class TileMachine extends TileEntity implements ITickable, IEner
         }
     }
 
-    private int getProcTime() {
-        final MachineRecipe recipe = getCurrentRecipe();
+    public int getProcTime() {
+        final ElectrolodeRecipe recipe = getCurrentRecipe();
 
         if(recipe == null) {
             return Integer.MAX_VALUE;
@@ -260,6 +256,7 @@ public abstract class TileMachine extends TileEntity implements ITickable, IEner
         return getBaseMaxEnergy();
     }
 
+    @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
         if(capability == CapabilityEnergy.ENERGY) {
             return CapabilityEnergy.ENERGY.cast(this);
@@ -272,7 +269,7 @@ public abstract class TileMachine extends TileEntity implements ITickable, IEner
     public int receiveEnergy(int maxReceive, boolean simulate) {
         if (!canReceive()) return 0;
 
-        int energyReceived = Math.min(getMaxEnergyStored() - energy, Math.min(getMaxReceive(), maxReceive));
+        int energyReceived = Math.min(getMaxEnergyStored() - energy, maxReceive);
 
         if (!simulate) {
             energy += energyReceived;
@@ -286,7 +283,7 @@ public abstract class TileMachine extends TileEntity implements ITickable, IEner
     public int extractEnergy(int maxExtract, boolean simulate) {
         if (!canExtract()) return 0;
 
-        int energyExtracted = Math.min(energy, Math.min(getMaxExtract(), maxExtract));
+        int energyExtracted = Math.min(energy, maxExtract);
 
         if (!simulate) {
             energy -= energyExtracted;
@@ -294,14 +291,6 @@ public abstract class TileMachine extends TileEntity implements ITickable, IEner
         }
 
         return energyExtracted;
-    }
-
-    public int getMaxReceive() {
-        return (int) (getEnergyUsage() * 1.1f);
-    }
-
-    public int getMaxExtract() {
-        return (int) (getEnergyUsage() * 1.1f);
     }
 
     @Override
@@ -328,7 +317,7 @@ public abstract class TileMachine extends TileEntity implements ITickable, IEner
 
     public abstract RecipeComponent[] getOutputContents();
 
-    public MachineRecipe getCurrentRecipe() {
+    public ElectrolodeRecipe getCurrentRecipe() {
         return RecipeHandler.findRecipe(this.getClass(), getInputContents());
     }
 }

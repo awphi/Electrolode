@@ -7,7 +7,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
-import ph.adamw.electrolode.manager.FluidManager;
 import ph.adamw.electrolode.manager.RecipeManager;
 import ph.adamw.electrolode.proxy.CommonProxy;
 import ph.adamw.electrolode.manager.OreDictManager;
@@ -42,7 +41,7 @@ public class Electrolode {
     public void init(FMLInitializationEvent e) {
         OreDictManager.registerEntries();
         OreDictManager.registerRecipes();
-        RecipeManager.registerMachineRecipes();
+        RecipeManager.register();
         proxy.init(e);
     }
 

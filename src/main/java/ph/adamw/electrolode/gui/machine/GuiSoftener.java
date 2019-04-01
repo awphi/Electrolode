@@ -23,7 +23,7 @@ public class GuiSoftener extends GuiMachineBasic {
     }
 
     public ResourceLocation getBackground() {
-        return new ResourceLocation(Electrolode.MODID, "textures/gui/softener_front.png");
+        return new ResourceLocation(Electrolode.MODID, "textures/gui/softener.png");
     }
 
     public void onAction(int id, int mbp) {}
