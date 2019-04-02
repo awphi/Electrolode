@@ -11,7 +11,7 @@ import ph.adamw.electrolode.recipe.RecipeHandler;
 /**
  * The basis 'hijacking' of the machine tile to create a generator.
  */
-public abstract class TileItemGenerator extends TileInventoriedMachine implements IEnergyProvider {
+public abstract class TileItemGenerator extends TileInventoriedMachine {
 	private GeneratorRecipe currentRecipe;
 
 	public TileItemGenerator() {
