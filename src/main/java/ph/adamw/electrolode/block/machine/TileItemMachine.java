@@ -4,8 +4,6 @@ import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
 import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.recipe.RecipeComponent;
-import ph.adamw.electrolode.recipe.RecipeHandler;
-import ph.adamw.electrolode.recipe.RecipeUtils;
 
 public abstract class TileItemMachine extends TileInventoriedMachine {
     protected void addPotentialFaceRoles() {
@@ -14,7 +12,7 @@ public abstract class TileItemMachine extends TileInventoriedMachine {
     }
 
     public void processingComplete() {
-        final MachineRecipe recipe = getCurrentRecipe();
+        final MachineRecipe recipe = getNextRecipe();
 
         int c = 0;
         for(RecipeComponent i : recipe.getOutput()) {

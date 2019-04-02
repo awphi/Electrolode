@@ -11,6 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.BlockBase;
+import ph.adamw.electrolode.block.machine.coalgenerator.BlockCoalGenerator;
 import ph.adamw.electrolode.block.machine.press.BlockPress;
 import ph.adamw.electrolode.block.machine.purifier.BlockPurifier;
 import ph.adamw.electrolode.block.machine.softener.BlockSoftener;
@@ -19,7 +20,6 @@ import ph.adamw.electrolode.item.core.ItemBlockDescribed;
 
 import java.util.HashMap;
 
-//TODO migrate to using forge registries instead of these managers
 public class BlockManager {
     private static final HashMap<Class<? extends BlockBase>, BlockBase> blockMap = new HashMap<>();
 
@@ -71,6 +71,7 @@ public class BlockManager {
         registerBlock(registry, BlockPurifier.class);
         registerBlock(registry, BlockPress.class);
         registerBlock(registry, BlockSoftener.class);
+        registerBlock(registry, BlockCoalGenerator.class);
     }
 
     @SideOnly(Side.CLIENT)

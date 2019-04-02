@@ -1,6 +1,7 @@
 tile.electrolode.purifier.name=Purifier
 tile.electrolode.press.name=Press
 tile.electrolode.softener.name=Water Softener
+tile.electrolode.coalgenerator.name=Coal Generator
 
 fluid.softenedwater=Softened Water
 
@@ -25,9 +26,11 @@ itemGroup.electrolode=Electrolode
 tooltip.electrolode.purifierprogress=purified
 tooltip.electrolode.pressprogress=pressed
 tooltip.electrolode.softenerprogress=softened
+tooltip.electrolode.coalgeneratorprogress=burned
 
 tooltip.electrolode.configtab=Configuration
-tooltip.electrolode.maxenergyusage=Max:
+tooltip.electrolode.maxenergyusage=Max Usage:
+tooltip.electrolode.energyoutput=Output:
 tooltip.electrolode.totalenergy=Total:
 tooltip.electrolode.autoeject=Auto-eject output:
 tooltip.electrolode.on=On

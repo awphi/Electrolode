@@ -9,6 +9,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import ph.adamw.electrolode.Config;
@@ -24,7 +25,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TileMachine extends TileEntity implements ITickable, IEnergyStorage {
+public abstract class TileMachine extends TileEntity implements ICapabilityProvider, ITickable, IEnergyStorage {
     double processedTime = 0;
     private int energy = 0;
     private boolean toUpdate = false;
@@ -218,11 +219,8 @@ public abstract class TileMachine extends TileEntity implements ITickable, IEner
     public abstract void processingComplete();
 
     public boolean canProcess() {
-        if (RecipeHandler.hasRecipe(getClass(), getInputContents())) {
-            return RecipeUtils.canComponentArraysStack(getCurrentRecipe().getOutput(), getOutputContents());
-        }
-
-        return false;
+        return RecipeHandler.hasRecipe(getClass(), getInputContents())
+                && RecipeUtils.canComponentArraysStack(getNextRecipe().getOutput(), getOutputContents());
     }
 
     protected void resetProcess() {
@@ -233,7 +231,7 @@ public abstract class TileMachine extends TileEntity implements ITickable, IEner
     }
 
     public int getProcTime() {
-        final MachineRecipe recipe = getCurrentRecipe();
+        final MachineRecipe recipe = getNextRecipe();
 
         if(recipe == null) {
             return Integer.MAX_VALUE;
@@ -251,8 +249,7 @@ public abstract class TileMachine extends TileEntity implements ITickable, IEner
     public abstract int getBaseEnergyUsage();
 
     public int getEnergyUsage() {
-        // TODO: include upgrades and other things that affect it
-        // - Could be overridden in child classes to include other, machine-specific factors maybe.
+        // TODO include upgrades and other things that affect it
         return getBaseEnergyUsage();
     }
 
@@ -273,10 +270,7 @@ public abstract class TileMachine extends TileEntity implements ITickable, IEner
         return super.getCapability(capability, facing);
     }
 
-    @Override
-    public int receiveEnergy(int maxReceive, boolean simulate) {
-        if (!canReceive()) return 0;
-
+    int receiveEnergyInternal(int maxReceive, boolean simulate) {
         int energyReceived = Math.min(getMaxEnergyStored() - energy, maxReceive);
 
         if (!simulate) {
@@ -285,6 +279,13 @@ public abstract class TileMachine extends TileEntity implements ITickable, IEner
         }
 
         return energyReceived;
+    }
+
+    @Override
+    public int receiveEnergy(int maxReceive, boolean simulate) {
+        if (!canReceive()) return 0;
+
+        return receiveEnergyInternal(maxReceive, simulate);
     }
 
     @Override
@@ -325,7 +326,7 @@ public abstract class TileMachine extends TileEntity implements ITickable, IEner
 
     public abstract RecipeComponent[] getOutputContents();
 
-    public MachineRecipe getCurrentRecipe() {
+    public MachineRecipe getNextRecipe() {
         return RecipeHandler.findRecipe(this.getClass(), getInputContents());
     }
 }

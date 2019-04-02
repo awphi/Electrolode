@@ -10,8 +10,8 @@ import ph.adamw.electrolode.gui.element.GuiTabEnergy;
 import ph.adamw.electrolode.gui.element.GuiTabSideConfig;
 
 @SideOnly(Side.CLIENT)
-public abstract class GuiMachineBasic extends GuiBaseContainer {
-    GuiMachineBasic(TileMachine tileEntity, Container container) {
+public abstract class GuiMachine extends GuiBaseContainer {
+    public GuiMachine(TileMachine tileEntity, Container container) {
         super(tileEntity, container);
         guiElements.add(new GuiTabEnergy(this, tileEntity));
         guiElements.add(new GuiTabSideConfig(this, tileEntity));

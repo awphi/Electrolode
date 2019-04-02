@@ -15,6 +15,16 @@ plugins {
 
 repositories {
     jcenter() // or Maven central, required for Lombok dependency
+
+    maven {
+        name 'CoFH Maven'
+        url = 'http://maven.covers1624.net'
+    }
+
+    maven {
+        name 'curseforge'
+        url 'https://minecraft.curseforge.com/api/maven/'
+    }
 }
 
 lombok { // optional: values below are the defaults
@@ -65,6 +75,7 @@ dependencies {
     // except that these dependencies get remapped to your current MCP mappings
     //deobfCompile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
     //deobfProvided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+    deobfCompile "cofh:RedstoneFlux:1.12-${redstoneflux_version}:universal"
 
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html

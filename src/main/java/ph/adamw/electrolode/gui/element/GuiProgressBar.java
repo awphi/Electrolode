@@ -54,7 +54,6 @@ public class GuiProgressBar extends GuiElement {
         double progress = tileEntity.getCompletedPercentage();
         tooltip = Math.round(tileEntity.getCompletedPercentage() * 100) + "% " + tooltipSpecific;
 
-        // For some reason this doesn't render properly when in a switch?
         if(direction == EnumGuiDirection.RIGHT) {
             guiObj.drawTexturedModalRect(guiWidth + PLACEHOLDER_X, guiHeight + PLACEHOLDER_Y, BAR_U, BAR_V, (int) (progress * WIDTH), HEIGHT);
         } else if(direction == EnumGuiDirection.DOWN) {

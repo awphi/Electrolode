@@ -1,10 +1,14 @@
 package ph.adamw.electrolode.manager;
 
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import ph.adamw.electrolode.ElectrolodeItems;
+import ph.adamw.electrolode.block.machine.coalgenerator.TileCoalGenerator;
 import ph.adamw.electrolode.block.machine.press.TilePress;
 import ph.adamw.electrolode.item.core.EnumMineral;
 import ph.adamw.electrolode.item.core.EnumPlate;
+import ph.adamw.electrolode.recipe.GeneratorRecipe;
 import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
 import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.recipe.RecipeHandler;
@@ -46,6 +50,14 @@ public class RecipeManager {
                 1000
         );
         RecipeHandler.addRecipe(TilePress.class, recipe);
+
+        // Coal to RF
+        recipe = new GeneratorRecipe(new ItemStackRecipeComponent(new ItemStack(Items.COAL)), 20000, 300);
+        RecipeHandler.addRecipe(TileCoalGenerator.class, recipe);
+
+        // Charcoal to RF
+        recipe = new GeneratorRecipe(new ItemStackRecipeComponent(new ItemStack(Items.COAL, 1, 1)), 20000, 500);
+        RecipeHandler.addRecipe(TileCoalGenerator.class, recipe);
     }
 }
 

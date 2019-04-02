@@ -15,8 +15,6 @@ import ph.adamw.electrolode.recipe.FluidStackRecipeComponent;
 import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
 import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.recipe.RecipeComponent;
-import ph.adamw.electrolode.recipe.RecipeHandler;
-import ph.adamw.electrolode.recipe.RecipeUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -156,14 +154,7 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
 
     @Override
     public boolean canProcess() {
-        if(RecipeHandler.hasRecipe(this.getClass(), getInputContents())) {
-            return RecipeUtils.canComponentArraysStack(
-                    getCurrentRecipe().getOutput(), getOutputContents())
-                    && canTanksHoldOutput(getCurrentRecipe().getOutput()
-            );
-        }
-
-        return false;
+        return super.canProcess() && canTanksHoldOutput(getNextRecipe().getOutput());
     }
 
     @Override
@@ -197,7 +188,7 @@ public abstract class TileTankedMachine extends TileInventoriedMachine {
     }
 
     public void processingComplete() {
-        final MachineRecipe recipe = getCurrentRecipe();
+        final MachineRecipe recipe = getNextRecipe();
         final RecipeComponent[] output = recipe.getOutput();
         final RecipeComponent[] input = recipe.getInput();
 

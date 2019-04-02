@@ -1,13 +1,16 @@
 package ph.adamw.electrolode.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.machine.TileMachine;
 import ph.adamw.electrolode.block.machine.TileInventoriedMachine;
-import ph.adamw.electrolode.inventory.BaseMachineContainer;
+import ph.adamw.electrolode.inventory.ElectrolodeContainer;
+import ph.adamw.electrolode.inventory.MachineContainer;
 import ph.adamw.electrolode.manager.GuiManager;
 
 import java.lang.reflect.Constructor;
@@ -25,6 +28,7 @@ public class GuiProxy implements IGuiHandler {
 
         try {
             Constructor constructor = entry.container.getDeclaredConstructor(IInventory.class, TileInventoriedMachine.class);
+            constructor.setAccessible(true);
             return constructor.newInstance(player.inventory, te);
         } catch(InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
@@ -43,9 +47,11 @@ public class GuiProxy implements IGuiHandler {
         }
 
         try {
-            Constructor constructor = entry.guiMachineBasic.getDeclaredConstructor(TileMachine.class, BaseMachineContainer.class);
-            Constructor cs = entry.container.getDeclaredConstructor(IInventory.class, TileInventoriedMachine.class);
-            return constructor.newInstance(te, cs.newInstance(player.inventory, te));
+            Constructor constructor = entry.guiMachineBasic.getDeclaredConstructor(TileMachine.class, Container.class);
+            constructor.setAccessible(true);
+            Constructor containerConstructor = entry.container.getDeclaredConstructor(IInventory.class, TileInventoriedMachine.class);
+            containerConstructor.setAccessible(true);
+            return constructor.newInstance(te, containerConstructor.newInstance(player.inventory, te));
         } catch(InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }

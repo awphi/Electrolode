@@ -4,10 +4,10 @@ import net.minecraft.inventory.IInventory;
 import net.minecraftforge.items.IItemHandler;
 import ph.adamw.electrolode.block.machine.TileInventoriedMachine;
 import ph.adamw.electrolode.gui.GuiPoint;
-import ph.adamw.electrolode.inventory.BaseMachineContainer;
+import ph.adamw.electrolode.inventory.MachineContainer;
 import ph.adamw.electrolode.inventory.item.SlotRecipeInput;
 
-public class ContainerSoftener extends BaseMachineContainer {
+public class ContainerSoftener extends MachineContainer {
     private final int INPUT = 0;
 
     public ContainerSoftener(IInventory playerInv, TileInventoriedMachine e) {
