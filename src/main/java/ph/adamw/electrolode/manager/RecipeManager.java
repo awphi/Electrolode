@@ -6,7 +6,7 @@ import ph.adamw.electrolode.block.machine.press.TilePress;
 import ph.adamw.electrolode.item.core.EnumMineral;
 import ph.adamw.electrolode.item.core.EnumPlate;
 import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
-import ph.adamw.electrolode.recipe.ElectrolodeRecipe;
+import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.recipe.RecipeHandler;
 import ph.adamw.electrolode.util.ItemUtils;
 
@@ -19,7 +19,7 @@ public class RecipeManager {
         // Structural Plate
         ItemStackRecipeComponent[] ingredients
                 = ItemUtils.makeItemStackRecipeArray(new ItemStack(ElectrolodeItems.POWDER_PURIFIED, 1, EnumMineral.IRON.ordinal()), 3);
-        ElectrolodeRecipe recipe = new ElectrolodeRecipe(
+        MachineRecipe recipe = new MachineRecipe(
                 ingredients,
                 new ItemStackRecipeComponent(new ItemStack(ElectrolodeItems.PLATE, 1, EnumPlate.STRUCTURAL.ordinal())),
                 1000
@@ -29,7 +29,7 @@ public class RecipeManager {
         // Strengthened Plate
         ingredients =
                 ItemUtils.makeItemStackRecipeArray(new ItemStack(ElectrolodeItems.POWDER_PURIFIED, 1, EnumMineral.CARBON.ordinal()), 3);
-        recipe = new ElectrolodeRecipe(
+        recipe = new MachineRecipe(
                 ingredients,
                 new ItemStackRecipeComponent(new ItemStack(ElectrolodeItems.PLATE, 1, EnumPlate.STRENGTHENED.ordinal())),
                 1000
@@ -40,7 +40,7 @@ public class RecipeManager {
         ingredients =
                 ItemUtils.makeItemStackRecipeArray(new ItemStack(ElectrolodeItems.POWDER_PURIFIED, 1, EnumMineral.CARBON.ordinal()), 3);
         ingredients[1] = new ItemStackRecipeComponent(new ItemStack(ElectrolodeItems.POWDER_PURIFIED, 1, EnumMineral.GOLD.ordinal()));
-        recipe = new ElectrolodeRecipe(
+        recipe = new MachineRecipe(
                 ingredients,
                 new ItemStackRecipeComponent(new ItemStack(ElectrolodeItems.PLATE, 1, EnumPlate.CONDUCTIVE.ordinal())),
                 1000

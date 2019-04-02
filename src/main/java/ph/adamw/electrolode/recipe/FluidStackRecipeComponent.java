@@ -1,5 +1,6 @@
 package ph.adamw.electrolode.recipe;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
 
 public class FluidStackRecipeComponent extends RecipeComponent<FluidStackRecipeComponent, FluidStack> {
@@ -34,5 +35,15 @@ public class FluidStackRecipeComponent extends RecipeComponent<FluidStackRecipeC
 	@Override
 	public FluidStack copyOf() {
 		return fluidStack == null ? null : fluidStack.copy();
+	}
+
+	@Override
+	protected NBTTagCompound addNBT(NBTTagCompound compound) {
+		compound.setTag(COMPONENT_TAG, fluidStack.writeToNBT(new NBTTagCompound()));
+		return compound;
+	}
+
+	public static FluidStackRecipeComponent fromNBT(NBTTagCompound compound) {
+		return new FluidStackRecipeComponent(FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(COMPONENT_TAG)));
 	}
 }

@@ -43,4 +43,8 @@ public class ItemStackRecipeComponent extends RecipeComponent<ItemStackRecipeCom
 		compound.setTag(COMPONENT_TAG, itemStack.serializeNBT());
 		return compound;
 	}
+
+	public static ItemStackRecipeComponent fromNBT(NBTTagCompound compound) {
+		return new ItemStackRecipeComponent(new ItemStack(compound.getCompoundTag(COMPONENT_TAG)));
+	}
 }

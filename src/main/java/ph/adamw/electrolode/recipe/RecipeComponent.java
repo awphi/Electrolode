@@ -2,8 +2,11 @@ package ph.adamw.electrolode.recipe;
 
 import net.minecraft.nbt.NBTTagCompound;
 
+import java.lang.reflect.InvocationTargetException;
+
 public abstract class RecipeComponent<T extends RecipeComponent, E> {
 	public static final String COMPONENT_TAG = "component";
+	public static final String CLASS_TAG = "class";
 
 	public abstract boolean compare(T other);
 
@@ -19,15 +22,22 @@ public abstract class RecipeComponent<T extends RecipeComponent, E> {
 
 	protected abstract NBTTagCompound addNBT(NBTTagCompound compound);
 
-	public NBTTagCompound asNBT() {
+	public NBTTagCompound toNBT() {
 		final NBTTagCompound compound = new NBTTagCompound();
-		compound.setString("class", getClass().getName());
+		compound.setString(CLASS_TAG, getClass().getName());
 		return addNBT(compound);
 	}
 
 	public static RecipeComponent fromNBT(NBTTagCompound compound) {
-		//TODO resolve a recipe component from the nbt tag compound - use the class name from the compound
-		// to access an expected static method w/ the compound in the RecipeComponent implementation that will return an
-		// instance of itself built w/ the component.
+		try {
+			return (RecipeComponent) Class.forName(compound.getString(CLASS_TAG))
+					.getMethod("fromNBT", NBTTagCompound.class)
+					.invoke(null, compound);
+
+		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

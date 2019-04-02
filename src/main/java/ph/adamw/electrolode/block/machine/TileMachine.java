@@ -14,9 +14,10 @@ import net.minecraftforge.energy.IEnergyStorage;
 import ph.adamw.electrolode.Config;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.manager.GuiManager;
-import ph.adamw.electrolode.recipe.ElectrolodeRecipe;
+import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
+import ph.adamw.electrolode.recipe.RecipeUtils;
 import ph.adamw.electrolode.util.SidedHashMap;
 
 import javax.annotation.Nullable;
@@ -216,7 +217,13 @@ public abstract class TileMachine extends TileEntity implements ITickable, IEner
     /* Basic processing stuff */
     public abstract void processingComplete();
 
-    public abstract boolean canProcess();
+    public boolean canProcess() {
+        if (RecipeHandler.hasRecipe(getClass(), getInputContents())) {
+            return RecipeUtils.canComponentArraysStack(getCurrentRecipe().getOutput(), getOutputContents());
+        }
+
+        return false;
+    }
 
     protected void resetProcess() {
         if(processedTime > 0) {
@@ -226,7 +233,7 @@ public abstract class TileMachine extends TileEntity implements ITickable, IEner
     }
 
     public int getProcTime() {
-        final ElectrolodeRecipe recipe = getCurrentRecipe();
+        final MachineRecipe recipe = getCurrentRecipe();
 
         if(recipe == null) {
             return Integer.MAX_VALUE;
@@ -318,7 +325,7 @@ public abstract class TileMachine extends TileEntity implements ITickable, IEner
 
     public abstract RecipeComponent[] getOutputContents();
 
-    public ElectrolodeRecipe getCurrentRecipe() {
+    public MachineRecipe getCurrentRecipe() {
         return RecipeHandler.findRecipe(this.getClass(), getInputContents());
     }
 }

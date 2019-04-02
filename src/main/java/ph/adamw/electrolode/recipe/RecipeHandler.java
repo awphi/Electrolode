@@ -7,22 +7,22 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class RecipeHandler {
-    private static HashMap<Class<? extends TileMachine>, List<ElectrolodeRecipe>> recipeMap = new HashMap<>();
+    private static HashMap<Class<? extends TileMachine>, List<MachineRecipe>> recipeMap = new HashMap<>();
 
-    public static void addRecipe(Class<? extends TileMachine> machine, ElectrolodeRecipe recipe) {
+    public static void addRecipe(Class<? extends TileMachine> machine, MachineRecipe recipe) {
         recipeMap.computeIfAbsent(machine, k -> new LinkedList<>());
         recipeMap.get(machine).add(recipe);
     }
 
     @SuppressWarnings("unchecked")
-    private static ElectrolodeRecipe findRecipe(Class<? extends TileMachine> machine, RecipeComponent[] userInput, boolean soft) {
-        final List<ElectrolodeRecipe> recipes = recipeMap.get(machine);
+    private static MachineRecipe findRecipe(Class<? extends TileMachine> machine, RecipeComponent[] userInput, boolean soft) {
+        final List<MachineRecipe> recipes = recipeMap.get(machine);
 
         if(recipes == null || recipes.size() == 0) {
             return null;
         }
 
-        for(ElectrolodeRecipe recipe : recipes) {
+        for(MachineRecipe recipe : recipes) {
             final RecipeComponent[] desiredInput = recipe.getInput();
 
             if(desiredInput.length != userInput.length) {
@@ -51,7 +51,7 @@ public class RecipeHandler {
         return null;
     }
 
-    public static ElectrolodeRecipe findRecipe(Class<? extends TileMachine> machine, RecipeComponent[] input) {
+    public static MachineRecipe findRecipe(Class<? extends TileMachine> machine, RecipeComponent[] input) {
         return findRecipe(machine, input, false);
     }
 

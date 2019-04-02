@@ -1,7 +1,7 @@
 package ph.adamw.electrolode.block.machine;
 
 import net.minecraft.nbt.NBTTagCompound;
-import ph.adamw.electrolode.recipe.ElectrolodeRecipe;
+import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.recipe.GeneratorRecipe;
 
 /**
@@ -17,21 +17,17 @@ public abstract class TileGenerator extends TileInventoriedMachine {
 	@Override
 	public void tick() {
 		if(!world.isRemote) {
-			if (canProcess()) {
-				processedTime ++;
-				//TODO output energy / proc time into the buffer
-			} else {
+			if(currentRecipe != null && currentRecipe.getTime() >= processedTime) {
 				resetProcess();
 			}
+
+			if(currentRecipe == null) {
+				//TODO Look for and accept a new recipe if it's found
+			} else {
+				processedTime ++;
+				receiveEnergy((int) ((float) currentRecipe.getEnergy() / (float) currentRecipe.getTime()), false);
+			}
 		}
-	}
-
-	//TODO energy extraction capability
-
-	@Override
-	public boolean canProcess() {
-		//TODO check if it's already processing
-		return currentRecipe == null;
 	}
 
 	@Override
@@ -41,7 +37,7 @@ public abstract class TileGenerator extends TileInventoriedMachine {
 	}
 
 	@Override
-	public ElectrolodeRecipe getCurrentRecipe() {
+	public MachineRecipe getCurrentRecipe() {
 		return currentRecipe;
 	}
 
@@ -61,7 +57,7 @@ public abstract class TileGenerator extends TileInventoriedMachine {
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		currentRecipe = (GeneratorRecipe) ElectrolodeRecipe.fromNBT(compound.getCompoundTag("currentRecipe"));
+		currentRecipe = GeneratorRecipe.fromNBT(compound.getCompoundTag("currentRecipe"));
 	}
 
 	@Override

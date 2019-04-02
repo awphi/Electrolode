@@ -11,7 +11,7 @@ import ph.adamw.electrolode.ElectrolodeItems;
 import ph.adamw.electrolode.block.machine.purifier.TilePurifier;
 import ph.adamw.electrolode.recipe.FluidStackRecipeComponent;
 import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
-import ph.adamw.electrolode.recipe.ElectrolodeRecipe;
+import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
 
@@ -43,7 +43,7 @@ public class OreDictManager {
                 // Purifier
                 RecipeHandler.addRecipe(
                         TilePurifier.class,
-                        new ElectrolodeRecipe(
+                        new MachineRecipe(
                             entry,
                             new ItemStackRecipeComponent(new ItemStack(ElectrolodeItems.POWDER_PURIFIED, 1, el.ordinal())),
                             1000
@@ -63,7 +63,7 @@ public class OreDictManager {
                     if(!RecipeHandler.hasRecipe(TileSoftener.class, inputs)) {
                         RecipeHandler.addRecipe(
                                 TileSoftener.class,
-                                new ElectrolodeRecipe(
+                                new MachineRecipe(
                                     inputs,
                                     new FluidStackRecipeComponent(new FluidStack(ElectrolodeFluids.SOFTENED_WATER, 500)),
                                     1000
