@@ -1,6 +1,7 @@
 package ph.adamw.electrolode.recipe;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class ItemStackRecipeComponent extends RecipeComponent<ItemStackRecipeComponent, ItemStack> {
@@ -37,5 +38,9 @@ public class ItemStackRecipeComponent extends RecipeComponent<ItemStackRecipeCom
 		return itemStack.copy();
 	}
 
-
+	@Override
+	protected NBTTagCompound addNBT(NBTTagCompound compound) {
+		compound.setTag(COMPONENT_TAG, itemStack.serializeNBT());
+		return compound;
+	}
 }

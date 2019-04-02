@@ -19,10 +19,11 @@ import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;
 import ph.adamw.electrolode.util.SidedHashMap;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TileMachine<T extends ElectrolodeRecipe> extends TileEntity implements ITickable, IEnergyStorage {
+public abstract class TileMachine extends TileEntity implements ITickable, IEnergyStorage {
     double processedTime = 0;
     private int energy = 0;
     private boolean toUpdate = false;
@@ -257,7 +258,7 @@ public abstract class TileMachine<T extends ElectrolodeRecipe> extends TileEntit
     }
 
     @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
         if(capability == CapabilityEnergy.ENERGY) {
             return CapabilityEnergy.ENERGY.cast(this);
         }

@@ -16,10 +16,12 @@ import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.util.EnergyUtils;
 
+import javax.annotation.Nullable;
+
 public abstract class TileInventoriedMachine extends TileMachine {
     InputItemStackHandler inputOnlySlotsWrapper = new InputRecipeItemStackHandler(new ItemStackHandler(getInputSlots()), this.getClass());
     OutputItemStackHandler outputOnlySlotsWrapper = new OutputItemStackHandler(new ItemStackHandler(getOutputSlots()));
-    protected ItemStackHandler chargeSlotWrapper = new ItemStackHandler(1);
+    ItemStackHandler chargeSlotWrapper = new ItemStackHandler(1);
     private CombinedInvWrapper allSlotsWrapper = new CombinedInvWrapper(inputOnlySlotsWrapper.internalSlot, outputOnlySlotsWrapper, chargeSlotWrapper);
 
     public void ejectOutput() {
@@ -75,7 +77,7 @@ public abstract class TileInventoriedMachine extends TileMachine {
     }
 
     @Override
-    public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             final ItemStackHandlerBase value;
 
