@@ -42,8 +42,4 @@ public class FluidStackRecipeComponent extends RecipeComponent<FluidStackRecipeC
 		compound.setTag(COMPONENT_TAG, fluidStack.writeToNBT(new NBTTagCompound()));
 		return compound;
 	}
-
-	public static FluidStackRecipeComponent fromNBT(NBTTagCompound compound) {
-		return new FluidStackRecipeComponent(FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(COMPONENT_TAG)));
-	}
 }

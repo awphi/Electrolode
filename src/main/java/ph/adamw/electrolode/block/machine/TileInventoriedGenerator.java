@@ -78,7 +78,7 @@ public abstract class TileInventoriedGenerator extends TileInventoriedMachine {
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound = super.writeToNBT(compound);
 		if(currentRecipe != null) {
-			compound.setTag("currentRecipe", currentRecipe.toNBT());
+			compound.setTag("currentRecipe", currentRecipe.writeToNBT(new NBTTagCompound()));
 		}
 
 		return compound;

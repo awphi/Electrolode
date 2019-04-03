@@ -67,17 +67,16 @@ public class ElectroEnergyStorage extends EnergyStorage {
 		return getMaxEnergyStored() > getEnergyStored();
 	}
 
-	public NBTTagCompound toNBT() {
-		final NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setInteger("energy", energy);
-		nbt.setInteger("capacity", capacity);
-		nbt.setInteger("maxExtract", maxExtract);
-		nbt.setInteger("maxReceive", maxReceive);
-		nbt.setString("class", getClass().getSimpleName());
-		return nbt;
+	public NBTTagCompound writeToNbt(NBTTagCompound compound) {
+		compound.setInteger("energy", energy);
+		compound.setInteger("capacity", capacity);
+		compound.setInteger("maxExtract", maxExtract);
+		compound.setInteger("maxReceive", maxReceive);
+		compound.setString("class", getClass().getSimpleName());
+		return compound;
 	}
 
-	public static ElectroEnergyStorage fromNBT(TileMachine tile, NBTTagCompound compound) {
+	public static ElectroEnergyStorage readFromNBT(TileMachine tile, NBTTagCompound compound) {
 		final ElectroEnergyStorage e;
 
 		switch(compound.getString("class")) {

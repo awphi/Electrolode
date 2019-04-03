@@ -25,7 +25,7 @@ public abstract class TileItemGenerator extends TileInventoriedGenerator {
 	@Override
 	public void depositOutput(GeneratorRecipe recipe) {
 		int c = 0;
-		for(RecipeComponent i : recipe.getInput()) {
+		for(RecipeComponent i : recipe.getOutput()) {
 			if(i instanceof ItemStackRecipeComponent) {
 				outputOnlySlotsWrapper.insertItemInternally(c, ((ItemStackRecipeComponent) i).copyOf(), false);
 				c ++;

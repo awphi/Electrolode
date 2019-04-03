@@ -1,8 +1,8 @@
 package ph.adamw.electrolode.recipe;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-
-import java.lang.reflect.InvocationTargetException;
+import net.minecraftforge.fluids.FluidStack;
 
 public abstract class RecipeComponent<T extends RecipeComponent, E> {
 	public static final String COMPONENT_TAG = "component";
@@ -22,20 +22,15 @@ public abstract class RecipeComponent<T extends RecipeComponent, E> {
 
 	protected abstract NBTTagCompound addNBT(NBTTagCompound compound);
 
-	public NBTTagCompound toNBT() {
-		final NBTTagCompound compound = new NBTTagCompound();
-		compound.setString(CLASS_TAG, getClass().getName());
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		compound.setString(CLASS_TAG, getClass().getSimpleName());
 		return addNBT(compound);
 	}
 
 	public static RecipeComponent fromNBT(NBTTagCompound compound) {
-		try {
-			return (RecipeComponent) Class.forName(compound.getString(CLASS_TAG))
-					.getMethod("fromNBT", NBTTagCompound.class)
-					.invoke(null, compound);
-
-		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
-			e.printStackTrace();
+		switch(compound.getString(CLASS_TAG)) {
+			case "ItemStackRecipeComponent": return new ItemStackRecipeComponent(new ItemStack(compound.getCompoundTag(COMPONENT_TAG)));
+			case "FluidStackRecipeComponent": return new FluidStackRecipeComponent(FluidStack.loadFluidStackFromNBT(compound.getCompoundTag(COMPONENT_TAG)));
 		}
 
 		return null;

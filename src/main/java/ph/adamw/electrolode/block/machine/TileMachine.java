@@ -13,12 +13,10 @@ import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 import ph.adamw.electrolode.Config;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.energy.ElectroEnergyReceiver;
 import ph.adamw.electrolode.energy.ElectroEnergyStorage;
-import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.gui.machine.GuiMachine;
 import ph.adamw.electrolode.inventory.ElectrolodeContainer;
 import ph.adamw.electrolode.manager.GuiManager;
@@ -134,7 +132,7 @@ public abstract class TileMachine extends TileEntity implements ICapabilityProvi
             }
             /* --- */
             processedTime = compound.getDouble("processedTime");
-            energy = ElectroEnergyStorage.fromNBT(this, compound.getCompoundTag("energyStorage"));
+            energy = ElectroEnergyStorage.readFromNBT(this, compound.getCompoundTag("energyStorage"));
             autoEject = compound.getBoolean("autoEject");
         }
     }
@@ -163,7 +161,7 @@ public abstract class TileMachine extends TileEntity implements ICapabilityProvi
 
 
         compound.setDouble("processedTime", processedTime);
-        compound.setTag("energyStorage", energy.toNBT());
+        compound.setTag("energyStorage", energy.writeToNbt(new NBTTagCompound()));
         compound.setBoolean("autoEject", autoEject);
         return compound;
     }
