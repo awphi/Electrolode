@@ -39,7 +39,6 @@ public class CommonProxy {
 
     public void init(FMLInitializationEvent e) {
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiProxy());
-        GuiManager.registerGuis();
     }
 
     public void postInit(FMLPostInitializationEvent e) {

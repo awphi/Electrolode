@@ -11,7 +11,6 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import ph.adamw.electrolode.block.EnumFaceRole;
-import ph.adamw.electrolode.inventory.ElectrolodeContainer;
 import ph.adamw.electrolode.inventory.item.*;
 import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeComponent;
@@ -22,7 +21,7 @@ import javax.annotation.Nullable;
 public abstract class TileInventoriedMachine extends TileMachine {
     InputItemStackHandler inputOnlySlotsWrapper = new InputRecipeItemStackHandler(new ItemStackHandler(getInputSlots()), this.getClass());
     OutputItemStackHandler outputOnlySlotsWrapper = new OutputItemStackHandler(new ItemStackHandler(getOutputSlots()));
-    ItemStackHandler chargeSlotWrapper = new ItemStackHandler(getContainerClass().isAssignableFrom(IDischargeSlot.class) ? 1 : 0);
+    private ItemStackHandler chargeSlotWrapper = new ItemStackHandler(IDischargeSlot.class.isAssignableFrom(getContainerClass()) ? 1 : 0);
     private CombinedInvWrapper allSlotsWrapper = new CombinedInvWrapper(inputOnlySlotsWrapper.internalSlot, outputOnlySlotsWrapper, chargeSlotWrapper);
 
     public void ejectOutput() {
@@ -60,8 +59,6 @@ public abstract class TileInventoriedMachine extends TileMachine {
         }
     }
 
-
-    public abstract Class<? extends ElectrolodeContainer> getContainerClass();
     public abstract int getInputSlots();
     public abstract int getOutputSlots();
 

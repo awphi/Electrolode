@@ -1,12 +1,19 @@
 package ph.adamw.electrolode.block.machine.press;
 
 import ph.adamw.electrolode.block.machine.TileItemMachine;
+import ph.adamw.electrolode.gui.machine.GuiMachine;
+import ph.adamw.electrolode.gui.machine.GuiPress;
 import ph.adamw.electrolode.inventory.ElectrolodeContainer;
 
 public class TilePress extends TileItemMachine {
     @Override
     public Class<? extends ElectrolodeContainer> getContainerClass() {
         return ContainerPress.class;
+    }
+
+    @Override
+    public Class<? extends GuiMachine> getGuiClass() {
+        return GuiPress.class;
     }
 
     public int getInputSlots() {

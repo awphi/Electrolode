@@ -3,9 +3,11 @@ package ph.adamw.electrolode.gui.element;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.Electrolode;
+import ph.adamw.electrolode.block.machine.TileInventoriedGenerator;
 import ph.adamw.electrolode.block.machine.TileItemGenerator;
 import ph.adamw.electrolode.block.machine.TileItemMachine;
 import ph.adamw.electrolode.block.machine.TileMachine;
+import ph.adamw.electrolode.energy.ElectroEnergyProducer;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
 
 public class GuiTabEnergy extends GuiTab {
@@ -16,8 +18,8 @@ public class GuiTabEnergy extends GuiTab {
 
     public String getTooltip() {
         String top = I18n.format("tooltip.electrolode.maxenergyusage")  + " " + tileEntity.getEnergyUsage() + " RF/t";
-        if(tileEntity instanceof TileItemGenerator) {
-            top = I18n.format("tooltip.electrolode.energyoutput") + " " + ((TileItemGenerator) tileEntity).getEnergyOutput() + " RF/t";
+        if(tileEntity.getEnergy() instanceof ElectroEnergyProducer) {
+            top = I18n.format("tooltip.electrolode.energyoutput") + " " + ((TileInventoriedGenerator) tileEntity).getEnergyOutput() + " RF/t";
         }
 
         return top + "#n" + I18n.format("tooltip.electrolode.totalenergy") + " " + tileEntity.getEnergy().getEnergyStored() + " / " + tileEntity.getEnergy().getMaxEnergyStored() + " RF";

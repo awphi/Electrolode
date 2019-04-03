@@ -27,6 +27,7 @@ public class GuiManager {
         return currentID ++;
     }
 
+    //TODO replace this with a bimap for O(1) getGuiId search times
     private static HashMap<Integer, GuiEntry> guiMap = new HashMap<>();
 
     public static int getGuiId(TileMachine e) {
@@ -51,12 +52,5 @@ public class GuiManager {
         }
 
         return -1;
-    }
-
-    public static void registerGuis() {
-        registerGui(GuiPurifier.class, ContainerPurifier.class, TilePurifier.class);
-        registerGui(GuiPress.class, ContainerPress.class, TilePress.class);
-        registerGui(GuiSoftener.class, ContainerSoftener.class, TileSoftener.class);
-        registerGui(GuiCoalGenerator.class, ContainerCoalGenerator.class, TileCoalGenerator.class);
     }
 }

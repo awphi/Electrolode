@@ -18,6 +18,9 @@ import ph.adamw.electrolode.Config;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.energy.ElectroEnergyReceiver;
 import ph.adamw.electrolode.energy.ElectroEnergyStorage;
+import ph.adamw.electrolode.gui.GuiBaseContainer;
+import ph.adamw.electrolode.gui.machine.GuiMachine;
+import ph.adamw.electrolode.inventory.ElectrolodeContainer;
 import ph.adamw.electrolode.manager.GuiManager;
 import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.recipe.RecipeComponent;
@@ -38,6 +41,11 @@ public abstract class TileMachine extends TileEntity implements ICapabilityProvi
     private boolean toUpdate = false;
     public boolean autoEject = Config.autoEjectDefault;
 
+    @Override
+    public boolean hasFastRenderer() {
+        return true;
+    }
+
     public int getGuiId() {
         return GuiManager.getGuiId(this);
     }
@@ -52,6 +60,7 @@ public abstract class TileMachine extends TileEntity implements ICapabilityProvi
             potentialRoles.add(EnumFaceRole.NO_ROLE);
         }
 
+        GuiManager.registerGui(getGuiClass(), getContainerClass(), getClass());
         energy = new ElectroEnergyReceiver(this, getBaseMaxEnergy());
     }
 
@@ -160,6 +169,10 @@ public abstract class TileMachine extends TileEntity implements ICapabilityProvi
     }
     /* --- */
 
+    public abstract Class<? extends ElectrolodeContainer> getContainerClass();
+
+    public abstract Class<? extends GuiMachine> getGuiClass();
+
     /* Syncing tile entity props between client and server */
     @Override
     public NBTTagCompound getUpdateTag() {
@@ -175,11 +188,6 @@ public abstract class TileMachine extends TileEntity implements ICapabilityProvi
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
         super.onDataPacket(net, packet);
         handleUpdateTag(packet.getNbtCompound());
-    }
-
-    @Override
-    public boolean hasFastRenderer() {
-        return true;
     }
 
     /* --- */
