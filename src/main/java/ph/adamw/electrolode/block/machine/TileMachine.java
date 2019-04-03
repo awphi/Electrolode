@@ -1,5 +1,7 @@
 package ph.adamw.electrolode.block.machine;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,6 +16,8 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import ph.adamw.electrolode.Config;
 import ph.adamw.electrolode.block.EnumFaceRole;
+import ph.adamw.electrolode.energy.ElectroEnergyReceiver;
+import ph.adamw.electrolode.energy.ElectroEnergyStorage;
 import ph.adamw.electrolode.manager.GuiManager;
 import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.recipe.RecipeComponent;
@@ -25,9 +29,12 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TileMachine extends TileEntity implements ICapabilityProvider, ITickable, IEnergyStorage {
+public abstract class TileMachine extends TileEntity implements ICapabilityProvider, ITickable {
+    @Getter
+    @Setter
+    private ElectroEnergyStorage energy;
+
     double processedTime = 0;
-    private int energy = 0;
     private boolean toUpdate = false;
     public boolean autoEject = Config.autoEjectDefault;
 
@@ -44,6 +51,8 @@ public abstract class TileMachine extends TileEntity implements ICapabilityProvi
         if(!potentialRoles.contains(EnumFaceRole.NO_ROLE)) {
             potentialRoles.add(EnumFaceRole.NO_ROLE);
         }
+
+        energy = new ElectroEnergyReceiver(this, getBaseMaxEnergy());
     }
 
     public boolean canInteractWith(EntityPlayer playerIn) {
@@ -82,10 +91,9 @@ public abstract class TileMachine extends TileEntity implements ICapabilityProvi
     public void tick() {
         if(!world.isRemote) {
             if (canProcess()) {
-                //TODO Mark as on
-                if(extractEnergy(getEnergyUsage(), true) >= getEnergyUsage()) {
+                if(energy.extractEnergyInternal(getEnergyUsage(), true) >= getEnergyUsage()) {
                     processedTime ++;
-                    extractEnergy(getEnergyUsage(), false);
+                    energy.extractEnergyInternal(getEnergyUsage(), false);
 
                     if (processedTime >= getProcTime()) {
                         processingComplete();
@@ -96,7 +104,6 @@ public abstract class TileMachine extends TileEntity implements ICapabilityProvi
                 }
             } else {
                 resetProcess();
-                //TODO Mark as off
             }
         }
     }
@@ -118,7 +125,7 @@ public abstract class TileMachine extends TileEntity implements ICapabilityProvi
             }
             /* --- */
             processedTime = compound.getDouble("processedTime");
-            energy = compound.getInteger("energyStored");
+            energy = ElectroEnergyStorage.fromNBT(this, compound.getCompoundTag("energyStorage"));
             autoEject = compound.getBoolean("autoEject");
         }
     }
@@ -147,7 +154,7 @@ public abstract class TileMachine extends TileEntity implements ICapabilityProvi
 
 
         compound.setDouble("processedTime", processedTime);
-        compound.setInteger("energyStored", energy);
+        compound.setTag("energyStorage", energy.toNBT());
         compound.setBoolean("autoEject", autoEject);
         return compound;
     }
@@ -256,69 +263,17 @@ public abstract class TileMachine extends TileEntity implements ICapabilityProvi
     public abstract int getBaseMaxEnergy();
 
     @Override
-    public int getMaxEnergyStored() {
-        //See get energy usage
-        return getBaseMaxEnergy();
-    }
-
-    @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
         if(capability == CapabilityEnergy.ENERGY) {
-            return CapabilityEnergy.ENERGY.cast(this);
+            return (T) energy;
         }
 
         return super.getCapability(capability, facing);
     }
 
-    int receiveEnergyInternal(int maxReceive, boolean simulate) {
-        int energyReceived = Math.min(getMaxEnergyStored() - energy, maxReceive);
-
-        if (!simulate) {
-            energy += energyReceived;
-            markForUpdate();
-        }
-
-        return energyReceived;
-    }
-
-    @Override
-    public int receiveEnergy(int maxReceive, boolean simulate) {
-        if (!canReceive()) return 0;
-
-        return receiveEnergyInternal(maxReceive, simulate);
-    }
-
-    @Override
-    public int extractEnergy(int maxExtract, boolean simulate) {
-        if (!canExtract()) return 0;
-
-        int energyExtracted = Math.min(energy, maxExtract);
-
-        if (!simulate) {
-            energy -= energyExtracted;
-            markForUpdate();
-        }
-
-        return energyExtracted;
-    }
-
-    @Override
-    public int getEnergyStored() {
-        return energy;
-    }
-
-    @Override
-    public boolean canExtract() {
-        return getEnergyUsage() > 0 && 0 < getEnergyStored();
-    }
-
-    @Override
-    public boolean canReceive() {
-        return getEnergyUsage() > 0 && getMaxEnergyStored() > getEnergyStored();
-    }
 
     public double getEnergyPercentage() {
-        return ((double) getEnergyStored() / (double) getMaxEnergyStored());
+        return ((double) energy.getEnergyStored() / (double) energy.getMaxEnergyStored());
     }
     /* --- */
 

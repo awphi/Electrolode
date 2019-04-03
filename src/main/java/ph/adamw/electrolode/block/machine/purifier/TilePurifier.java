@@ -1,9 +1,15 @@
 package ph.adamw.electrolode.block.machine.purifier;
 
 import ph.adamw.electrolode.block.machine.TileItemMachine;
+import ph.adamw.electrolode.inventory.ElectrolodeContainer;
 
 
 public class TilePurifier extends TileItemMachine {
+    @Override
+    public Class<? extends ElectrolodeContainer> getContainerClass() {
+        return ContainerPurifier.class;
+    }
+
     public int getInputSlots() {
         return 1;
     }

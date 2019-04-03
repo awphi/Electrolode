@@ -56,7 +56,7 @@ public class GuiEnergyBar extends GuiElement {
     }
 
     public String getTooltip() {
-        return tileEntity.getEnergyStored() + " / " + tileEntity.getMaxEnergyStored() + " RF";
+        return tileEntity.getEnergy().getEnergyStored() + " / " + tileEntity.getEnergy().getMaxEnergyStored() + " RF";
     }
 
     public void preMouseClicked(int xAxis, int yAxis, int button) {}

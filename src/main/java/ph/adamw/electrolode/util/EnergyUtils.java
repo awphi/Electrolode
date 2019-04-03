@@ -18,9 +18,9 @@ public class EnergyUtils {
         final IEnergyStorage energyStorage = itemStack.getCapability(CapabilityEnergy.ENERGY, null);
 
         //noinspection ConstantConditions
-        if(energyStorage.getEnergyStored() - te.getEnergyUsage() > 0 && te.getEnergyStored() + te.getEnergyUsage() <= te.getMaxEnergyStored()) {
+        if(energyStorage.getEnergyStored() - te.getEnergyUsage() > 0 && te.getEnergy().getEnergyStored() + te.getEnergyUsage() <= te.getEnergy().getMaxEnergyStored()) {
             energyStorage.extractEnergy(te.getEnergyUsage(), false);
-            te.receiveEnergy(te.getEnergyUsage(), false);
+            te.getEnergy().receiveEnergy(te.getEnergyUsage(), false);
         }
     }
 }

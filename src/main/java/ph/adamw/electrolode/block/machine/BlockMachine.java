@@ -20,6 +20,7 @@ import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.BlockHorizontalDirectional;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.block.state.FaceMapProperty;
+import ph.adamw.electrolode.inventory.ElectrolodeContainer;
 import ph.adamw.electrolode.manager.BlockManager;
 import ph.adamw.electrolode.item.core.IExtendedDescription;
 import ph.adamw.electrolode.rendering.machine.MachineTESR;
@@ -120,6 +121,11 @@ public abstract class BlockMachine extends BlockHorizontalDirectional implements
         }
 
         return true;
+    }
+
+    @Override
+    public void onPlayerDestroy(World worldIn, BlockPos pos, IBlockState state) {
+        super.onPlayerDestroy(worldIn, pos, state);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class GuiTabEnergy extends GuiTab {
             top = I18n.format("tooltip.electrolode.energyoutput") + " " + ((TileItemGenerator) tileEntity).getEnergyOutput() + " RF/t";
         }
 
-        return top + "#n" + I18n.format("tooltip.electrolode.totalenergy") + " " + tileEntity.getEnergyStored() + " / " + tileEntity.getMaxEnergyStored() + " RF";
+        return top + "#n" + I18n.format("tooltip.electrolode.totalenergy") + " " + tileEntity.getEnergy().getEnergyStored() + " / " + tileEntity.getEnergy().getMaxEnergyStored() + " RF";
     }
 
     public void preMouseClicked(int xAxis, int yAxis, int button) {}

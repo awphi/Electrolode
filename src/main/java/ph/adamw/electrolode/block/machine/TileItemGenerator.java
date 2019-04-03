@@ -2,6 +2,7 @@ package ph.adamw.electrolode.block.machine;
 
 import net.minecraft.nbt.NBTTagCompound;
 import ph.adamw.electrolode.block.EnumFaceRole;
+import ph.adamw.electrolode.energy.ElectroEnergyProducer;
 import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
 import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.recipe.GeneratorRecipe;
@@ -16,6 +17,8 @@ public abstract class TileItemGenerator extends TileInventoriedMachine {
 
 	public TileItemGenerator() {
 		chargeSlotWrapper.setSize(0);
+
+		setEnergy(new ElectroEnergyProducer(this, getBaseMaxEnergy()));
 	}
 
 	@Override
@@ -28,8 +31,10 @@ public abstract class TileItemGenerator extends TileInventoriedMachine {
 		if(!world.isRemote) {
 			if(currentRecipe != null) {
 				processedTime ++;
-				receiveEnergyInternal((int) ((double) currentRecipe.getEnergy() / (double) currentRecipe.getTime()), false);
+				getEnergy().receiveEnergyInternal((int) ((double) currentRecipe.getEnergy() / (double) currentRecipe.getTime()), false);
 			}
+
+			getEnergy().attemptEnergyDump(getEnergy().getEnergyStored());
 
 			if(getProcTime() <= processedTime) {
 				resetProcess();
@@ -103,11 +108,6 @@ public abstract class TileItemGenerator extends TileInventoriedMachine {
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		currentRecipe = GeneratorRecipe.fromNBT(compound.getCompoundTag("currentRecipe"));
-	}
-
-	@Override
-	public boolean canExtract() {
-		return getEnergyStored() > 0;
 	}
 
 	@Override
