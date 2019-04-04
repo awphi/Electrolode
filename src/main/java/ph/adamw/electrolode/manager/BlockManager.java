@@ -11,10 +11,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.BlockBase;
-import ph.adamw.electrolode.block.machine.coalgenerator.BlockCoalGenerator;
-import ph.adamw.electrolode.block.machine.press.BlockPress;
-import ph.adamw.electrolode.block.machine.purifier.BlockPurifier;
-import ph.adamw.electrolode.block.machine.softener.BlockSoftener;
+import ph.adamw.electrolode.block.machine.BlockCoalGenerator;
+import ph.adamw.electrolode.block.machine.BlockPress;
+import ph.adamw.electrolode.block.machine.BlockPurifier;
+import ph.adamw.electrolode.block.machine.BlockSoftener;
 import ph.adamw.electrolode.item.core.IExtendedDescription;
 import ph.adamw.electrolode.item.core.ItemBlockDescribed;
 

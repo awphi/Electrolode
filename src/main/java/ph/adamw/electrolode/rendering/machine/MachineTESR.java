@@ -8,8 +8,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.animation.FastTESR;
 import net.minecraftforge.common.property.IExtendedBlockState;
-import ph.adamw.electrolode.block.machine.BlockMachine;
-import ph.adamw.electrolode.block.machine.TileMachine;
+import ph.adamw.electrolode.block.machine.core.BlockMachine;
+import ph.adamw.electrolode.tile.machine.core.TileMachine;
 
 public class MachineTESR extends FastTESR<TileMachine> {
 	@Override

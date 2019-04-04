@@ -1,6 +1,6 @@
 package ph.adamw.electrolode.recipe;
 
-import ph.adamw.electrolode.block.machine.TileMachine;
+import ph.adamw.electrolode.tile.machine.core.TileMachine;
 
 import java.util.HashMap;
 import java.util.LinkedList;

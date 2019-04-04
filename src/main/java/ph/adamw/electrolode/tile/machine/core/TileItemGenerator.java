@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.block.machine;
+package ph.adamw.electrolode.tile.machine.core;
 
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;

@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.block.machine;
+package ph.adamw.electrolode.block.machine.core;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -19,12 +19,11 @@ import net.minecraftforge.items.IItemHandler;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.BlockHorizontalDirectional;
 import ph.adamw.electrolode.block.EnumFaceRole;
-import ph.adamw.electrolode.block.state.FaceMapProperty;
-import ph.adamw.electrolode.inventory.ElectrolodeContainer;
 import ph.adamw.electrolode.manager.BlockManager;
 import ph.adamw.electrolode.item.core.IExtendedDescription;
 import ph.adamw.electrolode.rendering.machine.MachineTESR;
 import ph.adamw.electrolode.rendering.particle.ParticleDiggingUnregistered;
+import ph.adamw.electrolode.tile.machine.core.TileMachine;
 import ph.adamw.electrolode.util.InventoryUtils;
 
 public abstract class BlockMachine extends BlockHorizontalDirectional implements ITileEntityProvider, IExtendedDescription {

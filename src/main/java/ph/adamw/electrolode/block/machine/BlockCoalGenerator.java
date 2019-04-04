@@ -1,7 +1,8 @@
-package ph.adamw.electrolode.block.machine.coalgenerator;
+package ph.adamw.electrolode.block.machine;
 
-import ph.adamw.electrolode.block.machine.BlockMachine;
-import ph.adamw.electrolode.block.machine.TileMachine;
+import ph.adamw.electrolode.block.machine.core.BlockMachine;
+import ph.adamw.electrolode.tile.machine.core.TileMachine;
+import ph.adamw.electrolode.tile.machine.TileCoalGenerator;
 
 public class BlockCoalGenerator extends BlockMachine {
 	@Override

@@ -2,9 +2,9 @@ package ph.adamw.electrolode;
 
 import net.minecraft.block.Block;
 import ph.adamw.electrolode.block.BlockBase;
-import ph.adamw.electrolode.block.machine.press.BlockPress;
-import ph.adamw.electrolode.block.machine.purifier.BlockPurifier;
-import ph.adamw.electrolode.block.machine.softener.BlockSoftener;
+import ph.adamw.electrolode.block.machine.BlockPress;
+import ph.adamw.electrolode.block.machine.BlockPurifier;
+import ph.adamw.electrolode.block.machine.BlockSoftener;
 import ph.adamw.electrolode.manager.BlockManager;
 
 @SuppressWarnings("WeakerAccess")

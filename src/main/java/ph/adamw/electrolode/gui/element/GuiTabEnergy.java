@@ -3,10 +3,8 @@ package ph.adamw.electrolode.gui.element;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.block.machine.TileInventoriedGenerator;
-import ph.adamw.electrolode.block.machine.TileItemGenerator;
-import ph.adamw.electrolode.block.machine.TileItemMachine;
-import ph.adamw.electrolode.block.machine.TileMachine;
+import ph.adamw.electrolode.tile.machine.core.TileInventoriedGenerator;
+import ph.adamw.electrolode.tile.machine.core.TileMachine;
 import ph.adamw.electrolode.energy.ElectroEnergyProducer;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
 

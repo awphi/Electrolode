@@ -1,11 +1,10 @@
 package ph.adamw.electrolode.manager;
 
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import ph.adamw.electrolode.ElectrolodeItems;
-import ph.adamw.electrolode.block.machine.coalgenerator.TileCoalGenerator;
-import ph.adamw.electrolode.block.machine.press.TilePress;
+import ph.adamw.electrolode.tile.machine.TileCoalGenerator;
+import ph.adamw.electrolode.tile.machine.TilePress;
 import ph.adamw.electrolode.item.core.EnumMineral;
 import ph.adamw.electrolode.item.core.EnumPlate;
 import ph.adamw.electrolode.recipe.GeneratorRecipe;

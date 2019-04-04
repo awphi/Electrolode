@@ -15,7 +15,7 @@ import net.minecraftforge.common.property.IExtendedBlockState;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.BlockHorizontalDirectional;
 import ph.adamw.electrolode.block.EnumFaceRole;
-import ph.adamw.electrolode.block.machine.BlockMachine;
+import ph.adamw.electrolode.block.machine.core.BlockMachine;
 import ph.adamw.electrolode.util.SidedHashMap;
 
 import javax.annotation.Nullable;

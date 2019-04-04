@@ -1,9 +1,10 @@
-package ph.adamw.electrolode.block.machine.coalgenerator;
+package ph.adamw.electrolode.tile.machine;
 
-import ph.adamw.electrolode.block.machine.TileItemGenerator;
+import ph.adamw.electrolode.inventory.machine.ContainerCoalGenerator;
 import ph.adamw.electrolode.gui.machine.GuiCoalGenerator;
 import ph.adamw.electrolode.gui.machine.GuiMachine;
 import ph.adamw.electrolode.inventory.ElectrolodeContainer;
+import ph.adamw.electrolode.tile.machine.core.TileItemGenerator;
 
 public class TileCoalGenerator extends TileItemGenerator {
 	@Override

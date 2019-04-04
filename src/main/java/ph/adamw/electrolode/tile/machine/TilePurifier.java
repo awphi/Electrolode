@@ -1,23 +1,25 @@
-package ph.adamw.electrolode.block.machine.press;
+package ph.adamw.electrolode.tile.machine;
 
-import ph.adamw.electrolode.block.machine.TileItemMachine;
+import ph.adamw.electrolode.inventory.machine.ContainerPurifier;
 import ph.adamw.electrolode.gui.machine.GuiMachine;
-import ph.adamw.electrolode.gui.machine.GuiPress;
+import ph.adamw.electrolode.gui.machine.GuiPurifier;
 import ph.adamw.electrolode.inventory.ElectrolodeContainer;
+import ph.adamw.electrolode.tile.machine.core.TileItemMachine;
 
-public class TilePress extends TileItemMachine {
+
+public class TilePurifier extends TileItemMachine {
     @Override
     public Class<? extends ElectrolodeContainer> getContainerClass() {
-        return ContainerPress.class;
+        return ContainerPurifier.class;
     }
 
     @Override
     public Class<? extends GuiMachine> getGuiClass() {
-        return GuiPress.class;
+        return GuiPurifier.class;
     }
 
     public int getInputSlots() {
-        return 3;
+        return 1;
     }
 
     public int getOutputSlots() {
@@ -25,7 +27,7 @@ public class TilePress extends TileItemMachine {
     }
 
     public int getBaseEnergyUsage() {
-        return 240;
+        return 40;
     }
 
     public int getBaseMaxEnergy() {

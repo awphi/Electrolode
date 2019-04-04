@@ -1,7 +1,8 @@
-package ph.adamw.electrolode.block.machine.purifier;
+package ph.adamw.electrolode.block.machine;
 
-import ph.adamw.electrolode.block.machine.BlockMachine;
-import ph.adamw.electrolode.block.machine.TileMachine;
+import ph.adamw.electrolode.block.machine.core.BlockMachine;
+import ph.adamw.electrolode.tile.machine.core.TileMachine;
+import ph.adamw.electrolode.tile.machine.TilePurifier;
 
 public class BlockPurifier extends BlockMachine {
     public String getDescription() {

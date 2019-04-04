@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.block.state;
+package ph.adamw.electrolode.block.machine.core;
 
 import net.minecraftforge.common.property.IUnlistedProperty;
 import ph.adamw.electrolode.util.SidedHashMap;

@@ -6,11 +6,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
-import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.block.machine.TileMachine;
-import ph.adamw.electrolode.block.machine.TileInventoriedMachine;
-import ph.adamw.electrolode.inventory.ElectrolodeContainer;
-import ph.adamw.electrolode.inventory.MachineContainer;
+import ph.adamw.electrolode.tile.machine.core.TileMachine;
+import ph.adamw.electrolode.tile.machine.core.TileInventoriedMachine;
 import ph.adamw.electrolode.manager.GuiManager;
 
 import java.lang.reflect.Constructor;

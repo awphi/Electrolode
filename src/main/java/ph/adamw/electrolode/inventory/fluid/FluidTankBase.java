@@ -3,7 +3,7 @@ package ph.adamw.electrolode.inventory.fluid;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import ph.adamw.electrolode.block.machine.TileMachine;
+import ph.adamw.electrolode.tile.machine.core.TileMachine;
 
 import javax.annotation.Nullable;
 

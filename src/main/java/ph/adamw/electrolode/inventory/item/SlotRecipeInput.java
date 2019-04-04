@@ -3,7 +3,7 @@ package ph.adamw.electrolode.inventory.item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import ph.adamw.electrolode.block.machine.TileInventoriedMachine;
+import ph.adamw.electrolode.tile.machine.core.TileInventoriedMachine;
 import ph.adamw.electrolode.recipe.ItemStackRecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeComponent;
 import ph.adamw.electrolode.recipe.RecipeHandler;

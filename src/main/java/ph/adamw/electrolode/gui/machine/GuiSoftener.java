@@ -4,12 +4,11 @@ import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.EnumFaceRole;
-import ph.adamw.electrolode.block.machine.TileMachine;
-import ph.adamw.electrolode.block.machine.TileTankedMachine;
+import ph.adamw.electrolode.tile.machine.core.TileMachine;
+import ph.adamw.electrolode.tile.machine.core.TileTankedMachine;
 import ph.adamw.electrolode.gui.element.GuiEnergyBar;
 import ph.adamw.electrolode.gui.element.GuiProgressBar;
 import ph.adamw.electrolode.gui.element.GuiTank;
-import ph.adamw.electrolode.inventory.MachineContainer;
 import ph.adamw.electrolode.util.EnumGuiDirection;
 import ph.adamw.electrolode.util.TextureWrapper;
 

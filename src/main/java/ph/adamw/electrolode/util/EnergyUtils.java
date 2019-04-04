@@ -3,7 +3,7 @@ package ph.adamw.electrolode.util;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import ph.adamw.electrolode.block.machine.TileMachine;
+import ph.adamw.electrolode.tile.machine.core.TileMachine;
 
 public class EnergyUtils {
     public static boolean isItemStackChargeable(ItemStack itemstack) {

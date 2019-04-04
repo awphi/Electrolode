@@ -6,14 +6,23 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
-import ph.adamw.electrolode.block.machine.TileMachine;
+import ph.adamw.electrolode.tile.TileTickable;
+import ph.adamw.electrolode.tile.machine.core.TileMachine;
 
 public class ElectroEnergyStorage extends EnergyStorage {
-	protected final TileMachine tile;
+	protected final TileTickable tile;
 
-	public ElectroEnergyStorage(TileMachine tile, int capacity) {
+	public ElectroEnergyStorage(TileTickable tile, int capacity) {
 		super(capacity);
 		this.tile = tile;
+	}
+
+	public int getMaxReceive() {
+		return maxReceive;
+	}
+
+	public int getMaxExtract() {
+		return maxExtract;
 	}
 
 	public int receiveEnergyInternal(int maxReceive, boolean simulate) {

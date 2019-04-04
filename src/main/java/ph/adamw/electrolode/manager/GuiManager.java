@@ -1,22 +1,9 @@
 package ph.adamw.electrolode.manager;
 
-import ph.adamw.electrolode.block.machine.TileMachine;
-import ph.adamw.electrolode.block.machine.coalgenerator.ContainerCoalGenerator;
-import ph.adamw.electrolode.block.machine.coalgenerator.TileCoalGenerator;
-import ph.adamw.electrolode.block.machine.press.ContainerPress;
-import ph.adamw.electrolode.block.machine.press.TilePress;
-import ph.adamw.electrolode.block.machine.purifier.ContainerPurifier;
-import ph.adamw.electrolode.block.machine.purifier.TilePurifier;
-import ph.adamw.electrolode.block.machine.softener.ContainerSoftener;
-import ph.adamw.electrolode.block.machine.softener.TileSoftener;
+import ph.adamw.electrolode.tile.machine.core.TileMachine;
 import ph.adamw.electrolode.gui.GuiEntry;
-import ph.adamw.electrolode.gui.machine.GuiCoalGenerator;
 import ph.adamw.electrolode.gui.machine.GuiMachine;
-import ph.adamw.electrolode.gui.machine.GuiPress;
-import ph.adamw.electrolode.gui.machine.GuiPurifier;
-import ph.adamw.electrolode.gui.machine.GuiSoftener;
 import ph.adamw.electrolode.inventory.ElectrolodeContainer;
-import ph.adamw.electrolode.inventory.MachineContainer;
 
 import java.util.HashMap;
 

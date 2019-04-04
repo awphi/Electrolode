@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.block.machine;
+package ph.adamw.electrolode.tile.machine.core;
 
 import net.minecraft.nbt.NBTTagCompound;
 import ph.adamw.electrolode.energy.ElectroEnergyProducer;

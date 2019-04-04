@@ -1,11 +1,12 @@
-package ph.adamw.electrolode.block.machine.softener;
+package ph.adamw.electrolode.tile.machine;
 
 import ph.adamw.electrolode.block.EnumFaceRole;
-import ph.adamw.electrolode.block.machine.TileTankedMachine;
+import ph.adamw.electrolode.inventory.machine.ContainerSoftener;
 import ph.adamw.electrolode.gui.machine.GuiMachine;
 import ph.adamw.electrolode.gui.machine.GuiSoftener;
 import ph.adamw.electrolode.inventory.ElectrolodeContainer;
 import ph.adamw.electrolode.inventory.fluid.FluidTankBase;
+import ph.adamw.electrolode.tile.machine.core.TileTankedMachine;
 
 public class TileSoftener extends TileTankedMachine {
     @Override

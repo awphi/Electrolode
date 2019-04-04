@@ -1,7 +1,8 @@
-package ph.adamw.electrolode.block.machine.press;
+package ph.adamw.electrolode.block.machine;
 
-import ph.adamw.electrolode.block.machine.BlockMachine;
-import ph.adamw.electrolode.block.machine.TileMachine;
+import ph.adamw.electrolode.block.machine.core.BlockMachine;
+import ph.adamw.electrolode.tile.machine.core.TileMachine;
+import ph.adamw.electrolode.tile.machine.TilePress;
 
 public class BlockPress extends BlockMachine {
     public String getDescription() {
