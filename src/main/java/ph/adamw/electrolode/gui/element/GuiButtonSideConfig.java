@@ -27,17 +27,10 @@ public class GuiButtonSideConfig extends GuiButtonElement {
         this.current = guiObj.tileEntity.faceMap.getRole(direction);
         this.direction = direction;
         this.containerIndex = guiObj.tileEntity.faceMap.getContainerIndex(direction);
-        if (guiObj.tileEntity.isFaceDisabled(direction)) {
-            disabled = true;
-        }
     }
 
     private String getTooltipSpecific() {
-        if(guiObj.tileEntity.isFaceDisabled(direction)) {
-            return current.getLocalizedName() + " §l(" + I18n.format("tooltip.electrolode.locked") + ")";
-        } else {
-            return current.getLocalizedName();
-        }
+        return current.getLocalizedName();
     }
 
     private void stepRole(int y) {

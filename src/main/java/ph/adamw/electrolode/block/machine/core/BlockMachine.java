@@ -5,7 +5,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.ParticleManager;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -17,39 +19,19 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.block.BlockHorizontalDirectional;
+import ph.adamw.electrolode.block.BlockProperties;
+import ph.adamw.electrolode.block.BlockTileProvider;
 import ph.adamw.electrolode.block.EnumFaceRole;
-import ph.adamw.electrolode.manager.BlockManager;
 import ph.adamw.electrolode.item.core.IExtendedDescription;
 import ph.adamw.electrolode.rendering.machine.MachineTESR;
 import ph.adamw.electrolode.rendering.particle.ParticleDiggingUnregistered;
 import ph.adamw.electrolode.tile.machine.core.TileMachine;
 import ph.adamw.electrolode.util.InventoryUtils;
 
-public abstract class BlockMachine extends BlockHorizontalDirectional implements ITileEntityProvider, IExtendedDescription {
-    public static final FaceMapProperty FACEMAP_PROP = new FaceMapProperty();
-
+public abstract class BlockMachine extends BlockTileProvider implements IExtendedDescription {
     public BlockMachine() {
         super(Material.IRON, true);
         setHardness(4.0f);
-        BlockManager.registerTileEntity(getTileClass(), getBlockName());
-    }
-
-    public abstract Class<? extends TileMachine> getTileClass();
-
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
-        try {
-            return getTileClass().newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        throw new RuntimeException("Could not instantiate " + getTileClass().getSimpleName() + " it needs to have an accessible no-args constructor!");
-    }
-
-    @Override
-    protected BlockStateContainer createBlockState() {
-        return new ExtendedBlockState.Builder(this).add(FACING).add(FACEMAP_PROP).build();
     }
 
     @Override
@@ -59,11 +41,6 @@ public abstract class BlockMachine extends BlockHorizontalDirectional implements
 
     @Override
     public boolean isFullCube(IBlockState state) {
-        return true;
-    }
-
-    @Override
-    public boolean hasTileEntity(IBlockState state) {
         return true;
     }
 
@@ -123,11 +100,6 @@ public abstract class BlockMachine extends BlockHorizontalDirectional implements
     }
 
     @Override
-    public void onPlayerDestroy(World worldIn, BlockPos pos, IBlockState state) {
-        super.onPlayerDestroy(worldIn, pos, state);
-    }
-
-    @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.INVISIBLE;
     }
@@ -135,5 +107,32 @@ public abstract class BlockMachine extends BlockHorizontalDirectional implements
     @Override
     public void initModel() {
         ClientRegistry.bindTileEntitySpecialRenderer(getTileClass(), new MachineTESR());
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+        world.setBlockState(pos, state.withProperty(BlockProperties.FACING, getFacingFromEntity(pos, placer)), 2);
+    }
+
+    private EnumFacing getFacingFromEntity(BlockPos clickedBlock, EntityLivingBase entity) {
+        return EnumFacing.getFacingFromVector(
+                (float) (entity.posX - clickedBlock.getX()),
+                0f,
+                (float) (entity.posZ - clickedBlock.getZ()));
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return getDefaultState().withProperty(BlockProperties.FACING, EnumFacing.byIndex(meta & 7));
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(BlockProperties.FACING).getIndex();
+    }
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new ExtendedBlockState.Builder(this).add(BlockProperties.FACING).add(BlockProperties.FACEMAP).build();
     }
 }

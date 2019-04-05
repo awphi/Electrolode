@@ -17,11 +17,6 @@ repositories {
     jcenter() // or Maven central, required for Lombok dependency
 
     maven {
-        name 'CoFH Maven'
-        url = 'http://maven.covers1624.net'
-    }
-
-    maven {
         name 'curseforge'
         url 'https://minecraft.curseforge.com/api/maven/'
     }
@@ -70,7 +65,6 @@ dependencies {
 
     // the 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
     //provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-    provided "cofh:RedstoneFlux:1.12-${redstoneflux_version}:universal"
 
     // the deobf configurations:  'deobfCompile' and 'deobfProvided' are the same as the normal compile and provided,
     // except that these dependencies get remapped to your current MCP mappings

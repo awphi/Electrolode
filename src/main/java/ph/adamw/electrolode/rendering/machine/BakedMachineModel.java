@@ -13,7 +13,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.block.BlockHorizontalDirectional;
+import ph.adamw.electrolode.block.BlockProperties;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.block.machine.core.BlockMachine;
 import ph.adamw.electrolode.util.SidedHashMap;
@@ -49,7 +49,7 @@ public class BakedMachineModel implements IBakedModel {
 			faceLocation = new ResourceLocation(Electrolode.MODID, "blocks/machine/" + ((BlockMachine) state.getBlock()).getBlockName() + "_front");
 
 			if(state instanceof IExtendedBlockState) {
-				faceMap = ((IExtendedBlockState) state).getValue(BlockMachine.FACEMAP_PROP);
+				faceMap = ((IExtendedBlockState) state).getValue(BlockProperties.FACEMAP);
 			}
 		}
 
@@ -61,7 +61,7 @@ public class BakedMachineModel implements IBakedModel {
 			}
 
 			//Overwrite it if it's the face since we don't draw IO ports on the face
-			if(i.equals(state.getValue(BlockHorizontalDirectional.FACING))) {
+			if(i.equals(state.getValue(BlockProperties.FACING))) {
 				sprite = bakedTextureGetter.apply(faceLocation);
 			}
 
