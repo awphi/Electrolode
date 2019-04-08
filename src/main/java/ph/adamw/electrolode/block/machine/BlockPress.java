@@ -1,7 +1,7 @@
 package ph.adamw.electrolode.block.machine;
 
+import net.minecraft.tileentity.TileEntity;
 import ph.adamw.electrolode.block.machine.core.BlockMachine;
-import ph.adamw.electrolode.tile.machine.core.TileMachine;
 import ph.adamw.electrolode.tile.machine.TilePress;
 
 public class BlockPress extends BlockMachine {
@@ -10,7 +10,7 @@ public class BlockPress extends BlockMachine {
     }
 
     @Override
-    public Class<? extends TileMachine> getTileClass() {
+    public Class<? extends TileEntity> getTileClass() {
         return TilePress.class;
     }
 

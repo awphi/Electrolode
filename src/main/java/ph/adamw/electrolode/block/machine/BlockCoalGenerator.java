@@ -1,12 +1,12 @@
 package ph.adamw.electrolode.block.machine;
 
+import net.minecraft.tileentity.TileEntity;
 import ph.adamw.electrolode.block.machine.core.BlockMachine;
-import ph.adamw.electrolode.tile.machine.core.TileMachine;
 import ph.adamw.electrolode.tile.machine.TileCoalGenerator;
 
 public class BlockCoalGenerator extends BlockMachine {
 	@Override
-	public Class<? extends TileMachine> getTileClass() {
+	public Class<? extends TileEntity> getTileClass() {
 		return TileCoalGenerator.class;
 	}
 

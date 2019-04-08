@@ -106,7 +106,7 @@ public abstract class BlockMachine extends BlockTileProvider implements IExtende
 
     @Override
     public void initModel() {
-        ClientRegistry.bindTileEntitySpecialRenderer(getTileClass(), new MachineTESR());
+        ClientRegistry.bindTileEntitySpecialRenderer((Class<TileMachine>) getTileClass(), new MachineTESR());
     }
 
     @Override

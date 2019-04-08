@@ -10,19 +10,17 @@ import ph.adamw.electrolode.tile.TileTickable;
 import ph.adamw.electrolode.tile.machine.core.TileMachine;
 
 public class ElectroEnergyStorage extends EnergyStorage {
-	protected final TileTickable tile;
+	protected final TileEntity tile;
 
-	public ElectroEnergyStorage(TileTickable tile, int capacity) {
+	public ElectroEnergyStorage(TileEntity tile, int capacity) {
 		super(capacity);
 		this.tile = tile;
 	}
 
-	public int getMaxReceive() {
-		return maxReceive;
-	}
-
-	public int getMaxExtract() {
-		return maxExtract;
+	private void attemptTileUpdate() {
+		if(tile instanceof TileTickable) {
+			((TileTickable) tile).markForUpdate();
+		}
 	}
 
 	public int receiveEnergyInternal(int maxReceive, boolean simulate) {
@@ -30,7 +28,7 @@ public class ElectroEnergyStorage extends EnergyStorage {
 
 		if (!simulate && energyReceived > 0) {
 			energy += energyReceived;
-			tile.markForUpdate();
+			attemptTileUpdate();
 		}
 
 		return energyReceived;
@@ -48,7 +46,7 @@ public class ElectroEnergyStorage extends EnergyStorage {
 
 		if (!simulate && energyExtracted > 0) {
 			energy -= energyExtracted;
-			tile.markForUpdate();
+			attemptTileUpdate();
 		}
 
 		return energyExtracted;
@@ -117,6 +115,11 @@ public class ElectroEnergyStorage extends EnergyStorage {
 			final TileEntity neighbour = tile.getWorld().getTileEntity(tile.getPos().offset(i));
 			if(neighbour != null && neighbour.hasCapability(CapabilityEnergy.ENERGY, i.getOpposite())) {
 				final IEnergyStorage ies = neighbour.getCapability(CapabilityEnergy.ENERGY, i.getOpposite());
+
+				if(!ies.canReceive()) {
+					continue;
+				}
+
 				int attempt = ies.receiveEnergy(toDump, true);
 
 				if(attempt > 0) {
@@ -127,6 +130,6 @@ public class ElectroEnergyStorage extends EnergyStorage {
 			}
 		}
 
-		tile.markForUpdate();
+		attemptTileUpdate();
 	}
 }
