@@ -1,6 +1,5 @@
 package ph.adamw.electrolode.gui.element;
 
-import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;

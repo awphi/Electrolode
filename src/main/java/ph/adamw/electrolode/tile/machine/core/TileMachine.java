@@ -10,7 +10,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.energy.CapabilityEnergy;
 import ph.adamw.electrolode.Config;
 import ph.adamw.electrolode.block.EnumFaceRole;
-import ph.adamw.electrolode.energy.ElectroEnergyReceiver;
+import ph.adamw.electrolode.energy.ElectroEnergyConsumer;
 import ph.adamw.electrolode.energy.ElectroEnergyStorage;
 import ph.adamw.electrolode.gui.machine.GuiMachine;
 import ph.adamw.electrolode.inventory.ElectrolodeContainer;
@@ -53,7 +53,7 @@ public abstract class TileMachine extends TileTickable implements ICapabilityPro
         }
 
         GuiManager.registerGui(getGuiClass(), getContainerClass(), getClass());
-        energy = new ElectroEnergyReceiver(this, getBaseMaxEnergy());
+        energy = new ElectroEnergyConsumer(this, getBaseMaxEnergy());
     }
 
     public boolean canInteractWith(EntityPlayer playerIn) {
@@ -164,7 +164,7 @@ public abstract class TileMachine extends TileTickable implements ICapabilityPro
     public abstract int getBaseEnergyUsage();
 
     public int getEnergyUsage() {
-        // TODO include upgrades and other things that affect it
+        //Include upgrades and other things that affect it
         return getBaseEnergyUsage();
     }
 

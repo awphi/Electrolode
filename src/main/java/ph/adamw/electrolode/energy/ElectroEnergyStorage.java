@@ -88,7 +88,7 @@ public class ElectroEnergyStorage extends EnergyStorage {
 
 		switch(compound.getString("class")) {
 			case "ElectroEnergyStorage": e = new ElectroEnergyStorage(tile, 0); break;
-			case "ElectroEnergyReceiver": e = new ElectroEnergyReceiver(tile, 0); break;
+			case "ElectroEnergyConsumer": e = new ElectroEnergyConsumer(tile, 0); break;
 			case "ElectroEnergyProducer": e = new ElectroEnergyProducer(tile, 0); break;
 			default: return null;
 		}

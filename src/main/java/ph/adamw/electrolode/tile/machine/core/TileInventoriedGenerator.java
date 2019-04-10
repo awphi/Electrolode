@@ -1,14 +1,10 @@
 package ph.adamw.electrolode.tile.machine.core;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.energy.IEnergyStorage;
 import ph.adamw.electrolode.energy.ElectroEnergyProducer;
 import ph.adamw.electrolode.recipe.GeneratorRecipe;
 import ph.adamw.electrolode.recipe.MachineRecipe;
 import ph.adamw.electrolode.recipe.RecipeHandler;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A generator base - effectively a machine that will 'absorb' the input to produce power and and, if given, outputs.
@@ -41,7 +37,7 @@ public abstract class TileInventoriedGenerator extends TileInventoriedMachine {
 					currentRecipe = (GeneratorRecipe) recipe;
 					extractInput(currentRecipe);
 				} else {
-					System.err.println("Resolved a MachineRecipe for a TileItemGenerator with last input contents - please check your registered generator recipes!");
+					System.err.println("Resolved a MachineRecipe (not a GeneratorRecipe) for a generator with last input contents - please check your registered generator recipes!");
 				}
 			}
 		}

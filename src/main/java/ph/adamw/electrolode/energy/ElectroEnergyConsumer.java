@@ -2,8 +2,8 @@ package ph.adamw.electrolode.energy;
 
 import ph.adamw.electrolode.tile.machine.core.TileMachine;
 
-public class ElectroEnergyReceiver extends ElectroEnergyStorage {
-	public ElectroEnergyReceiver(TileMachine tile, int capacity) {
+public class ElectroEnergyConsumer extends ElectroEnergyStorage {
+	public ElectroEnergyConsumer(TileMachine tile, int capacity) {
 		super(tile, capacity);
 	}
 

@@ -14,7 +14,6 @@ public class GuiManager {
         return currentID ++;
     }
 
-    //TODO replace this with a bimap for O(1) getGuiId search times
     private static HashMap<Integer, GuiEntry> guiMap = new HashMap<>();
 
     public static int getGuiId(TileMachine e) {

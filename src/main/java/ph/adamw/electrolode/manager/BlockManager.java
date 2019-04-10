@@ -11,6 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.BlockBase;
+import ph.adamw.electrolode.block.BlockCable;
 import ph.adamw.electrolode.block.machine.BlockCoalGenerator;
 import ph.adamw.electrolode.block.machine.BlockPress;
 import ph.adamw.electrolode.block.machine.BlockPurifier;
@@ -72,6 +73,7 @@ public class BlockManager {
         registerBlock(registry, BlockPress.class);
         registerBlock(registry, BlockSoftener.class);
         registerBlock(registry, BlockCoalGenerator.class);
+        registerBlock(registry, BlockCable.class);
     }
 
     @SideOnly(Side.CLIENT)

@@ -2,10 +2,6 @@ package ph.adamw.electrolode.recipe;
 
 import lombok.Getter;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GeneratorRecipe extends MachineRecipe {
 	@Getter

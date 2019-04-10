@@ -16,7 +16,6 @@ import ph.adamw.electrolode.manager.BlockManager;
 import ph.adamw.electrolode.manager.FluidManager;
 import ph.adamw.electrolode.manager.ItemManager;
 import ph.adamw.electrolode.gui.GuiProxy;
-import ph.adamw.electrolode.manager.GuiManager;
 import ph.adamw.electrolode.networking.PacketHandler;
 
 import java.io.File;
