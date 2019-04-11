@@ -1,6 +1,7 @@
 package ph.adamw.electrolode.energy.network;
 
 import net.minecraft.world.World;
+import net.minecraftforge.energy.IEnergyStorage;
 import ph.adamw.electrolode.tile.channel.TileCable;
 
 import java.util.List;

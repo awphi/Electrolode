@@ -90,8 +90,8 @@ public class EnergyNetwork {
 
 	public void externalAdded(TileEntity te, EnumFacing facing) {
 		final IEnergyStorage ies = te.getCapability(CapabilityEnergy.ENERGY, facing);
-		final ExternalState state = ExternalState.resolve(ies);
-		if(state == ExternalState.CONSUMER) {
+
+		if(ies.canReceive()) {
 			consumers.put(te.getPos(), ies);
 		}
 	}
@@ -163,18 +163,5 @@ public class EnergyNetwork {
 		}
 
 		return null;
-	}
-
-	public enum ExternalState {
-		PRODUCER,
-		CONSUMER;
-
-		public static ExternalState resolve(IEnergyStorage capability) {
-			if(capability.canExtract() && !capability.canReceive()) {
-				return PRODUCER;
-			}
-
-			return CONSUMER;
-		}
 	}
 }
