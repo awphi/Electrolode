@@ -6,9 +6,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import ph.adamw.electrolode.tile.TileCable;
+import ph.adamw.electrolode.tile.channel.TileCable;
+import ph.adamw.electrolode.util.WorldUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -71,17 +70,11 @@ public class EnergyNetworkManager {
 	public static void neighborChanged(IBlockAccess world, TileCable cable, BlockPos neighbor) {
 		final TileEntity te = world.getTileEntity(neighbor);
 
-		System.out.println(world.getClass().getSimpleName());
-
 		if(te instanceof TileCable || cable.getNetwork() == null) {
 			return;
 		}
 
-		final BlockPos cablePos = cable.getPos();
-		final EnumFacing dir = EnumFacing.getFacingFromVector(
-				(float) (cablePos.getX() - neighbor.getX()),
-				(float) (cablePos.getY() - neighbor.getY()),
-				(float) (cablePos.getZ() - neighbor.getZ()));
+		final EnumFacing dir = WorldUtils.getFacingFrom(cable.getPos(), neighbor);
 
 		if(te == null) {
 			cable.getNetwork().externalRemoved(neighbor);

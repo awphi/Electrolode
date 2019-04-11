@@ -6,21 +6,21 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
-import ph.adamw.electrolode.tile.TileTickable;
+import ph.adamw.electrolode.tile.TileUpdatable;
+import ph.adamw.electrolode.tile.channel.TileCable;
 import ph.adamw.electrolode.tile.machine.core.TileMachine;
 
 public class ElectroEnergyStorage extends EnergyStorage {
-	protected final TileEntity tile;
+	protected final TileUpdatable tile;
 
-	public ElectroEnergyStorage(TileEntity tile, int capacity) {
+	public ElectroEnergyStorage(TileUpdatable tile, int capacity) {
 		super(capacity);
 		this.tile = tile;
 	}
 
-	private void attemptTileUpdate() {
-		if(tile instanceof TileTickable) {
-			((TileTickable) tile).markForUpdate();
-		}
+	public ElectroEnergyStorage(TileUpdatable tile, int capacity, int maxTransfer) {
+		super(capacity, maxTransfer, maxTransfer, 0);
+		this.tile = tile;
 	}
 
 	public int receiveEnergyInternal(int maxReceive, boolean simulate) {
@@ -28,7 +28,7 @@ public class ElectroEnergyStorage extends EnergyStorage {
 
 		if (!simulate && energyReceived > 0) {
 			energy += energyReceived;
-			attemptTileUpdate();
+			tile.markForUpdate();
 		}
 
 		return energyReceived;
@@ -46,7 +46,7 @@ public class ElectroEnergyStorage extends EnergyStorage {
 
 		if (!simulate && energyExtracted > 0) {
 			energy -= energyExtracted;
-			attemptTileUpdate();
+			tile.markForUpdate();
 		}
 
 		return energyExtracted;
@@ -83,13 +83,14 @@ public class ElectroEnergyStorage extends EnergyStorage {
 		return compound;
 	}
 
-	public static ElectroEnergyStorage readFromNBT(TileMachine tile, NBTTagCompound compound) {
+	public static ElectroEnergyStorage readFromNBT(TileUpdatable tile, NBTTagCompound compound) {
 		final ElectroEnergyStorage e;
 
 		switch(compound.getString("class")) {
 			case "ElectroEnergyStorage": e = new ElectroEnergyStorage(tile, 0); break;
 			case "ElectroEnergyConsumer": e = new ElectroEnergyConsumer(tile, 0); break;
 			case "ElectroEnergyProducer": e = new ElectroEnergyProducer(tile, 0); break;
+			case "ElectroEnergyCable": e = new ElectroEnergyCable((TileCable) tile, 0); break;
 			default: return null;
 		}
 
@@ -98,38 +99,5 @@ public class ElectroEnergyStorage extends EnergyStorage {
 		e.maxReceive = compound.getInteger("maxReceive");
 		e.capacity = compound.getInteger("capacity");
 		return e;
-	}
-
-	public void attemptEnergyDump(int toDump) {
-		if(!canExtract() || toDump > getEnergyStored() || getEnergyStored() <= 0) {
-			return;
-		}
-
-		for(EnumFacing i : EnumFacing.VALUES) {
-			// If all the energy we had to dump has been dumped to neighbours
-			if(toDump <= 0) {
-				break;
-			}
-
-			// Attempts to dump what's left of maxReceive to neighbours or at least, as much as the neighbour can take.
-			final TileEntity neighbour = tile.getWorld().getTileEntity(tile.getPos().offset(i));
-			if(neighbour != null && neighbour.hasCapability(CapabilityEnergy.ENERGY, i.getOpposite())) {
-				final IEnergyStorage ies = neighbour.getCapability(CapabilityEnergy.ENERGY, i.getOpposite());
-
-				if(!ies.canReceive()) {
-					continue;
-				}
-
-				int attempt = ies.receiveEnergy(toDump, true);
-
-				if(attempt > 0) {
-					ies.receiveEnergy(attempt, false);
-					toDump -= attempt;
-					energy -= attempt;
-				}
-			}
-		}
-
-		attemptTileUpdate();
 	}
 }

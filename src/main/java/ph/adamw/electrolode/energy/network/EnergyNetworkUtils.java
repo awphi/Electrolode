@@ -1,14 +1,13 @@
 package ph.adamw.electrolode.energy.network;
 
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import ph.adamw.electrolode.tile.TileCable;
+import ph.adamw.electrolode.tile.channel.TileCable;
 
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
+import java.util.Stack;
 
 public class EnergyNetworkUtils {
 	public static EnergyNetwork mergeNetworks(World world, List<EnergyNetwork> networks) {

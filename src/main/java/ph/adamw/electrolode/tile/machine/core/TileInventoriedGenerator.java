@@ -24,7 +24,7 @@ public abstract class TileInventoriedGenerator extends TileInventoriedMachine {
 				getEnergy().receiveEnergyInternal((int) ((double) currentRecipe.getEnergy() / (double) currentRecipe.getTime()), false);
 			}
 
-			getEnergy().attemptEnergyDump(getEnergy().getEnergyStored());
+			((ElectroEnergyProducer) getEnergy()).attemptEnergyDump(getEnergy().getEnergyStored());
 
 			if(getProcTime() <= processedTime) {
 				depositOutput(currentRecipe);
