@@ -1,14 +1,9 @@
 package ph.adamw.electrolode.energy;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.EnergyStorage;
-import net.minecraftforge.energy.IEnergyStorage;
 import ph.adamw.electrolode.tile.TileUpdatable;
 import ph.adamw.electrolode.tile.channel.TileCable;
-import ph.adamw.electrolode.tile.machine.core.TileMachine;
 
 public class ElectroEnergyStorage extends EnergyStorage {
 	protected final TileUpdatable tile;

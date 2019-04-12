@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Set;
 
 public class EnergyNetworkManager {
-	//To be used for serialization ultimately
-	private static final List<EnergyNetwork> networks = new LinkedList<>();
 
 	private static void registerNetwork(TileCable... cables) {
 		final EnergyNetwork net = new EnergyNetwork();
@@ -25,11 +23,6 @@ public class EnergyNetworkManager {
 			net.add(i, true);
 		}
 
-		networks.add(net);
-	}
-
-	public static void unregisterNetwork(EnergyNetwork network) {
-		networks.remove(network);
 	}
 
 	public static void nodeCreated(World world, TileCable cable) {
