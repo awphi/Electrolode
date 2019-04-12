@@ -31,7 +31,11 @@ public class EnergyNetworkManager {
 		for(EnumFacing i : EnumFacing.VALUES) {
 			final TileEntity tile = world.getTileEntity(cable.getPos().offset(i));
 			if(tile instanceof TileCable) {
-				applicableNetworks.add(((TileCable) tile).getNetwork());
+				final EnergyNetwork network = ((TileCable) tile).getNetwork();
+
+				if(!applicableNetworks.contains(network)) {
+					applicableNetworks.add(network);
+				}
 			}
 		}
 
