@@ -49,7 +49,7 @@ public class BakedMachineModel implements IBakedModel {
 			faceLocation = new ResourceLocation(Electrolode.MODID, "blocks/machine/" + ((BlockMachine) state.getBlock()).getBlockName() + "_front");
 
 			if(state instanceof IExtendedBlockState) {
-				faceMap = ((IExtendedBlockState) state).getValue(BlockProperties.FACEMAP);
+				faceMap = ((IExtendedBlockState) state).getValue(BlockProperties.FACE_MAP);
 			}
 		}
 

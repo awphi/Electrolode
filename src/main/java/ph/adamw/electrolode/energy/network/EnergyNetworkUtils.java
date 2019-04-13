@@ -21,10 +21,10 @@ public class EnergyNetworkUtils {
 		return network;
 	}
 
-	public static EnergyNetwork splitNetwork(World world, EnergyNetwork network, Set<EnergyNode> connectedNodes) {
+	public static EnergyNetwork divideNetwork(World world, EnergyNetwork network, Set<EnergyNode> subnet) {
 		final EnergyNetwork newNetwork = new EnergyNetwork();
 
-		for(EnergyNode i : connectedNodes) {
+		for(EnergyNode i : subnet) {
 			final TileCable te = i.getCable(world);
 
 			newNetwork.add(te, false);

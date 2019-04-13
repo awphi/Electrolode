@@ -26,6 +26,10 @@ public class EnergyNetwork {
 	@Getter
 	private UUID uuid = UUID.randomUUID();
 
+	public EnergyNetwork() {
+		EnergyNetworkManager.registerNetwork(this);
+	}
+
 	public static EnergyNetwork readFromNbt(NBTTagCompound compound) {
 		final UUID uuid = compound.getUniqueId("uuid");
 
@@ -76,22 +80,22 @@ public class EnergyNetwork {
 		System.out.println("Adding " + cable + " to network: " + this + " with joining: " + join + " on side: " + cable.getWorld().getClass().getSimpleName());
 
 		// Connects existing nodes to this one
-		if(join) {
+		if (join) {
 			for (EnumFacing i : EnumFacing.VALUES) {
 				final BlockPos neighborPos = cable.getPos().offset(i);
 
 				if (nodes.containsKey(neighborPos)) {
 					final EnergyNode neighborNode = nodes.get(neighborPos);
-					neighborNode.addTwoWayAdjacency(node);
+					neighborNode.addTwoWayEdge(cable.getWorld(), node);
 				}
 			}
 		}
 
 		// Checks for adjacent externals
-		for(EnumFacing i : EnumFacing.VALUES) {
+		for (EnumFacing i : EnumFacing.VALUES) {
 			final BlockPos pos = cable.getPos().offset(i);
 			final TileEntity te = cable.getWorld().getTileEntity(pos);
-			if(te != null && te.hasCapability(CapabilityEnergy.ENERGY, i) && !(te instanceof TileCable)) {
+			if (te != null && te.hasCapability(CapabilityEnergy.ENERGY, i) && !(te instanceof TileCable)) {
 				externalAdded(te, i);
 			}
 		}
@@ -108,8 +112,8 @@ public class EnergyNetwork {
 		if(sever) {
 			final EnergyNode node = nodes.get(cable.getPos());
 
- 			for (EnergyNode i : node.getAdjacencies()) {
-				i.getAdjacencies().remove(node);
+ 			for (EnergyNode i : node.getConnected()) {
+				i.removeEdge(cable.getWorld(), node);
 			}
 		}
 
@@ -132,6 +136,7 @@ public class EnergyNetwork {
 			network.add(i.getCable(world), true);
 		}
 
+		EnergyNetworkManager.unregsiterNetwork(this);
 		return network;
 	}
 
@@ -157,7 +162,7 @@ public class EnergyNetwork {
 			EnergyNode element = stack.pop();
 			map.put(element, true);
 
-			for (EnergyNode n : element.getAdjacencies()) {
+			for (EnergyNode n : element.getConnected()) {
 				if(!map.containsKey(n)) {
 					stack.add(n);
 				}
@@ -165,10 +170,6 @@ public class EnergyNetwork {
 		}
 
 		return map.keySet();
-	}
-
-	public boolean isSplintered(Set<EnergyNode> nodes) {
-		return nodes.size() != this.nodes.keySet().size();
 	}
 
 	/**
@@ -212,5 +213,9 @@ public class EnergyNetwork {
 		}
 
 		return null;
+	}
+
+	public int size() {
+		return nodes.keySet().size();
 	}
 }

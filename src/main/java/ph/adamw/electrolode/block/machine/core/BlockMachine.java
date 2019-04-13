@@ -132,6 +132,6 @@ public abstract class BlockMachine extends BlockTileProvider implements IExtende
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new ExtendedBlockState.Builder(this).add(BlockProperties.FACING).add(BlockProperties.FACEMAP).build();
+        return new ExtendedBlockState.Builder(this).add(BlockProperties.FACING).add(BlockProperties.FACE_MAP).build();
     }
 }

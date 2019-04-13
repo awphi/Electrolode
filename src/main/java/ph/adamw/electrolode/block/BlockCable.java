@@ -1,16 +1,15 @@
 package ph.adamw.electrolode.block;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.property.ExtendedBlockState;
 import ph.adamw.electrolode.energy.network.EnergyNetworkManager;
 import ph.adamw.electrolode.tile.channel.TileCable;
 
@@ -42,13 +41,18 @@ public class BlockCable extends BlockTileProvider {
 
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		super.onBlockPlacedBy(world, pos, state, placer, stack);
-
 		final TileEntity te = world.getTileEntity(pos);
 
 		if(te instanceof TileCable && !world.isRemote) {
 			EnergyNetworkManager.nodeCreated(world, (TileCable) te);
 		}
+
+		super.onBlockPlacedBy(world, pos, state, placer, stack);
+	}
+
+	@Override
+	public BlockStateContainer createBlockState() {
+		return new ExtendedBlockState.Builder(this).add(BlockProperties.CONNECTIONS).build();
 	}
 
 	@Override

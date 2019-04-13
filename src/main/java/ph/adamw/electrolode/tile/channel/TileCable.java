@@ -1,8 +1,11 @@
 package ph.adamw.electrolode.tile.channel;
 
 import lombok.Getter;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -47,6 +50,11 @@ public class TileCable extends TileTickable implements ICapabilityProvider {
 	}
 
 	@Override
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
+		return !oldState.getBlock().equals(newState.getBlock());
+	}
+
+	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setTag("energy", energy.writeToNbt(new NBTTagCompound()));
 		compound.setUniqueId("networkUuid", networkUuid);
@@ -63,7 +71,7 @@ public class TileCable extends TileTickable implements ICapabilityProvider {
 	}
 
 	public void routeEnergy(EnergyRequest request) {
-		this.requestStack.add(request);
+		requestStack.add(request);
 	}
 
 	@Override

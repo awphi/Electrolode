@@ -16,7 +16,7 @@ public class MachineTESR extends FastTESR<TileMachine> {
 	public void renderTileEntityFast(TileMachine te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer) {
 		final BlockPos pos = te.getPos();
 		final IExtendedBlockState state = ((IExtendedBlockState) getWorld().getBlockState(pos))
-				.withProperty(BlockProperties.FACEMAP, te.faceMap);
+				.withProperty(BlockProperties.FACE_MAP, te.faceMap);
 
 		BakedMachineModel.MODEL.setBakedTextureGetter(ModelLoader.defaultTextureGetter());
 		BakedMachineModel.MODEL.setFormat(DefaultVertexFormats.ITEM);

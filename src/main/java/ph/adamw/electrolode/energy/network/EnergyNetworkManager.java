@@ -21,13 +21,7 @@ public class EnergyNetworkManager {
 	@Getter
 	private static final Map<UUID, EnergyNetwork> networks = new HashMap<>();
 
-	private static void registerNetwork(TileCable... cables) {
-		final EnergyNetwork net = new EnergyNetwork();
-
-		for(TileCable i : cables) {
-			net.add(i, true);
-		}
-
+	static void registerNetwork(EnergyNetwork net) {
 		networks.put(net.getUuid(), net);
 	}
 
@@ -43,14 +37,15 @@ public class EnergyNetworkManager {
 			if(tile instanceof TileCable) {
 				final EnergyNetwork network = ((TileCable) tile).getNetwork();
 
-				if(!applicableNetworks.contains(network)) {
+				if(!applicableNetworks.contains(network) && network != null) {
 					applicableNetworks.add(network);
 				}
 			}
 		}
 
 		if(applicableNetworks.size() == 0) {
-			registerNetwork(cable);
+			final EnergyNetwork net = new EnergyNetwork();
+			net.add(cable, true);
 		} else if(applicableNetworks.size() == 1) {
 			applicableNetworks.get(0).add(cable, true);
 		} else {
@@ -69,8 +64,8 @@ public class EnergyNetworkManager {
 
 		final Set<EnergyNode> connectedNodes = network.getConnectedNodes();
 
-		if(network.isSplintered(connectedNodes)) {
-			EnergyNetworkUtils.splitNetwork(cable.getWorld(), network, connectedNodes);
+		if(connectedNodes.size() != network.size()) {
+			EnergyNetworkUtils.divideNetwork(cable.getWorld(), network, connectedNodes);
 		}
 	}
 

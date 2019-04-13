@@ -9,10 +9,10 @@ import ph.adamw.electrolode.Electrolode;
 import java.util.Map;
 import java.util.UUID;
 
-public class EnergyNetworkSaveData extends WorldSavedData {
+public class EnergyNetworkSavedData extends WorldSavedData {
 	private static String DATA_NAME = Electrolode.MODID + "_energynetworks";
 
-	public EnergyNetworkSaveData() {
+	public EnergyNetworkSavedData() {
 		super(DATA_NAME);
 	}
 
@@ -42,12 +42,12 @@ public class EnergyNetworkSaveData extends WorldSavedData {
 		return compound;
 	}
 
-	public static EnergyNetworkSaveData get(World world) {
+	public static EnergyNetworkSavedData get(World world) {
 		final MapStorage storage = world.getMapStorage();
-		EnergyNetworkSaveData instance = (EnergyNetworkSaveData) storage.getOrLoadData(EnergyNetworkSaveData.class, DATA_NAME);
+		EnergyNetworkSavedData instance = (EnergyNetworkSavedData) storage.getOrLoadData(EnergyNetworkSavedData.class, DATA_NAME);
 
 		if (instance == null) {
-			instance = new EnergyNetworkSaveData();
+			instance = new EnergyNetworkSavedData();
 			storage.setData(DATA_NAME, instance);
 		}
 
