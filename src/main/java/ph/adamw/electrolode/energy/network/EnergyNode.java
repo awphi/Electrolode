@@ -2,7 +2,6 @@ package ph.adamw.electrolode.energy.network;
 
 import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -10,10 +9,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.IExtendedBlockState;
-import ph.adamw.electrolode.block.BlockCable;
-import ph.adamw.electrolode.block.BlockProperties;
-import ph.adamw.electrolode.block.machine.core.Connections;
-import ph.adamw.electrolode.tile.channel.TileCable;
+import ph.adamw.electrolode.block.channel.BlockEnergyChannel;
+import ph.adamw.electrolode.block.properties.BlockProperties;
+import ph.adamw.electrolode.block.properties.Connections;
+import ph.adamw.electrolode.tile.channel.TileEnergyChannel;
 import ph.adamw.electrolode.util.WorldUtils;
 
 import java.util.HashMap;
@@ -47,11 +46,11 @@ public class EnergyNode {
 	}
 
 
-	public TileCable getCable(World world) {
+	public TileEnergyChannel getTile(World world) {
 		final TileEntity te = world.getTileEntity(cablePos);
 
-		if(te instanceof TileCable) {
-			return (TileCable) te;
+		if(te instanceof TileEnergyChannel) {
+			return (TileEnergyChannel) te;
 		}
 
 		return null;
@@ -63,9 +62,9 @@ public class EnergyNode {
 	private void connectionChanged(World world) {
 		final IBlockState state = world.getBlockState(cablePos);
 
-		if(state.getBlock() instanceof BlockCable && state instanceof IExtendedBlockState) {
+		if(state.getBlock() instanceof BlockEnergyChannel && state instanceof IExtendedBlockState) {
 			final IExtendedBlockState exState = (IExtendedBlockState) state;
-			world.setBlockState(cablePos, exState.withProperty(BlockProperties.CONNECTIONS, generateConnections()));
+			world.setBlockState(cablePos, exState.withProperty(BlockProperties.CONNECTIONS, generateConnections()), 2);
 		} else {
 			System.err.println("Expected cable at " + cablePos.toString() + " but found " + state.getBlock().toString() + "!");
 		}

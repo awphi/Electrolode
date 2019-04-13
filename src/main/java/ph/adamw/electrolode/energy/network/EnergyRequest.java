@@ -37,14 +37,14 @@ public class EnergyRequest {
 	}
 
 	public void execute(World world, EnergyNetwork network) {
-		final EnergyNode toCable = network.resolveFirstNodeNextTo(to);
+		final EnergyNode toNode = network.resolveFirstNodeNextTo(to);
 
-		if(toCable == null) {
+		if(toNode == null) {
 			System.err.println("Failed to resolve energy node next to " + to.toString());
 			return;
 		}
 
-		route = resolveRoute(from, toCable);
-		route.pop().getCable(world).routeEnergy(this);
+		route = resolveRoute(from, toNode);
+		route.pop().getTile(world).routeEnergy(this);
 	}
 }

@@ -1,19 +1,19 @@
 package ph.adamw.electrolode.rendering.machine;
 
-import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.block.BlockProperties;
+import ph.adamw.electrolode.block.properties.BlockProperties;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.block.machine.core.BlockMachine;
 import ph.adamw.electrolode.util.SidedHashMap;
@@ -25,15 +25,8 @@ import java.util.List;
 import java.util.function.Function;
 
 public class BakedMachineModel implements IBakedModel {
-	@Getter
-	@Setter
-	private Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter;
-
-	@Getter
-	@Setter
-	private VertexFormat format;
-
-	public final static BakedMachineModel MODEL = new BakedMachineModel();
+	private static final Function<ResourceLocation, TextureAtlasSprite> TEXTURE_GETTER = ModelLoader.defaultTextureGetter();
+	private static final VertexFormat VERTEX_FORMAT = DefaultVertexFormats.ITEM;
 
 	@Override
 	public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
@@ -54,18 +47,18 @@ public class BakedMachineModel implements IBakedModel {
 		}
 
 		for(EnumFacing i : EnumFacing.VALUES) {
-			TextureAtlasSprite sprite = bakedTextureGetter.apply(EnumFaceRole.NO_ROLE.resolveResourceLocation());
+			TextureAtlasSprite sprite = TEXTURE_GETTER.apply(EnumFaceRole.NO_ROLE.resolveResourceLocation());
 
 			if(faceMap != null) {
-				sprite = bakedTextureGetter.apply(faceMap.get(i).getRole().resolveResourceLocation());
+				sprite = TEXTURE_GETTER.apply(faceMap.get(i).getRole().resolveResourceLocation());
 			}
 
 			//Overwrite it if it's the face since we don't draw IO ports on the face
 			if(i.equals(state.getValue(BlockProperties.FACING))) {
-				sprite = bakedTextureGetter.apply(faceLocation);
+				sprite = TEXTURE_GETTER.apply(faceLocation);
 			}
 
-			quads.add(BakedModelUtils.generateDirectionalQuad(i, sprite, format));
+			quads.add(BakedModelUtils.generateDirectionalQuad(i, sprite, VERTEX_FORMAT));
 		}
 
 		return quads;
@@ -88,7 +81,7 @@ public class BakedMachineModel implements IBakedModel {
 
 	@Override
 	public TextureAtlasSprite getParticleTexture() {
-		return bakedTextureGetter.apply(EnumFaceRole.NO_ROLE.resolveResourceLocation());
+		return TEXTURE_GETTER.apply(EnumFaceRole.NO_ROLE.resolveResourceLocation());
 	}
 
 	@Override

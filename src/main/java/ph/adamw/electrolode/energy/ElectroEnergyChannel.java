@@ -3,17 +3,20 @@ package ph.adamw.electrolode.energy;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
+import ph.adamw.electrolode.block.properties.BlockProperties;
+import ph.adamw.electrolode.channel.ChannelTier;
 import ph.adamw.electrolode.energy.network.EnergyNode;
 import ph.adamw.electrolode.energy.network.EnergyRequest;
-import ph.adamw.electrolode.tile.channel.TileCable;
+import ph.adamw.electrolode.tile.channel.TileEnergyChannel;
 import ph.adamw.electrolode.util.WorldUtils;
 
-public class ElectroEnergyCable extends ElectroEnergyStorage {
-	private final static int TRANSFER_MULTIPLIER = 5;
+public class ElectroEnergyChannel extends ElectroEnergyStorage {
+	private final static int CAPACITY_MULTIPLIER = 5;
 
-	public ElectroEnergyCable(TileCable tile, int transfer) {
-		super(tile, transfer * TRANSFER_MULTIPLIER, transfer);
+	public ElectroEnergyChannel(TileEnergyChannel tile, int transfer) {
+		super(tile, transfer * CAPACITY_MULTIPLIER, transfer);
 	}
 
 	@Override
@@ -21,7 +24,7 @@ public class ElectroEnergyCable extends ElectroEnergyStorage {
 		final int c = super.receiveEnergy(maxReceive, simulate);
 
 		if(!simulate) {
-			((TileCable) tile).getNetwork().energyPush(tile.getWorld(), tile.getPos(), maxReceive);
+			((TileEnergyChannel) tile).getNetwork().energyPush(tile.getWorld(), tile.getPos(), maxReceive);
 		}
 
 		return c;
@@ -55,9 +58,14 @@ public class ElectroEnergyCable extends ElectroEnergyStorage {
 		}
 
 		final EnergyNode next = request.getRoute().pop();
-		final TileCable cable = next.getCable(tile.getWorld());
+		final TileEnergyChannel tile = next.getTile(this.tile.getWorld());
 
-		cable.getEnergy().receiveEnergyInternal(request.getBottleneck(), false);
-		cable.routeEnergy(request);
+		tile.getEnergy().receiveEnergyInternal(request.getBottleneck(), false);
+		tile.routeEnergy(request);
+	}
+
+	public void setTier(ChannelTier value) {
+		maxExtract = maxReceive = value.getEnergyTransfer();
+		capacity = maxReceive * CAPACITY_MULTIPLIER;
 	}
 }

@@ -9,7 +9,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.energy.CapabilityEnergy;
-import ph.adamw.electrolode.energy.ElectroEnergyCable;
+import ph.adamw.electrolode.block.properties.BlockProperties;
+import ph.adamw.electrolode.channel.ChannelTier;
+import ph.adamw.electrolode.energy.ElectroEnergyChannel;
 import ph.adamw.electrolode.energy.ElectroEnergyStorage;
 import ph.adamw.electrolode.energy.network.EnergyNetwork;
 import ph.adamw.electrolode.energy.network.EnergyNetworkManager;
@@ -21,9 +23,9 @@ import javax.annotation.Nullable;
 import java.util.Stack;
 import java.util.UUID;
 
-public class TileCable extends TileTickable implements ICapabilityProvider {
+public class TileEnergyChannel extends TileTickable implements ICapabilityProvider {
 	@Getter
-	private ElectroEnergyCable energy = new ElectroEnergyCable(this, 1000);
+	private ElectroEnergyChannel energy = new ElectroEnergyChannel(this, 1000);
 
 	private UUID networkUuid;
 
@@ -44,7 +46,7 @@ public class TileCable extends TileTickable implements ICapabilityProvider {
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		energy = (ElectroEnergyCable) ElectroEnergyStorage.readFromNBT(this, compound.getCompoundTag("energy"));
+		energy = (ElectroEnergyChannel) ElectroEnergyStorage.readFromNBT(this, compound.getCompoundTag("energy"));
 		networkUuid = compound.getUniqueId("networkUuid");
 		super.readFromNBT(compound);
 	}
@@ -79,6 +81,11 @@ public class TileCable extends TileTickable implements ICapabilityProvider {
 		while(!requestStack.isEmpty()) {
 			energy.routeEnergy(requestStack.pop());
 		}
+	}
+
+	public void setTier(ChannelTier value) {
+		energy.setTier(value);
+		world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockProperties.CHANNEL_TIER, value), 2);
 	}
 }
 

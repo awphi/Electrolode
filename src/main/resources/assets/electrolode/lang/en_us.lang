@@ -17,6 +17,11 @@ item.electrolode.ironpowderpurified.name=Purified Iron Powder
 item.electrolode.goldpowderpurified.name=Purified Gold Powder
 item.electrolode.titaniumpowderpurified.name=Purified Titanium Powder
 
+item.electrolode.energychannelweak.name=Weak Energy Channel
+item.electrolode.energychannelstandard.name=Standard Energy Channel
+item.electrolode.energychanneladvanced.name=Advanced Energy Channel
+item.electrolode.energychannelquantum.name=Quantum Energy Channel
+
 item.electrolode.structuralplate.name=Structural Plate
 item.electrolode.conductiveplate.name=Conductive Plate
 item.electrolode.strengthenedplate.name=Strengthened Plate

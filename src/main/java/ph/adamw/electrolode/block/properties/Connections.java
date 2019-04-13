@@ -1,4 +1,4 @@
-package ph.adamw.electrolode.block.machine.core;
+package ph.adamw.electrolode.block.properties;
 
 import net.minecraft.util.EnumFacing;
 

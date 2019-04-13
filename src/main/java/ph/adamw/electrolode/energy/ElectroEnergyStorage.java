@@ -3,7 +3,7 @@ package ph.adamw.electrolode.energy;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.energy.EnergyStorage;
 import ph.adamw.electrolode.tile.TileUpdatable;
-import ph.adamw.electrolode.tile.channel.TileCable;
+import ph.adamw.electrolode.tile.channel.TileEnergyChannel;
 
 public class ElectroEnergyStorage extends EnergyStorage {
 	protected final TileUpdatable tile;
@@ -85,7 +85,7 @@ public class ElectroEnergyStorage extends EnergyStorage {
 			case "ElectroEnergyStorage": e = new ElectroEnergyStorage(tile, 0); break;
 			case "ElectroEnergyConsumer": e = new ElectroEnergyConsumer(tile, 0); break;
 			case "ElectroEnergyProducer": e = new ElectroEnergyProducer(tile, 0); break;
-			case "ElectroEnergyCable": e = new ElectroEnergyCable((TileCable) tile, 0); break;
+			case "ElectroEnergyChannel": e = new ElectroEnergyChannel((TileEnergyChannel) tile, 0); break;
 			default: return null;
 		}
 

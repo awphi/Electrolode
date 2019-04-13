@@ -6,7 +6,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.block.BlockProperties;
+import ph.adamw.electrolode.block.properties.BlockProperties;
 import ph.adamw.electrolode.tile.machine.core.TileMachine;
 import ph.adamw.electrolode.gui.GuiBaseContainer;
 import ph.adamw.electrolode.gui.element.GuiButtonEject;

@@ -1,7 +1,7 @@
 package ph.adamw.electrolode.energy.network;
 
 import net.minecraft.world.World;
-import ph.adamw.electrolode.tile.channel.TileCable;
+import ph.adamw.electrolode.tile.channel.TileEnergyChannel;
 
 import java.util.List;
 import java.util.Set;
@@ -25,12 +25,12 @@ public class EnergyNetworkUtils {
 		final EnergyNetwork newNetwork = new EnergyNetwork();
 
 		for(EnergyNode i : subnet) {
-			final TileCable te = i.getCable(world);
+			final TileEnergyChannel te = i.getTile(world);
 
 			newNetwork.add(te, false);
 			network.remove(te, false);
 
-			i.getCable(world).setNetwork(newNetwork);
+			i.getTile(world).setNetwork(newNetwork);
 		}
 
 		return newNetwork;

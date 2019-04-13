@@ -6,6 +6,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -18,10 +19,11 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import ph.adamw.electrolode.Electrolode;
-import ph.adamw.electrolode.block.BlockProperties;
+import ph.adamw.electrolode.block.properties.BlockProperties;
 import ph.adamw.electrolode.block.BlockTileProvider;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.item.core.IExtendedDescription;
+import ph.adamw.electrolode.item.core.ItemBlockDescribed;
 import ph.adamw.electrolode.rendering.machine.MachineTESR;
 import ph.adamw.electrolode.rendering.particle.ParticleDiggingUnregistered;
 import ph.adamw.electrolode.tile.machine.core.TileMachine;
@@ -31,6 +33,11 @@ public abstract class BlockMachine extends BlockTileProvider implements IExtende
     public BlockMachine() {
         super(Material.IRON, true);
         setHardness(4.0f);
+    }
+
+    @Override
+    public ItemBlock getItemBlock() {
+        return new ItemBlockDescribed(this);
     }
 
     @Override

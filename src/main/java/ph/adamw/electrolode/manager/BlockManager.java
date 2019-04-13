@@ -2,7 +2,6 @@ package ph.adamw.electrolode.manager;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -11,13 +10,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.BlockBase;
-import ph.adamw.electrolode.block.BlockCable;
+import ph.adamw.electrolode.block.channel.BlockEnergyChannel;
 import ph.adamw.electrolode.block.machine.BlockCoalGenerator;
 import ph.adamw.electrolode.block.machine.BlockPress;
 import ph.adamw.electrolode.block.machine.BlockPurifier;
 import ph.adamw.electrolode.block.machine.BlockSoftener;
-import ph.adamw.electrolode.item.core.IExtendedDescription;
-import ph.adamw.electrolode.item.core.ItemBlockDescribed;
 
 import java.util.HashMap;
 
@@ -52,11 +49,7 @@ public class BlockManager {
                 continue;
             }
 
-            if (i instanceof IExtendedDescription) {
-                registry.register(new ItemBlockDescribed(i).setRegistryName(i.getRegistryName()));
-            } else {
-                registry.register(new ItemBlock(i).setRegistryName(i.getRegistryName()));
-            }
+            registry.register(i.getItemBlock().setRegistryName(i.getRegistryName()));
         }
     }
 
@@ -73,7 +66,7 @@ public class BlockManager {
         registerBlock(registry, BlockPress.class);
         registerBlock(registry, BlockSoftener.class);
         registerBlock(registry, BlockCoalGenerator.class);
-        registerBlock(registry, BlockCable.class);
+        registerBlock(registry, BlockEnergyChannel.class);
     }
 
     @SideOnly(Side.CLIENT)

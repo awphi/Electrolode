@@ -9,7 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import ph.adamw.electrolode.tile.channel.TileCable;
+import ph.adamw.electrolode.tile.channel.TileEnergyChannel;
 import ph.adamw.electrolode.util.WorldUtils;
 
 import java.util.HashMap;
@@ -71,7 +71,7 @@ public class EnergyNetwork {
 	}
 
 
-	public void add(TileCable cable, boolean join) {
+	public void add(TileEnergyChannel cable, boolean join) {
 		cable.setNetwork(this);
 
 		nodes.put(cable.getPos(), new EnergyNode(cable.getPos()));
@@ -95,7 +95,7 @@ public class EnergyNetwork {
 		for (EnumFacing i : EnumFacing.VALUES) {
 			final BlockPos pos = cable.getPos().offset(i);
 			final TileEntity te = cable.getWorld().getTileEntity(pos);
-			if (te != null && te.hasCapability(CapabilityEnergy.ENERGY, i) && !(te instanceof TileCable)) {
+			if (te != null && te.hasCapability(CapabilityEnergy.ENERGY, i) && !(te instanceof TileEnergyChannel)) {
 				externalAdded(te, i);
 			}
 		}
@@ -106,7 +106,7 @@ public class EnergyNetwork {
 	 * @param sever whether cable connections should be severed or not
 	 * @return true if the network was reduced to size 0 after this removal, false otherwise
 	 */
-	public boolean remove(TileCable cable, boolean sever) {
+	public boolean remove(TileEnergyChannel cable, boolean sever) {
 		System.out.println("Removing " + cable + " from network: " + this + " with sever: " + sever);
 
 		if(sever) {
@@ -129,11 +129,11 @@ public class EnergyNetwork {
 
 	public EnergyNetwork mergeInto(World world, EnergyNetwork network) {
 		for(EnergyNode i : nodes.values()) {
-			i.getCable(world).setNetwork(network);
+			i.getTile(world).setNetwork(network);
 		}
 
 		for(EnergyNode i : nodes.values()) {
-			network.add(i.getCable(world), true);
+			network.add(i.getTile(world), true);
 		}
 
 		EnergyNetworkManager.unregsiterNetwork(this);
@@ -196,7 +196,7 @@ public class EnergyNetwork {
 		}
 
 		if(ready.size() > 0) {
-			final int maxTransfer = node.getCable(world).getEnergy().getTransfer();
+			final int maxTransfer = node.getTile(world).getEnergy().getTransfer();
 			final int amount = (int) ((float) Math.min(maxTransfer, maxReceive) / (float) ready.size());
 
 			for(BlockPos i : ready) {

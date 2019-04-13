@@ -39,8 +39,8 @@ public class ItemPowder extends ItemBase implements IMetadataItem {
     @Override
     public void getSubItems(CreativeTabs tabs, NonNullList<ItemStack> itemList) {
         if(!isInCreativeTab(tabs)) return;
-        for(int counter = 0; counter < EnumMineral.values().length; counter++) {
-            itemList.add(new ItemStack(this, 1, counter));
+        for(int i = 0; i < EnumMineral.values().length; i ++) {
+            itemList.add(new ItemStack(this, 1, i));
         }
     }
 }

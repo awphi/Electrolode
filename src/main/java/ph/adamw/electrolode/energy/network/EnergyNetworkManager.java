@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
-import ph.adamw.electrolode.tile.channel.TileCable;
+import ph.adamw.electrolode.tile.channel.TileEnergyChannel;
 import ph.adamw.electrolode.util.WorldUtils;
 
 import java.util.ArrayList;
@@ -29,13 +29,13 @@ public class EnergyNetworkManager {
 		networks.remove(network.getUuid());
 	}
 
-	public static void nodeCreated(World world, TileCable cable) {
+	public static void nodeCreated(World world, TileEnergyChannel cable) {
 		final List<EnergyNetwork> applicableNetworks = new ArrayList<>();
 
 		for(EnumFacing i : EnumFacing.VALUES) {
 			final TileEntity tile = world.getTileEntity(cable.getPos().offset(i));
-			if(tile instanceof TileCable) {
-				final EnergyNetwork network = ((TileCable) tile).getNetwork();
+			if(tile instanceof TileEnergyChannel) {
+				final EnergyNetwork network = ((TileEnergyChannel) tile).getNetwork();
 
 				if(!applicableNetworks.contains(network) && network != null) {
 					applicableNetworks.add(network);
@@ -54,7 +54,7 @@ public class EnergyNetworkManager {
 		}
 	}
 
-	public static void nodeRemoved(TileCable cable) {
+	public static void nodeRemoved(TileEnergyChannel cable) {
 		final EnergyNetwork network = cable.getNetwork();
 
 		// i.e. if this removal destroyed the destroyed don't worry about checking for splinters since it's empty
@@ -69,10 +69,10 @@ public class EnergyNetworkManager {
 		}
 	}
 
-	public static void neighborChanged(IBlockAccess world, TileCable cable, BlockPos neighbor) {
+	public static void neighborChanged(IBlockAccess world, TileEnergyChannel cable, BlockPos neighbor) {
 		final TileEntity te = world.getTileEntity(neighbor);
 
-		if(te instanceof TileCable || cable.getNetwork() == null) {
+		if(te instanceof TileEnergyChannel || cable.getNetwork() == null) {
 			return;
 		}
 
