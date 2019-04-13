@@ -1,14 +1,10 @@
 package ph.adamw.electrolode.energy.network;
 
 import net.minecraft.world.World;
-import net.minecraftforge.energy.IEnergyStorage;
 import ph.adamw.electrolode.tile.channel.TileCable;
 
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Set;
-import java.util.Stack;
 
 public class EnergyNetworkUtils {
 	public static EnergyNetwork mergeNetworks(World world, List<EnergyNetwork> networks) {

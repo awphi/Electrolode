@@ -1,5 +1,6 @@
 package ph.adamw.electrolode.energy.network;
 
+import lombok.Getter;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -21,16 +22,12 @@ import java.util.UUID;
 public class EnergyNetwork {
 	private final Map<BlockPos, EnergyNode> nodes = new HashMap<>();
 	private final Set<BlockPos> consumers = new HashSet<>();
-	private UUID uuid = UUID.randomUUID();
 
-	private static final Map<UUID, EnergyNetwork> networkCache = new HashMap<>();
+	@Getter
+	private UUID uuid = UUID.randomUUID();
 
 	public static EnergyNetwork readFromNbt(NBTTagCompound compound) {
 		final UUID uuid = compound.getUniqueId("uuid");
-
-		if(networkCache.containsKey(uuid)) {
-			return networkCache.get(uuid);
-		}
 
 		final EnergyNetwork network = new EnergyNetwork();
 		network.uuid = uuid;
@@ -47,7 +44,6 @@ public class EnergyNetwork {
 			c++;
 		}
 
-		networkCache.put(network.uuid, network);
 		return network;
 	}
 
@@ -112,7 +108,7 @@ public class EnergyNetwork {
 		if(sever) {
 			final EnergyNode node = nodes.get(cable.getPos());
 
-			for (EnergyNode i : node.getAdjacencies()) {
+ 			for (EnergyNode i : node.getAdjacencies()) {
 				i.getAdjacencies().remove(node);
 			}
 		}
@@ -120,6 +116,7 @@ public class EnergyNetwork {
 		nodes.remove(cable.getPos());
 
 		if(nodes.size() <= 0) {
+			EnergyNetworkManager.unregsiterNetwork(this);
 			return true;
 		}
 

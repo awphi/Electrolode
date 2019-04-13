@@ -1,5 +1,6 @@
 package ph.adamw.electrolode.energy.network;
 
+import lombok.Getter;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -10,11 +11,15 @@ import ph.adamw.electrolode.tile.channel.TileCable;
 import ph.adamw.electrolode.util.WorldUtils;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 public class EnergyNetworkManager {
+	@Getter
+	private static final Map<UUID, EnergyNetwork> networks = new HashMap<>();
 
 	private static void registerNetwork(TileCable... cables) {
 		final EnergyNetwork net = new EnergyNetwork();
@@ -23,6 +28,11 @@ public class EnergyNetworkManager {
 			net.add(i, true);
 		}
 
+		networks.put(net.getUuid(), net);
+	}
+
+	public static void unregsiterNetwork(EnergyNetwork network) {
+		networks.remove(network.getUuid());
 	}
 
 	public static void nodeCreated(World world, TileCable cable) {
@@ -78,5 +88,9 @@ public class EnergyNetworkManager {
 		} else if(te.hasCapability(CapabilityEnergy.ENERGY, dir)) {
 			cable.getNetwork().externalAdded(te, dir);
 		}
+	}
+
+	public static EnergyNetwork getNetwork(UUID network) {
+		return networks.get(network);
 	}
 }
