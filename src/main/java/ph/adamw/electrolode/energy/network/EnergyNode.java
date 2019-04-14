@@ -2,15 +2,11 @@ package ph.adamw.electrolode.energy.network;
 
 import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.property.IExtendedBlockState;
-import ph.adamw.electrolode.block.channel.BlockEnergyChannel;
-import ph.adamw.electrolode.block.properties.BlockProperties;
 import ph.adamw.electrolode.block.properties.Connections;
 import ph.adamw.electrolode.tile.channel.TileEnergyChannel;
 import ph.adamw.electrolode.util.WorldUtils;
@@ -23,6 +19,7 @@ public class EnergyNode {
 	@Getter
 	private final BlockPos cablePos;
 	private final Map<EnumFacing, EnergyNode> connections = new HashMap<>();
+	private final Connections isConnected = new Connections();
 
 	private static final Map<Long, EnergyNode> nbtCache = new HashMap<>();
 
@@ -36,17 +33,23 @@ public class EnergyNode {
 	}
 
 	private void addEdge(World world, EnergyNode node) {
-		connections.put(WorldUtils.getFacingFrom(cablePos, node.getCablePos()), node);
-		connectionChanged(world);
+		final EnumFacing facing = WorldUtils.getFacingFrom(node.getCablePos(), cablePos);
+		connections.put(facing, node);
+
+		isConnected.setConnected(facing, true);
+		getChannelTile(world).markForUpdate();
 	}
 
 	public void removeEdge(World world, EnergyNode node) {
-		connections.remove(WorldUtils.getFacingFrom(cablePos, node.getCablePos()));
-		connectionChanged(world);
+		final EnumFacing facing = WorldUtils.getFacingFrom(node.getCablePos(), cablePos);
+		connections.remove(facing);
+
+		isConnected.setConnected(facing, false);
+		getChannelTile(world).markForUpdate();
 	}
 
 
-	public TileEnergyChannel getTile(World world) {
+	public TileEnergyChannel getChannelTile(World world) {
 		final TileEntity te = world.getTileEntity(cablePos);
 
 		if(te instanceof TileEnergyChannel) {
@@ -56,30 +59,6 @@ public class EnergyNode {
 		return null;
 	}
 
-	/**
-	 * Used to update the block on when connections are changed so it can be rendered as such
-	 */
-	private void connectionChanged(World world) {
-		final IBlockState state = world.getBlockState(cablePos);
-
-		if(state.getBlock() instanceof BlockEnergyChannel && state instanceof IExtendedBlockState) {
-			final IExtendedBlockState exState = (IExtendedBlockState) state;
-			world.setBlockState(cablePos, exState.withProperty(BlockProperties.CONNECTIONS, generateConnections()), 2);
-		} else {
-			System.err.println("Expected cable at " + cablePos.toString() + " but found " + state.getBlock().toString() + "!");
-		}
-	}
-
-	private Connections generateConnections() {
-		Connections result = new Connections();
-
-		for(EnumFacing i : connections.keySet()) {
-			result = result.with(i, true);
-		}
-
-		return result;
-	}
-
 	public static EnergyNode readFromNbt(NBTTagCompound compound) {
 		final EnergyNode node = buildOrRetrieveLoneNode(compound.getLong("cablePos"));
 
@@ -87,7 +66,9 @@ public class EnergyNode {
 		while(compound.hasKey("connection" + c)) {
 			final long x = compound.getLong("connection" + c);
 			final BlockPos pos = BlockPos.fromLong(x);
-			node.connections.put(WorldUtils.getFacingFrom(node.getCablePos(), pos), buildOrRetrieveLoneNode(x));
+			final EnumFacing facing = WorldUtils.getFacingFrom(pos, node.getCablePos());
+			node.connections.put(facing, buildOrRetrieveLoneNode(x));
+			node.isConnected.setConnected(facing, true);
 			c ++;
 		}
 

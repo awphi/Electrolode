@@ -45,6 +45,6 @@ public class EnergyRequest {
 		}
 
 		route = resolveRoute(from, toNode);
-		route.pop().getTile(world).routeEnergy(this);
+		route.pop().getChannelTile(world).routeEnergy(this);
 	}
 }

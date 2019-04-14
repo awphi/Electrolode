@@ -3,9 +3,7 @@ package ph.adamw.electrolode.energy;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
-import ph.adamw.electrolode.block.properties.BlockProperties;
 import ph.adamw.electrolode.channel.ChannelTier;
 import ph.adamw.electrolode.energy.network.EnergyNode;
 import ph.adamw.electrolode.energy.network.EnergyRequest;
@@ -58,7 +56,7 @@ public class ElectroEnergyChannel extends ElectroEnergyStorage {
 		}
 
 		final EnergyNode next = request.getRoute().pop();
-		final TileEnergyChannel tile = next.getTile(this.tile.getWorld());
+		final TileEnergyChannel tile = next.getChannelTile(this.tile.getWorld());
 
 		tile.getEnergy().receiveEnergyInternal(request.getBottleneck(), false);
 		tile.routeEnergy(request);

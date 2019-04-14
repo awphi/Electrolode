@@ -129,11 +129,11 @@ public class EnergyNetwork {
 
 	public EnergyNetwork mergeInto(World world, EnergyNetwork network) {
 		for(EnergyNode i : nodes.values()) {
-			i.getTile(world).setNetwork(network);
+			i.getChannelTile(world).setNetwork(network);
 		}
 
 		for(EnergyNode i : nodes.values()) {
-			network.add(i.getTile(world), true);
+			network.add(i.getChannelTile(world), true);
 		}
 
 		EnergyNetworkManager.unregsiterNetwork(this);
@@ -196,7 +196,7 @@ public class EnergyNetwork {
 		}
 
 		if(ready.size() > 0) {
-			final int maxTransfer = node.getTile(world).getEnergy().getTransfer();
+			final int maxTransfer = node.getChannelTile(world).getEnergy().getTransfer();
 			final int amount = (int) ((float) Math.min(maxTransfer, maxReceive) / (float) ready.size());
 
 			for(BlockPos i : ready) {

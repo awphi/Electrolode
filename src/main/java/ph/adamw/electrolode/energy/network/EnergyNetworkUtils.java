@@ -25,12 +25,12 @@ public class EnergyNetworkUtils {
 		final EnergyNetwork newNetwork = new EnergyNetwork();
 
 		for(EnergyNode i : subnet) {
-			final TileEnergyChannel te = i.getTile(world);
+			final TileEnergyChannel te = i.getChannelTile(world);
 
 			newNetwork.add(te, false);
 			network.remove(te, false);
 
-			i.getTile(world).setNetwork(newNetwork);
+			i.getChannelTile(world).setNetwork(newNetwork);
 		}
 
 		return newNetwork;
