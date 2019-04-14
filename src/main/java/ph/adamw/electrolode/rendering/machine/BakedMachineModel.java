@@ -16,6 +16,7 @@ import ph.adamw.electrolode.Electrolode;
 import ph.adamw.electrolode.block.properties.BlockProperties;
 import ph.adamw.electrolode.block.EnumFaceRole;
 import ph.adamw.electrolode.block.machine.core.BlockMachine;
+import ph.adamw.electrolode.rendering.BakedModelUtils;
 import ph.adamw.electrolode.util.SidedHashMap;
 
 import javax.annotation.Nullable;
