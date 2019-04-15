@@ -21,21 +21,10 @@ import ph.adamw.electrolode.tile.TileTickable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Stack;
-import java.util.UUID;
 
-public class TileEnergyChannel extends TileTickable implements ICapabilityProvider {
+public class TileEnergyChannel extends TileChannel {
 	@Getter
 	private ElectroEnergyChannel energy = new ElectroEnergyChannel(this, 1000);
-
-	private UUID networkUuid;
-
-	public void setNetwork(EnergyNetwork network) {
-		this.networkUuid = network.getUuid();
-	}
-
-	public EnergyNetwork getNetwork() {
-		return EnergyNetworkManager.getNetwork(networkUuid);
-	}
 
 	private volatile Stack<EnergyRequest> requestStack = new Stack<>();
 
@@ -47,19 +36,12 @@ public class TileEnergyChannel extends TileTickable implements ICapabilityProvid
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		energy = (ElectroEnergyChannel) ElectroEnergyStorage.readFromNBT(this, compound.getCompoundTag("energy"));
-		networkUuid = compound.getUniqueId("networkUuid");
 		super.readFromNBT(compound);
-	}
-
-	@Override
-	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
-		return !oldState.getBlock().equals(newState.getBlock());
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setTag("energy", energy.writeToNbt(new NBTTagCompound()));
-		compound.setUniqueId("networkUuid", networkUuid);
 		return super.writeToNBT(compound);
 	}
 
@@ -83,9 +65,9 @@ public class TileEnergyChannel extends TileTickable implements ICapabilityProvid
 		}
 	}
 
+	@Override
 	public void setTier(ChannelTier value) {
 		energy.setTier(value);
-		world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockProperties.CHANNEL_TIER, value), 2);
 	}
 }
 
